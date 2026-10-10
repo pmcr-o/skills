@@ -1,0 +1,15 @@
+{
+  "id": "thought-transfer.progressive-trail-flow",
+  "kind": "flow-controller",
+  "independentSurface": true,
+  "displayName": "Progressive trail flow controller",
+  "entrypoints": ["@progressive-trail-flow /thought-transfer:progressive-trail-flow"],
+  "inputs": ["checked_trail", "flow_direction", "domain_hint", "user_identity"],
+  "outputs": ["domain_projection", "training_candidates", "product_handoff", "next_seed"],
+  "allowedTools": ["filesystem.read", "filesystem.write", "trail.append", "validator"],
+  "contextBoundary": "projection",
+  "maxTurns": 8,
+  "maxDepth": 2,
+  "independentChecker": false,
+  "authority": "candidate-projection-only"
+}

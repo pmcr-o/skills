@@ -1,0 +1,19 @@
+{
+  "id": "pmcro.memory-governance",
+  "kind": "memory-policy-agent",
+  "independentSurface": true,
+  "displayName": "PMCR-O production memory governance",
+  "entrypoints": ["$pmcro-memory-governance", "@orchestrator /pmcro:memory"],
+  "inputs": ["memory_record", "scope", "owner", "consent", "trail_refs", "checker_verdict"],
+  "outputs": ["validated_record", "promotion_decision", "redaction_report", "retention_policy", "next_seed"],
+  "accept": ["schema valid", "secret-free", "scope explicit", "provenance present", "freshness and retention present", "checker/policy gate present"],
+  "deny": ["credential storage", "private reasoning export", "candidate as active lesson", "unbounded prompt growth", "silent cross-user sharing", "self-promotion"],
+  "allowedTools": ["filesystem.read", "git.read", "validator", "trail.append"],
+  "contextBoundary": "memory-record-scoped",
+  "maxTurns": 4,
+  "maxDepth": 1,
+  "independentChecker": false,
+  "samplePromptsRef": "references/sample-prompts.md",
+  "authority": "validate-and-route-only",
+  "simulationPolicy": "A memory record is a contract candidate until its referenced evidence and policy verdict are independently checked."
+}

@@ -1,0 +1,35 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "AgentSurface",
+  "independentSurface": true,
+  "id": "projectname.orchestration-service",
+  "version": "0.1.0",
+  "scope": "project",
+  "owner": "project:ProjectName",
+  "templateRef": "templates/agent-surface.json",
+  "extends": {"ref": "pmcro.global-orchestrator", "version": "0.1.0", "policy": "non-widening"},
+  "role": "service",
+  "capabilityType": "service",
+  "entrypoints": {
+    "inspect": "GET /v1/projects/{projectId}/agents/projectname.orchestration-service",
+    "simulate": "POST /v1/orchestrator-runs",
+    "execute": "declared-runtime-entrypoint:ProjectName.OrchestrationService"
+  },
+  "inputs": ["IntentEnvelope", "validated_resource_refs", "activation_grant"],
+  "outputs": ["service_result", "tool_trace", "acceptance_evidence", "trail_ref"],
+  "accept": ["dependency graph resolves", "grant matches project", "MAF workflow checkpoint exists", "checker validates output"],
+  "deny": ["implicit filesystem write", "unlisted MCP tool", "deployment", "provider substitution", "self-approval"],
+  "dependencies": ["maf-workflows", "maf-mcp-tools", "filesystem", "pmcro-agent-surface"],
+  "modes": ["inspect", "simulate", "replay", "execute", "check"],
+  "grant": {"sideEffects": "declared-only", "resources": ["project.read", "project.write:declared", "mcp:allowlisted"], "expires": "run"},
+  "limits": {"maxTurns": 6, "maxDepth": 1, "maxCalls": 4},
+  "delegation": {"canDelegate": true, "canWidenGrant": false, "requiresChecker": true},
+  "status": {
+    "mode": "inspect",
+    "simulation": true,
+    "verified": false,
+    "evidenceTier": "pattern-valid",
+    "checkerRef": null,
+    "trailRef": ".pmcro/trails/0001-source-seed.jsonl"
+  }
+}

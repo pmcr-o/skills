@@ -1,0 +1,72 @@
+# {{ displayName }}
+
+## Purpose
+
+{{ purpose }}
+
+## Authoring gate
+
+Every new or reconciled skill begins with a `skill.create.request` emitted by
+`@skill-creator /create-skill`. The request names the plugin, skill, purpose,
+scope, validated resources, required folders/files, sample-prompt reference,
+message contract, and simulation/apply mode. Do not plan, make, or register a
+marketplace entry until that request is complete.
+
+The generic shape requires `agents/`, `scripts/`, `references/`, `assets/`, and
+`tests/`; an agent manifest, validator, example documentation, and bounded
+`references/sample-prompts.md` are required files. A child adds domain behavior
+without widening the inherited grant.
+
+## Activation
+
+Use `@[agent] /[plugin]:[skill]` after the caller and capability scope have been resolved.
+
+## Input and output contract
+
+The generated `agents/agent.json` is the machine-readable template for this
+skill. Its `inputs`, `outputs`, `accept`, `deny`, dependencies, limits, and
+authority are one contract. Keep this document aligned with that file; do not
+invent an input field or tool grant in prose alone.
+
+### Input
+
+Accept only a declared intent envelope, validated resource references, scope,
+and the caller's side-effect mode. The agent manifest is the authoritative
+list of field names and types.
+
+### Output
+
+Return the canonical `SkillOutput` envelope with the artifact or decision,
+evidence, simulation/verification status, unresolved findings, and one
+unexecuted next seed when another cycle is needed.
+
+## Example documentation
+
+Every example under `assets/`, `examples/`, or `tests/fixtures/` must be
+described in `assets/README.md` (or a more specific linked document). Explain
+its purpose, inputs, expected output, evidence tier, and what it does not
+prove. Example code is not self-authenticating and must not imply runtime or
+production evidence merely because it is syntactically plausible.
+
+## Sample prompts
+
+Short, concrete copy/paste starters live in
+`references/sample-prompts.md`. They are invocation examples, not hidden
+authority or additional tool grants. Keep each prompt within the manifest's
+character limit and make its expected scope and output clear.
+
+## Bounded discovery
+
+Run at most `{{ maxDiscoveryCycles }}` intent-discovery cycles. Preserve the raw seed, record each clarification as an envelope, and stop when the acceptance contract is stable or the cap is reached.
+
+## Required handoff
+
+Return the artifact, the scope, the validated resource references, the evidence, unresolved findings, and one unexecuted next-seed prompt intent. A checker must be a separate call/context when the skill claims verification. The public route is `ORCHESTRATE -> PLAN -> MAKE -> CHECK -> REFLECT`; a receiving session requests missing packages by exact ID instead of receiving the full prior transcript.
+
+## Next-seed levels
+
+Use `meta` for a current artifact or phase repair, `meta-meta` for a skill/workflow repair, and `meta-meta-meta` for an orchestrator, agent-surface, or prompt-routing repair. The seed is not executed by the skill that emits it.
+
+## Refusal conditions
+
+Refuse unscoped authority expansion, hidden side effects, impersonation of a historical person, and claims that a generated role-play voice proves consciousness.

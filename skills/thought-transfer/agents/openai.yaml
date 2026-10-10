@@ -1,0 +1,6 @@
+interface:
+  display_name: "Thought Transfer"
+  short_description: "Translate philosophical lenses into bounded trails"
+  default_prompt: "Use $thought-transfer to map a philosophical lens into a bounded agent role and checked trail."
+  sample_prompts_ref: "references/sample-prompts.md"
+  independent_surface: true

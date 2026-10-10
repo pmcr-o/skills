@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "command": "required artifact paths",
+      "evidence_ref": "manifest.json",
+      "id": "package-shape",
+      "result": "PASS"
+    },
+    {
+      "command": "sha256(source)",
+      "evidence_ref": "source/source-manifest.json",
+      "id": "source-integrity",
+      "result": "PASS"
+    },
+    {
+      "command": "inspect skill candidate contract",
+      "evidence_ref": "marketplace/skill-candidate.json",
+      "id": "candidate-boundary",
+      "result": "PASS"
+    },
+    {
+      "command": "inspect candidate training rows",
+      "evidence_ref": "training/candidates.jsonl",
+      "id": "training-boundary",
+      "result": "PASS"
+    },
+    {
+      "command": "validate_frames.py frames.jsonl",
+      "evidence_ref": "pmcro/frames.jsonl",
+      "id": "pmcro-prefix",
+      "result": "PASS"
+    }
+  ],
+  "independent": true,
+  "verdict": "PASS"
+}

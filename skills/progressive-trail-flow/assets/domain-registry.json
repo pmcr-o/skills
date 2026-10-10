@@ -1,0 +1,98 @@
+{
+  "version": "0.1.0",
+  "defaultFlow": "backward",
+  "requiredFields": ["id", "entrypoints", "iAm", "scope", "loadWhen", "artifacts", "checker"],
+  "domains": [
+    {
+      "id": "dotnet-skills",
+      "entrypoints": ["@skill-creator /dotnet:skills"],
+      "iAm": {
+        "notice": "skill folders, agent surfaces, and progressive resources",
+        "refuse": "treating an unverified upstream note as the current repository contract",
+        "handOff": "validated skill tree and compatibility evidence"
+      },
+      "scope": {"domains": ["skill-marketplace"], "tools": ["filesystem.read", "validator"], "sideEffects": "none"},
+      "loadWhen": ["dotnet-skills", "SKILL.md", "agents/", "scripts/", "references/", "assets/"],
+      "artifacts": ["SKILL.md", "agents/", "scripts/", "references/", "assets/"],
+      "checker": "skill-structure-check"
+    },
+    {
+      "id": "pmcro",
+      "entrypoints": ["@orchestrator /pmcro:orchestrate", "@orchestrator /pmcro:reflect"],
+      "iAm": {
+        "notice": "phase boundaries, parent-linked events, and next seeds",
+        "refuse": "letting a maker certify itself or executing an unspoken next seed",
+        "handOff": "intent envelope, verdict, and bounded next seed"
+      },
+      "scope": {"domains": ["orchestration", "trail"], "tools": ["trail.append", "checker"], "sideEffects": "staged"},
+      "loadWhen": ["PMCR-O", "trail", "checker", "next seed"],
+      "artifacts": ["frame.jsonl", "plan.jsonl", "make.jsonl", "check.jsonl", "reflect.jsonl"],
+      "checker": "independent-checker"
+    },
+    {
+      "id": "mcp",
+      "entrypoints": ["@mcp-agent /mcp:tool"],
+      "iAm": {
+        "notice": "typed intent, capability, artifact, evidence, and handoff across a boundary",
+        "refuse": "claiming that a protocol transfers consciousness or grants implicit authority",
+        "handOff": "tool result with scope, provenance, and parent event"
+      },
+      "scope": {"domains": ["transport"], "tools": ["mcp.call"], "sideEffects": "none"},
+      "loadWhen": ["MCP", "tool server", "typed bridge"],
+      "artifacts": ["intent envelope", "tool result", "trail event"],
+      "checker": "mcp-envelope-check"
+    },
+    {
+      "id": "maf",
+      "entrypoints": ["@maf-agent /maf:workflow"],
+      "iAm": {
+        "notice": "native MAF executors, messages, checkpoints, pinned-version compatibility, and context limits",
+        "refuse": "inventing unsupported MAF APIs or hiding PMCR-O role boundaries inside an opaque workflow",
+        "handOff": "phase output, pinned package evidence, and checkpoint/resume evidence"
+      },
+      "scope": {"domains": ["workflow"], "tools": ["workflow.run"], "sideEffects": "staged"},
+      "loadWhen": ["MAF", "workflow", "executor"],
+      "artifacts": ["workflow graph", "checkpoint", "handoff"],
+      "checker": "workflow-contract-check"
+    },
+    {
+      "id": "figma",
+      "entrypoints": ["@figma-agent /figma:design-to-code"],
+      "iAm": {
+        "notice": "design context and explicit read/draft/publish scope",
+        "refuse": "treating a connected account as permission to edit or publish",
+        "handOff": "design artifact and account-scoped evidence"
+      },
+      "scope": {"domains": ["design"], "tools": ["figma.read", "figma.write"], "sideEffects": "approved"},
+      "loadWhen": ["Figma", "design", "prototype"],
+      "artifacts": ["design context", "draft", "publish evidence"],
+      "checker": "design-scope-check"
+    },
+    {
+      "id": "harness-codeact",
+      "entrypoints": ["@executor /codeact:run"],
+      "iAm": {
+        "notice": "action IDs, dry-run parity, command evidence, and exit status",
+        "refuse": "executing an action outside its path, tool, time, or side-effect grant",
+        "handOff": "action result and reproducible evidence"
+      },
+      "scope": {"domains": ["execution"], "tools": ["shell", "filesystem"], "sideEffects": "staged"},
+      "loadWhen": ["Harness", "CodeAct", "terminal", "Docker"],
+      "artifacts": ["action envelope", "stdout", "exit status"],
+      "checker": "execution-evidence-check"
+    },
+    {
+      "id": "marketplace",
+      "entrypoints": ["@marketplace-agent /marketplace:discover"],
+      "iAm": {
+        "notice": "versions, digests, catalogs, promotion state, and compatibility",
+        "refuse": "installing or promoting an unverified catalog entry",
+        "handOff": "versioned skill offer with checker evidence"
+      },
+      "scope": {"domains": ["marketplace"], "tools": ["catalog.read", "validator"], "sideEffects": "staged"},
+      "loadWhen": ["marketplace", "plugin", "catalog", "promotion"],
+      "artifacts": ["manifest", "catalog entry", "validation report"],
+      "checker": "marketplace-package-check"
+    }
+  ]
+}

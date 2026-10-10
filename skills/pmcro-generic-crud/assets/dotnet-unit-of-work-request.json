@@ -1,0 +1,23 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "CrudRequest",
+  "requestId": "crud-unit-of-work-001",
+  "traceId": "trace-unit-of-work-001",
+  "resource": {"kind": "clean-architecture-unit-of-work", "id": "ProjectName.OrchestrationService", "scope": "project", "version": "0.1.0"},
+  "operation": "create",
+  "mode": "simulate",
+  "projection": "dotnet-clean-architecture",
+  "grant": {"sideEffects": "none", "resources": ["project.stage"], "expires": "cycle"},
+  "expectedVersion": null,
+  "payload": {
+    "architecture": "clean-architecture",
+    "unitOfWork": "IUnitOfWork",
+    "entity": "Customer",
+    "entityBase": "EntityBase",
+    "repository": "IGenericRepository<Customer>",
+    "inheritance": "Customer : EntityBase",
+    "crudSurface": ["AddAsync", "GetByIdAsync", "ListAsync", "UpdateAsync", "DeleteAsync"],
+    "commit": "SaveChangesAsync"
+  },
+  "outputProfile": "dotnet-console"
+}

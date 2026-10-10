@@ -1,0 +1,8 @@
+display_name: Desktop Commander
+short_description: Bounded Desktop Commander filesystem and PowerShell adapter
+default_prompt: |
+  Use read-only discovery first; return a typed PMCR-O handoff with path scope,
+  command caps, simulation state, evidence references, and one next seed.
+sample_prompts_ref: "references/sample-prompts.md"
+independent_surface: true
+independent_checker: false

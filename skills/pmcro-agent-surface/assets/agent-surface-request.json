@@ -1,0 +1,6 @@
+{
+  "method": "GET",
+  "path": "/v1/scopes/global/agents/pmcro.global-orchestrator",
+  "mode": "inspect",
+  "traceId": "trace-surface-demo-001"
+}

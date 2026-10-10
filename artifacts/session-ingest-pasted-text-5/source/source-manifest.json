@@ -1,0 +1,11 @@
+{
+  "authorizationBasis": "user-supplied attachment in current session",
+  "authorized": true,
+  "ingestId": "ingest-f3829d3d2ca3",
+  "lineCount": 155,
+  "path": "/workspace/scratch/b58f1a7d9e8f/upload/Pasted text(5).txt",
+  "preservation": "read-only source; derived views are separate",
+  "redactionApplied": true,
+  "redactions": 0,
+  "sha256": "f3829d3d2ca3c6c4bade201a012e1384208714354c47172cce770d75b13b60ab"
+}

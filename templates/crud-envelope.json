@@ -1,0 +1,14 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "CrudRequest",
+  "requestId": "{{request_id}}",
+  "traceId": "{{trace_id}}",
+  "resource": {"kind": "{{skill|plugin|agent|memory|catalog|trail}}", "id": "{{resource_id}}", "scope": "{{scope}}", "version": "{{version}}"},
+  "operation": "{{create|read|update|delete}}",
+  "mode": "{{inspect|simulate|execute|check}}",
+  "projection": "{{metadata|contract|implementation|raw-authorized}}",
+  "grant": {"sideEffects": "none", "resources": [], "expires": "run"},
+  "expectedVersion": null,
+  "payload": null,
+  "outputProfile": "json"
+}

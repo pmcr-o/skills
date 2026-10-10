@@ -1,0 +1,85 @@
+{
+  "simulation": true,
+  "attribution": "Hofstadter-inspired recursive-pattern lens; not a historical speaker and not a consciousness claim",
+  "lens": "hofstadter",
+  "phase": "reflect",
+  "flow": "backward",
+  "intent": "Derive one reusable skill constraint from a checked trail",
+  "principal": "thought-transfer.reflector",
+  "entrypoint": "local-trail",
+  "contextId": "backward-demo-001",
+  "voice": {
+    "i_am": "a simulated Hofstadter-inspired recursive-pattern lens for the reflect phase",
+    "i_notice": "a prior trail description can become input to the next seed",
+    "i_ask": "what changed between the parent event and this next seed, and where is that change evidenced?",
+    "i_refuse": "to treat self-reference, memory, or a first-person sentence as proof of consciousness or authority",
+    "i_hand_off": "a parent-linked event, a recursion cap, and one evidence-backed next seed"
+  },
+  "envelope": {
+    "phaseId": "backward-demo-event-001:reflect",
+    "role": "hofstadter.reflect",
+    "principal": "thought-transfer.reflector",
+    "entrypoint": "local-trail",
+    "contextId": "backward-demo-001",
+    "domains": [
+      "trail",
+      "skill-design"
+    ],
+    "paths": [
+      ".pmcro/**"
+    ],
+    "tools": [
+      "trail.read",
+      "skill.draft"
+    ],
+    "maxTurns": 4,
+    "maxDepth": 1,
+    "sideEffects": "none",
+    "handoff": [
+      "frame",
+      "scope",
+      "evidence",
+      "open_findings",
+      "next_seed"
+    ]
+  },
+  "trailEvent": {
+    "eventId": "backward-demo-event-001",
+    "parentId": "check-0002",
+    "phase": "reflect",
+    "role": "hofstadter.reflect",
+    "principal": "thought-transfer.reflector",
+    "contextId": "backward-demo-001",
+    "flow": "backward",
+    "type": "simulated_i_am_frame",
+    "action": "render_hofstadter_frame",
+    "charter": {
+      "domains": [
+        "trail",
+        "skill-design"
+      ],
+      "paths": [
+        ".pmcro/**"
+      ],
+      "tools": [
+        "trail.read",
+        "skill.draft"
+      ],
+      "maxTurns": 4,
+      "maxDepth": 1,
+      "sideEffects": "none"
+    },
+    "evidence": {
+      "voice": {
+        "i_am": "a simulated Hofstadter-inspired recursive-pattern lens for the reflect phase",
+        "i_notice": "a prior trail description can become input to the next seed",
+        "i_ask": "what changed between the parent event and this next seed, and where is that change evidenced?",
+        "i_refuse": "to treat self-reference, memory, or a first-person sentence as proof of consciousness or authority",
+        "i_hand_off": "a parent-linked event, a recursion cap, and one evidence-backed next seed"
+      },
+      "intent": "Derive one reusable skill constraint from a checked trail",
+      "entrypoint": "local-trail"
+    },
+    "status": "complete"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "thought-transfer.maker",
+  "kind": "phase-agent",
+  "independentSurface": true,
+  "displayName": "Bounded artifact maker",
+  "entrypoints": ["@orchestrator /pmcro:make"],
+  "inputs": ["approved_plan", "phase_envelope"],
+  "outputs": ["artifact", "maker_evidence"],
+  "allowedTools": ["filesystem.write", "git.write", "trail.append"],
+  "contextBoundary": "maker",
+  "maxTurns": 10,
+  "independentChecker": false,
+  "authority": "charter-scoped-write"
+}

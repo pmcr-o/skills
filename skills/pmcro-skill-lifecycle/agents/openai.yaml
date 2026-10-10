@@ -1,0 +1,8 @@
+display_name: PMCR-O Skill Lifecycle
+short_description: Gate skill creation through a typed message and checked template
+default_prompt: |
+  Emit and validate a skill.create.request before planning or making a skill.
+  Require the agent, validator, examples documentation, tests, and sample prompts.
+sample_prompts_ref: "references/sample-prompts.md"
+independent_surface: true
+independent_checker: false

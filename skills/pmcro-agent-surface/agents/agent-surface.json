@@ -1,0 +1,20 @@
+{
+  "id": "pmcro.agent-surface",
+  "kind": "surface-constructor",
+  "independentSurface": true,
+  "displayName": "PMCR-O typed agent surface",
+  "entrypoints": ["$pmcro-agent-surface", "@orchestrator /pmcro:surface"],
+  "inputs": ["component_ref", "scope", "activation_mode", "grant", "dependency_refs", "acceptance_cases"],
+  "outputs": ["activation_envelope", "api_response", "simulation_trace", "parity_result", "checker_handoff", "next_seed"],
+  "accept": ["scope and inheritance are explicit", "simulation is labeled", "grant is non-widening", "checker is separate"],
+  "deny": ["implicit authority cascade", "dry-run runtime claim", "self-approval", "credential discovery", "unbounded delegation"],
+  "allowedTools": ["filesystem.read", "git.read", "validator", "trail.append"],
+  "modes": ["inspect", "simulate", "replay", "execute", "check"],
+  "contextBoundary": "surface-scoped",
+  "maxTurns": 6,
+  "maxDepth": 2,
+  "independentChecker": false,
+  "samplePromptsRef": "references/sample-prompts.md",
+  "authority": "surface-contract-only",
+  "simulationPolicy": "simulation=true and verified=false until a separate checker has direct runtime evidence"
+}

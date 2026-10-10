@@ -1,0 +1,17 @@
+{
+  "id": "pmcro.product-repo",
+  "kind": "product-repository-surface",
+  "independentSurface": true,
+  "independentChecker": false,
+  "displayName": "PMCR-O agent product repository",
+  "entrypoints": ["@orchestrator /pmcro:product-repo", "$pmcro-product-repo"],
+  "inputs": ["product_intent", "repository_root", "principal", "autonomy_grant", "trail_id"],
+  "outputs": ["product_manifest", "generic_trail", "activation_bundle", "checker_handoff", "next_seed"],
+  "scope": "declared-product-repository",
+  "contextBoundary": "product-repository",
+  "maxTurns": 8,
+  "maxDepth": 2,
+  "allowedTools": ["filesystem.read", "filesystem.write", "git.read", "validator", "trail.append"],
+  "simulationPolicy": "simulation=true and verified=false until a separate checker has direct evidence",
+  "authority": "bounded-grant-only"
+}

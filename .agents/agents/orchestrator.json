@@ -1,0 +1,16 @@
+{
+  "id": "thought-transfer.orchestrator",
+  "kind": "control-plane",
+  "independentSurface": true,
+  "displayName": "Thought Transfer PMCR-O orchestrator",
+  "entrypoints": ["@orchestrator /pmcro:orchestrate", "@orchestrator /pmcro:run"],
+  "inputs": ["raw_intent", "principal", "charter"],
+  "outputs": ["intent_envelope", "validated_resources", "role_graph", "handoff_contract"],
+  "allowedTools": ["filesystem.read", "git.read", "trail.append"],
+  "contextBoundary": "cycle",
+  "maxTurns": 8,
+  "independentChecker": false,
+  "authority": "coordinate-only",
+  "phaseOrder": ["orchestrate", "plan", "make", "check", "reflect"],
+  "resourcePolicy": "Pass validated package IDs, paths, hashes, commits, and evidence; request missing resources explicitly instead of replaying the full session."
+}

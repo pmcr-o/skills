@@ -1,0 +1,14 @@
+{
+  "claim": "candidate package staged; no live runtime claim",
+  "files": [
+    "manifest.json",
+    "marketplace/skill-candidate.json",
+    "reports/architecture-assessment.md",
+    "source/redacted-session.txt",
+    "source/session.txt",
+    "source/source-manifest.json",
+    "training/candidates.jsonl"
+  ],
+  "ingestId": "ingest-f3829d3d2ca3",
+  "status": "complete"
+}

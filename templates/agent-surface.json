@@ -1,0 +1,30 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "AgentSurface",
+  "id": "{{agent_id}}",
+  "version": "{{version}}",
+  "scope": "{{global|personal|project|run}}",
+  "owner": "{{owner}}",
+  "templateRef": "templates/agent-surface.json",
+  "extends": null,
+  "role": "{{role}}",
+  "capabilityType": "{{agent|service|tool|workflow|resource|plugin}}",
+  "entrypoints": {},
+  "inputs": [],
+  "outputs": [],
+  "accept": [],
+  "deny": [],
+  "dependencies": [],
+  "modes": ["inspect", "simulate", "replay", "execute", "check"],
+  "grant": {"sideEffects": "none", "resources": [], "expires": null},
+  "limits": {"maxTurns": 1, "maxDepth": 0, "maxCalls": 1},
+  "delegation": {"canDelegate": false, "canWidenGrant": false},
+  "status": {
+    "mode": "inspect",
+    "simulation": true,
+    "verified": false,
+    "evidenceTier": "pattern-valid",
+    "checkerRef": null,
+    "trailRef": null
+  }
+}

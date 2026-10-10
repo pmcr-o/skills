@@ -1,0 +1,18 @@
+{
+  "id": "pmcro-messages-protocol.agent",
+  "kind": "protocol-skill-agent",
+  "independentSurface": true,
+  "displayName": "PMCR-O role-owned frame protocol",
+  "entrypoints": ["$pmcro-messages-protocol", "@orchestrator /pmcro:messages"],
+  "inputs": ["target_protocol_path", "frame_jsonl", "validated_resource_refs", "charter"],
+  "outputs": ["protocol_files", "frame_validation", "handoff_evidence", "unexecuted_next_seed"],
+  "allowedTools": ["filesystem.read", "filesystem.write", "git.read", "trail.append"],
+  "manualCommands": ["python3 scripts/validate_frames.py path/to/frames.jsonl"],
+  "inspectableArtifacts": ["references/messages.md", "assets/examples/*.jsonl"],
+  "contextBoundary": "protocol-scoped",
+  "maxTurns": 6,
+  "maxDepth": 1,
+  "samplePromptsRef": "references/sample-prompts.md",
+  "independentChecker": false,
+  "authority": "protocol-scoped"
+}

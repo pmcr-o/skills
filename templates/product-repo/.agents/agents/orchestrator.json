@@ -1,0 +1,11 @@
+{
+  "id": "product.orchestrator",
+  "kind": "orchestrator",
+  "independentSurface": true,
+  "independentChecker": false,
+  "canDelegate": true,
+  "authority": "domain-grant-only",
+  "phaseOrder": ["orchestrate", "plan", "make", "check", "reflect"],
+  "maxDepth": 2,
+  "grantRef": "../autonomy-grant.example.json"
+}

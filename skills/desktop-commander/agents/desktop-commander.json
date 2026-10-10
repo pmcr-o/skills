@@ -1,0 +1,13 @@
+{
+  "id": "desktop-commander",
+  "version": "0.1.0",
+  "role": "runtime-adapter",
+  "entrypoint": "@desktop-commander",
+  "independentSurface": true,
+  "independentChecker": false,
+  "samplePromptsRef": "references/sample-prompts.md",
+  "scope": "declared-device-and-path",
+  "operations": ["list", "read", "search", "process", "write", "handoff"],
+  "defaultGrant": "read-only-discovery",
+  "processCaps": {"timeoutSeconds": 3, "outputLines": 1000}
+}

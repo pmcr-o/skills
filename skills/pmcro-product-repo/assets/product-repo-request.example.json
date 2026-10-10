@@ -1,0 +1,10 @@
+{
+  "productId": "example-agent-product",
+  "repositoryRoot": "./product-repo",
+  "principal": "replace-with-authorized-principal",
+  "mode": "simulate",
+  "providerAdapters": ["codex", "claude", "ollama", "maf", "mcp"],
+  "autonomyGrantRef": "autonomy-grant.example.json",
+  "trailId": "example-trail",
+  "rawSeedPolicy": "preserve-read-only-redact-before-product"
+}

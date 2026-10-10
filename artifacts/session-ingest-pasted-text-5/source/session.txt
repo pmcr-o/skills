@@ -1,0 +1,155 @@
+
+prompting strategy selection I just added the “prompting strategy selection” skill. Let's explore what it does with an example. Make up a realistic user prompt and then use the full Skill end to end.
+
+The skill helps choose a prompting approach and requires evidence before adding complexity.
+
+Here’s a realistic example based on your marketplace work:
+
+“Inspect this skill package. Each skill must contain SKILL.md and at least one agent file inside its own agents/ folder. Return JSON with pass/fail and missing requirements.
+
+Files:
+audit/SKILL.md
+audit/agents/openai.yaml
+plan/SKILL.md
+plan/scripts/validate.ps1”
+
+Selected strategy: a direct prompt to a reasoning model, with explicit requirements and output format. OpenAI’s guidance supports avoiding unnecessary “think step by step” instructions. 
+
+Applying that prompt produces:
+
+{
+  "pass": false,
+  "skills": [
+    {"name": "audit", "pass": true, "missing": []},
+    {
+      "name": "plan",
+      "pass": false,
+      "missing": ["At least one file inside plan/agents/"]
+    }
+  ]
+}
+
+The skill’s remaining workflow is to compare that baseline against a candidate prompt on identical inputs, measure correctness and token usage, and retain the candidate only if it improves results at matched cost.
+
+Execution status: I completed the strategy selection and example, but couldn’t complete the measured comparison: this session has no callable text-model evaluation endpoint or per-call token measurements. No benchmark gain is claimed.
+
+Its required folders passed an equivalent filesystem check, including agents/. The prescribed PowerShell validator could not run because pwsh is unavailable.
+
+How about this Note that you can see my marketplace and MAF Um, um marketplace in my implementation of the agent framework in W drives. Now, the Spire app works. You just can call into the API, but the thing truly is, is agent design patterns and the true, like, reasonings of what, you know, these top LLM providers, how do they go about this and orchestrate it, etc. And their internal tools, how it's set up with MCP, so I can fully set that up, especially how they have Grok, Bot, and Quad, and all these ways that agent could talk to another one. Um, go to action step and say fully autonomous, because we have a loop enabling 100% terminal access, and the loop can be applied till being applied to the terminal, you know what I'm saying? Checker, you can check in if it's a good terminal, type of thing. I need my message, this message see right here: optimize, enhance, and refine for the enterprise grade. Maybe even a group of agents that'll help even update the application incrementally, like roadmaps for me.
+Optimize, enhance, and refine my existing Spire application, skill marketplace, and Microsoft Agent Framework implementation into an enterprise-grade agent platform.
+
+My marketplace and Agent Framework projects are on the W: drive. Spire already works and supports API calls. Inspect the existing implementation first, then build on it incrementally.
+
+The goal is a complete agent architecture: model orchestration, MCP integration, agent-to-agent communication, autonomous terminal execution, independent verification, and a practical development roadmap.
+
+Use these requirements:
+
+Inspect the current system. Locate the relevant projects on W:, map their architecture and dependencies, and verify the available APIs, MCP servers, tools, and terminal connections. Distinguish verified capabilities from assumptions.
+
+Research provider-supported patterns. Use current official documentation from the major LLM providers to identify supported orchestration, reasoning controls, tool calling, state management, and agent communication patterns. Clearly distinguish documented capabilities from private internals that are not publicly known. Verify the model and agent names I referred to as “Grok, Bot, and Quad” against my configuration.
+
+Design coordinated agent roles. Define an orchestrator, implementation agents, an independent checker, and a roadmap agent. Specify their responsibilities, handoffs, shared state, tool permissions, and completion criteria. Use multiple agents where they provide a measurable benefit.
+
+Implement MCP and agent communication. Define tool contracts, authentication, discovery, routing, timeouts, retries, and structured messages. Make execution traceable across agents, models, APIs, and terminal operations.
+
+Enable autonomous execution. Use the authorized terminal connection to inspect, implement, build, test, and repair the application. Run the execution loop autonomously within the approved scope, with explicit completion conditions, finite iteration limits, and recovery checkpoints. Continue routine work without repeated confirmation.
+
+Verify independently. Have the checker validate the terminal environment, proposed commands, implementation changes, and test results. Feed concrete failures back to the implementation agents. Stop repeated failures with a clear diagnosis rather than looping indefinitely.
+
+Deliver incremental improvements. Create a prioritized roadmap with milestones, dependencies, acceptance criteria, and validation evidence. Implement the first usable milestone, then update the roadmap based on verified results.
+
+Enforce marketplace conventions. Every skill must include an agent file inside its own agents/ folder. Validate package structure and provide text-only package exports when requested.
+
+Start with inspection and a concise architecture assessment, then proceed directly to implementation of the first milestone. Report what changed, how it was verified, what remains blocked, and the next actionable milestone. Do not claim access, execution, or successful validation without evidence.
+
+Optimize, enhance, and refine my existing Spire application, skill marketplace, and Microsoft Agent Framework implementation into an enterprise-grade agent platform.
+
+My marketplace and Agent Framework projects are on the W: drive. Spire already works and supports API calls. Inspect the existing implementation first, then build on it incrementally.
+
+The goal is a complete agent architecture: model orchestration, MCP integration, agent-to-agent communication, autonomous terminal execution, independent verification, and a practical development roadmap.
+
+Use these requirements:
+
+Inspect the current system. Locate the relevant projects on W:, map their architecture and dependencies, and verify the available APIs, MCP servers, tools, and terminal connections. Distinguish verified capabilities from assumptions.
+Research provider-supported patterns. Use current official documentation from the major LLM providers to identify supported orchestration, reasoning controls, tool calling, state management, and agent communication patterns. Clearly distinguish documented capabilities from private internals that are not publicly known. Verify the model and agent names I referred to as “Grok, Bot, and Quad” against my configuration.
+Design coordinated agent roles. Define an orchestrator, implementation agents, an independent checker, and a roadmap agent. Specify their responsibilities, handoffs, shared state, tool permissions, and completion criteria. Use multiple agents where they provide a measurable benefit.
+Implement MCP and agent communication. Define tool contracts, authentication, discovery, routing, timeouts, retries, and structured messages. Make execution traceable across agents, models, APIs, and terminal operations.
+Enable autonomous execution. Use the authorized terminal connection to inspect, implement, build, test, and repair the application. Run the execution loop autonomously within the approved scope, with explicit completion conditions, finite iteration limits, and recovery checkpoints. Continue routine work without repeated confirmation.
+Verify independently. Have the checker validate the terminal environment, proposed commands, implementation changes, and test results. Feed concrete failures back to the implementation agents. Stop repeated failures with a clear diagnosis rather than looping indefinitely.
+Deliver incremental improvements. Create a prioritized roadmap with milestones, dependencies, acceptance criteria, and validation evidence. Implement the first usable milestone, then update the roadmap based on verified results.
+Enforce marketplace conventions. Every skill must include an agent file inside its own agents/ folder. Validate package structure and provide text-only package exports when requested.
+Start with inspection and a concise architecture assessment, then proceed directly to implementation of the first milestone. Report what changed, how it was verified, what remains blocked, and the next actionable milestone. Do not claim access, execution, or successful validation without evidence.
+
+…
+I completed the offline inspection milestone. W: access is still blocked because PMCRO_Company is offline, so I have not changed Spire, MAF, or your marketplace.
+
+The deliverables are:
+
+spire-platform-milestone-1.txt
+ — architecture, roadmap, source code, test results, and independent reviews.
+inspect_platform.py
+ — project inventory and validation of required SKILL.md and agents/ files.
+test_inspect_platform.py
+ — regression tests.
+Verification: all 28 tests passed independently on Linux. Checker findings were corrected and the final review accepted the offline milestone. Windows behavior and live application integration remain unverified.
+
+The proposed architecture uses MAF orchestration, MCP tools, separate checker sessions, and persistent checkpoints, grounded in documented capabilities. 
+
+Next step: start Desktop Commander Remote on PMCRO_Company. That unlocks actual W: inspection, verification of “Grok, Bot, and Quad,” and selection of the first change to your existing application.
+
+
+spire-platform-milestone-1.txt
+Document
+
+inspect_platform.py
+Code
+
+test_inspect_platform.py
+Code
+ccobti ue
+PMCRO_Company is still offline, so W: inspection and application changes remain blocked.
+
+Start or restart Desktop Commander Remote on that Windows computer. You can check its connection at Desktop Commander. Then reply “connected” so I can resume inspection and implementation.
+
+oew try
+I retried. The connector still reports PMCRO_Company offline, last seen 41 hours ago, so W: remains unreachable.
+
+Check that the device shows Online at Desktop Commander.
+
+ok
+Still offline. W: inspection and implementation remain blocked until Desktop Commander Remote reconnects.
+
+oew try
+Implemented the first milestone on W: and committed it locally.
+
+Fixed checker verdict handling, bounded cycle execution, and added run IDs.
+Added per-skill agent metadata and validation across all 36 skills.
+Verified: build passed with zero warnings/errors; independent checks passed 20 cycle and 13 scaffold cases; marketplace passed 61/61; live API passed 5/5.
+Prompting comparison: both styles scored 3/3; the bare prompt used 18 fewer input tokens.
+Next: a scoped MCP adapter and trace ledger. Terminal autonomy, remote A2A, and durable recovery remain pending. Grok/Bot/Quad mappings remain unverified.
+
+
+spire-enterprise-milestone-1-report.md
+Document
+continue
+continue
+continue
+Continued M2. The scoped MCP adapter, separate stdio server, dry-run PowerShell planner, read-only filesystem tool, and hash-chained trace ledger are implemented and staged.
+
+Verified before the Windows device disconnected:
+
+Official C# MCP SDK 2.2.0 restored in isolated tooling projects; protocol pinned to 2026-07-28. 
+Server and console builds passed with 0 errors and 0 warnings.
+Real SDK calls succeeded: directory listing returned actual files; PowerShell returned executed=false.
+Eight-event trace chain verified.
+Child MCP processes use a controlled environment with inheritance disabled. 
+Structured MCP output is validated against the declared schema. 
+The final hardened transfer, 58-check proof, API restart smoke, and M2 commit are blocked because PMCRO_Company went offline. I’m not claiming M2 acceptance or a final W: commit.
+
+
+spire-m2-scoped-mcp-report.md
+Document
+
+
+
+⋮⋮⋮⋮

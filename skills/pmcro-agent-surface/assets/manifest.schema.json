@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PMCR-O Agent Surface",
+  "type": "object",
+  "required": ["apiVersion", "kind", "id", "version", "scope", "owner", "entrypoints", "inputs", "outputs", "accept", "deny", "modes", "grant", "limits", "status"],
+  "properties": {
+    "apiVersion": {"const": "pmcro.dev/v1"},
+    "kind": {"const": "AgentSurface"},
+    "scope": {"enum": ["global", "personal", "project", "run"]},
+    "modes": {"type": "array", "minItems": 1},
+    "status": {"type": "object", "required": ["mode", "simulation", "verified", "evidenceTier"]}
+  }
+}

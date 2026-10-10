@@ -1,0 +1,6 @@
+interface:
+  display_name: "PMCR-O Clean Architecture"
+  short_description: "Build a bounded .NET Clean Architecture application scaffold"
+  default_prompt: "Use $pmcro-clean-architecture to plan or stage a checked .NET Clean Architecture application."
+  sample_prompts_ref: "references/sample-prompts.md"
+  independent_surface: true

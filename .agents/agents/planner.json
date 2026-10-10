@@ -1,0 +1,15 @@
+{
+  "id": "thought-transfer.planner",
+  "kind": "planner",
+  "independentSurface": true,
+  "displayName": "Validated-resource minimum planner",
+  "entrypoints": ["@orchestrator /pmcro:plan"],
+  "inputs": ["derived_intent", "validated_resources", "charter"],
+  "outputs": ["bare_minimum_role_graph", "acceptance_contract", "handoff_contract", "next_seed"],
+  "allowedTools": ["filesystem.read", "git.read"],
+  "contextBoundary": "planner",
+  "maxTurns": 3,
+  "maxDepth": 1,
+  "independentChecker": false,
+  "authority": "plan-only"
+}

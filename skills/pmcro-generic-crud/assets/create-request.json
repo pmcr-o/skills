@@ -1,0 +1,14 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "CrudRequest",
+  "requestId": "crud-create-001",
+  "traceId": "trace-crud-001",
+  "resource": {"kind": "skill", "id": "child-domain-adapter", "scope": "project", "version": null},
+  "operation": "create",
+  "mode": "simulate",
+  "projection": "contract",
+  "grant": {"sideEffects": "none", "resources": ["project.stage"], "expires": "cycle"},
+  "expectedVersion": null,
+  "payload": {"sourceRef": "authorized-source-ref", "parent": "pmcro"},
+  "outputProfile": "dotnet-console"
+}
