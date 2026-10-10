@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/thought-transfer/phase-envelope.schema.json",
+  "title": "Bounded phase envelope",
+  "type": "object",
+  "required": ["phaseId", "role", "principal", "contextId", "scope", "limits", "handoff"],
+  "properties": {
+    "phaseId": {"type": "string"},
+    "role": {"type": "string"},
+    "principal": {"type": "string"},
+    "contextId": {"type": "string"},
+    "scope": {
+      "type": "object",
+      "required": ["domains", "paths", "tools"],
+      "properties": {
+        "domains": {"type": "array", "items": {"type": "string"}},
+        "paths": {"type": "array", "items": {"type": "string"}},
+        "tools": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "limits": {
+      "type": "object",
+      "required": ["maxTurns", "maxDepth", "sideEffects"],
+      "properties": {
+        "maxTurns": {"type": "integer", "minimum": 1},
+        "maxDepth": {"type": "integer", "minimum": 0},
+        "sideEffects": {"enum": ["none", "staged", "approved"]}
+      }
+    },
+    "handoff": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

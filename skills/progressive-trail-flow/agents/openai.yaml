@@ -1,0 +1,6 @@
+interface:
+  display_name: "Progressive Trail Flow"
+  short_description: "Project checked trails into skills and products"
+  default_prompt: "Use $progressive-trail-flow to route a checked trail backward into training data or forward into a user-aware product."
+  sample_prompts_ref: "references/sample-prompts.md"
+  independent_surface: true

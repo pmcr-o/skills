@@ -1,0 +1,21 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "SkillOutput",
+  "messageId": "{{message_id}}",
+  "traceId": "{{trace_id}}",
+  "parentMessageId": null,
+  "from": {"skillId": "{{skill_id}}", "surfaceId": "{{surface_id}}"},
+  "to": {"skillId": "{{next_skill_id}}", "role": "{{next_role}}"},
+  "phase": "{{orchestrate|plan|make|check|reflect}}",
+  "mode": "{{inspect|simulate|replay|execute|check}}",
+  "status": "{{open|complete|blocked|halted}}",
+  "simulation": true,
+  "verified": false,
+  "evidenceTier": "pattern-valid",
+  "input": {"refs": [], "summary": ""},
+  "output": {"summary": "", "artifacts": [], "decisions": []},
+  "accept": [],
+  "deny": [],
+  "evidence": [],
+  "next": {"action": "handoff", "unexecuted": true, "seedLevel": null}
+}

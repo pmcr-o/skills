@@ -1,0 +1,102 @@
+{
+  "canonicalShape": {
+    "requiredFolders": [
+      "agents",
+      "scripts",
+      "references",
+      "assets"
+    ],
+    "requiresAgentFile": true
+  },
+  "domains": [
+    {
+      "accept": "design candidate only until direct domain evidence is supplied",
+      "deny": "do not claim live access or runtime success from transcript text",
+      "evidenceTier": "unknown",
+      "id": "marketplace",
+      "purpose": "skill catalog, plugin, and promotion surfaces",
+      "simulation": true,
+      "verified": false
+    },
+    {
+      "accept": "design candidate only until direct domain evidence is supplied",
+      "deny": "do not claim live access or runtime success from transcript text",
+      "evidenceTier": "unknown",
+      "id": "mcp",
+      "purpose": "typed tool bridge and structured messages",
+      "simulation": true,
+      "verified": false
+    },
+    {
+      "accept": "design candidate only until direct domain evidence is supplied",
+      "deny": "do not claim live access or runtime success from transcript text",
+      "evidenceTier": "unknown",
+      "id": "maf",
+      "purpose": "workflow and checkpoint runtime adapter",
+      "simulation": true,
+      "verified": false
+    },
+    {
+      "accept": "design candidate only until direct domain evidence is supplied",
+      "deny": "do not claim live access or runtime success from transcript text",
+      "evidenceTier": "unknown",
+      "id": "terminal",
+      "purpose": "filesystem and command execution boundary",
+      "simulation": true,
+      "verified": false
+    },
+    {
+      "accept": "design candidate only until direct domain evidence is supplied",
+      "deny": "do not claim live access or runtime success from transcript text",
+      "evidenceTier": "unknown",
+      "id": "provider",
+      "purpose": "model/provider capability claims",
+      "simulation": true,
+      "verified": false
+    },
+    {
+      "accept": "design candidate only until direct domain evidence is supplied",
+      "deny": "do not claim live access or runtime success from transcript text",
+      "evidenceTier": "unknown",
+      "id": "windows-device",
+      "purpose": "W: or Desktop Commander connectivity",
+      "simulation": true,
+      "verified": false
+    }
+  ],
+  "ingestId": "ingest-f3829d3d2ca3",
+  "kind": "skill-candidate",
+  "messageContract": {
+    "accept": [
+      "source hash matches",
+      "redaction is applied",
+      "independent checker frame exists"
+    ],
+    "deny": [
+      "live W: access",
+      "provider-private history",
+      "automatic training",
+      "automatic promotion"
+    ],
+    "input": {
+      "consent": "user-authorized",
+      "scope": "local transformation only",
+      "sourceRef": "source/source-manifest.json"
+    },
+    "output": {
+      "artifacts": [
+        "pmcro/frames.jsonl",
+        "training/candidates.jsonl"
+      ],
+      "evidenceTier": "candidate"
+    }
+  },
+  "promotable": false,
+  "skillId": "session-derived-spire-platform",
+  "sourceRefs": [
+    "source/source-manifest.json",
+    "source/redacted-session.txt"
+  ],
+  "state": "staged",
+  "version": "0.1.0"
+}

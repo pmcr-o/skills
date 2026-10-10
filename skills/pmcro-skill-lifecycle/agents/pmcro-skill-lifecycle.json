@@ -1,0 +1,12 @@
+{
+  "id": "pmcro-skill-lifecycle",
+  "version": "0.1.0",
+  "role": "authoring-gate",
+  "entrypoint": "@skill-creator /create-skill",
+  "independentSurface": true,
+  "independentChecker": false,
+  "samplePromptsRef": "references/sample-prompts.md",
+  "messageKind": "skill.create.request",
+  "requiredFolders": ["agents", "scripts", "references", "assets", "tests"],
+  "marketplaceRegistration": "after-independent-checker"
+}

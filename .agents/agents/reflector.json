@@ -1,0 +1,19 @@
+{
+  "id": "thought-transfer.reflector",
+  "kind": "phase-agent",
+  "independentSurface": true,
+  "displayName": "Constraint reflector",
+  "entrypoints": ["@orchestrator /pmcro:reflect", "$reflect"],
+  "inputs": ["checker_verdict", "trail", "queue_ref"],
+  "outputs": ["earned_constraint", "next_seed", "wait_state"],
+  "allowedTools": ["filesystem.read", "trail.append"],
+  "contextBoundary": "reflection",
+  "maxTurns": 4,
+  "independentChecker": false,
+  "authority": "record-and-seed",
+  "nextSeedLevels": ["meta", "meta-meta", "meta-meta-meta"],
+  "invokedMarketplaceSkill": "reflect",
+  "waitFor": "checker.verdict(status=complete, independent=true)",
+  "messySeedRule": "Every next seed is raw input for a new orchestrate cycle; re-derive intent before planning.",
+  "nextSeedPolicy": "Emit one unexecuted prompt intent at the smallest level that explains the failure: artifact/phase repair, skill/workflow repair, or orchestrator/agent-prompt repair."
+}

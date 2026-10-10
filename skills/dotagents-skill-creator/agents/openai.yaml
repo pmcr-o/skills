@@ -1,0 +1,6 @@
+interface:
+  display_name: "DotAgents Skill Creator"
+  short_description: "Create repeatable provider-neutral agent-skill workspaces"
+  default_prompt: "Use $dotagents-skill-creator to dry-run or create a managed .agents/skills workspace with plugin projections."
+  sample_prompts_ref: "references/sample-prompts.md"
+  independent_surface: true

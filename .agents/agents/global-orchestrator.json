@@ -1,0 +1,34 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "AgentSurface",
+  "independentSurface": true,
+  "id": "pmcro.global-orchestrator",
+  "version": "0.1.0",
+  "scope": "global",
+  "owner": "platform",
+  "templateRef": "templates/agent-surface.json",
+  "extends": null,
+  "role": "orchestrator",
+  "capabilityType": "workflow",
+  "entrypoints": {
+    "inspect": "GET /v1/scopes/global/agents/pmcro.global-orchestrator",
+    "simulate": "POST /v1/orchestrator-runs"
+  },
+  "inputs": ["raw_intent", "principal", "charter", "validated_resource_refs"],
+  "outputs": ["intent_envelope", "role_graph", "handoff_contract", "trail_ref"],
+  "accept": ["routes only", "uses validated resources", "caps turns depth calls", "preserves trail"],
+  "deny": ["planning", "making", "checking", "private memory access", "grant widening", "self-approval"],
+  "dependencies": ["pmcro-bip", "pmcro-marketplace", "pmcro-agent-surface", "pmcro-trail-product"],
+  "modes": ["inspect", "simulate", "replay", "execute", "check"],
+  "grant": {"sideEffects": "none", "resources": ["catalog.read", "trail.append"], "expires": "cycle"},
+  "limits": {"maxTurns": 8, "maxDepth": 2, "maxCalls": 6},
+  "delegation": {"canDelegate": true, "canWidenGrant": false, "requiresChecker": true},
+  "status": {
+    "mode": "inspect",
+    "simulation": true,
+    "verified": false,
+    "evidenceTier": "pattern-valid",
+    "checkerRef": null,
+    "trailRef": ".pmcro/trails/0001-source-seed.jsonl"
+  }
+}

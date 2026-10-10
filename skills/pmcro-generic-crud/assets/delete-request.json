@@ -1,0 +1,14 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "CrudRequest",
+  "requestId": "crud-delete-001",
+  "traceId": "trace-crud-001",
+  "resource": {"kind": "skill", "id": "old-domain-adapter", "scope": "project", "version": "1.2.0"},
+  "operation": "delete",
+  "mode": "simulate",
+  "projection": "metadata",
+  "grant": {"sideEffects": "none", "resources": ["project.revoke"], "expires": "cycle"},
+  "expectedVersion": "1.2.0",
+  "payload": {"reason": "superseded", "retention": "retain-tombstone"},
+  "outputProfile": "dotnet-console"
+}

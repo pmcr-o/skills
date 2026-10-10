@@ -1,0 +1,14 @@
+{
+  "input": {
+    "sourceRef": "authorized-session.txt",
+    "consent": "user-authorized",
+    "scope": "local transformation only"
+  },
+  "output": {
+    "artifacts": ["pmcro/frames.jsonl", "marketplace/skill-candidate.json"],
+    "evidenceTier": "candidate"
+  },
+  "accept": ["hash matches", "redaction applied", "independent checker frame present"],
+  "deny": ["live W: access", "provider-private history", "automatic training", "automatic promotion"],
+  "simulationPolicy": {"simulation": true, "verified": false}
+}

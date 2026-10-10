@@ -1,0 +1,6 @@
+interface:
+  display_name: "PMCR-O Session Marketplace"
+  short_description: "Turn an authorized session into checked marketplace candidates"
+  default_prompt: "Use $pmcro-session-marketplace to ingest one authorized session into redacted PMCR-O frames and staged skill/training projections."
+  sample_prompts_ref: "references/sample-prompts.md"
+  independent_surface: true

@@ -1,0 +1,11 @@
+{
+  "id": "product.checker",
+  "kind": "checker",
+  "independentSurface": true,
+  "independentChecker": true,
+  "separateCall": true,
+  "contextBoundary": "checker-fresh",
+  "maxTurns": 1,
+  "authority": "verdict-only",
+  "refuses": ["maker-self-approval", "scope-widening", "credential-access", "seed-execution"]
+}

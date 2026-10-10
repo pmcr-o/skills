@@ -1,0 +1,20 @@
+{
+  "apiVersion": "pmcro.product-repo/v1",
+  "kind": "AgentProductRepository",
+  "id": "replace-product-id",
+  "version": "0.1.0",
+  "entrypoints": ["@orchestrator /pmcro", "@skill-creator /create-skill"],
+  "sourceOfTruth": {
+    "agents": ".agents/agents",
+    "protocol": ".pmcro/protocol",
+    "trails": ".pmcro/trails",
+    "scripts": "scripts"
+  },
+  "defaultOutputContract": "pmcro.skill/v1",
+  "trailContract": ".pmcro/protocol/trail-event.schema.json",
+  "autonomyGrant": "autonomy-grant.example.json",
+  "providerAdapters": ["codex", "claude", "ollama", "maf", "mcp", "harness", "codeact"],
+  "modes": ["inspect", "simulate", "execute", "check", "package"],
+  "promotion": "checker-verified-only",
+  "limits": {"iterations": 3, "toolCalls": 24, "deadlineMs": 600000, "maxDepth": 2}
+}

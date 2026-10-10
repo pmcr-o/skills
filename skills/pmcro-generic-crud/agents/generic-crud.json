@@ -1,0 +1,19 @@
+{
+  "id": "pmcro.generic-crud",
+  "kind": "resource-crud-agent",
+  "independentSurface": true,
+  "displayName": "PMCR-O generic declarative CRUD",
+  "entrypoints": ["$pmcro-generic-crud", "@orchestrator /pmcro:crud"],
+  "inputs": ["resource_ref", "operation", "projection", "grant", "expected_version", "base_model", "repository_contract"],
+  "outputs": ["crud_result", "version_ref", "disclosure_refs", "simulation_status", "checker_handoff", "dotnet_base_model", "generic_repository_contract", "unit_of_work_contract"],
+  "accept": ["operation is explicit", "resource scope is explicit", "updates are versioned", "delete is revocation-safe", "output envelope is valid"],
+  "deny": ["implicit overwrite", "physical delete by default", "scope widening", "simulation as execution", "self-approval"],
+  "allowedTools": ["filesystem.read", "git.read", "validator", "trail.append"],
+  "operations": ["create", "read", "update", "delete"],
+  "contextBoundary": "resource-scoped",
+  "maxTurns": 4,
+  "maxDepth": 1,
+  "independentChecker": false,
+  "samplePromptsRef": "references/sample-prompts.md",
+  "authority": "staged-resource-only"
+}

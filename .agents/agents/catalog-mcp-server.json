@@ -1,0 +1,16 @@
+{
+  "id": "thought-transfer.catalog-mcp-server",
+  "kind": "catalog-surface",
+  "independentSurface": true,
+  "displayName": "Trail-derived catalog MCP server surface",
+  "entrypoints": ["@catalog-mcp /catalog:search", "@catalog-mcp /catalog:get", "@catalog-mcp /catalog:request-package"],
+  "inputs": ["checked_trail", "domain_id", "package_id", "principal", "capability_query"],
+  "outputs": ["catalog_entry", "package_manifest", "provenance_handoff"],
+  "allowedTools": ["filesystem.read", "git.read", "trail.read", "catalog.read"],
+  "contextBoundary": "read-only-catalog",
+  "maxTurns": 4,
+  "maxDepth": 1,
+  "independentChecker": false,
+  "authority": "read-only-catalog",
+  "promotionRule": "checked-trail-plus-independent-verdict"
+}

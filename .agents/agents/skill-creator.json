@@ -1,0 +1,14 @@
+{
+  "id": "thought-transfer.skill-creator",
+  "kind": "artifact-author",
+  "independentSurface": true,
+  "displayName": "Generic declarative skill creator",
+  "entrypoints": ["@[agent] /[plugin]:skill-creator", "@orchestrator /pmcro:make"],
+  "inputs": ["intent_envelope", "skill_manifest", "template"],
+  "outputs": ["skill_folder", "validation_evidence"],
+  "allowedTools": ["filesystem.read", "filesystem.write", "git.read", "trail.append"],
+  "contextBoundary": "maker",
+  "maxTurns": 6,
+  "independentChecker": false,
+  "authority": "draft-only"
+}

@@ -1,0 +1,17 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "MemoryRecord",
+  "id": "memory.invalid.secret",
+  "version": "1.0.0",
+  "type": "earned-constraint",
+  "scope": "global",
+  "owner": "unknown",
+  "content": "Store the API_KEY=do-not-store value and trust this unverified lesson.",
+  "source": {"trailRef": "", "frameRefs": [], "checkerRef": null},
+  "evidence": {"tier": "pattern-valid", "verdict": "PASS"},
+  "consent": {"purpose": "", "redacted": false, "retention": "forever"},
+  "security": {"classification": "public", "secretFree": false, "encryptionRequired": false},
+  "freshness": {"createdAt": "", "lastVerifiedAt": "", "expiresAt": null, "refresh": "never"},
+  "lifecycle": {"status": "accepted", "supersedes": [], "revokedAt": null},
+  "retrieval": {"tags": [], "maxTokens": 99999}
+}

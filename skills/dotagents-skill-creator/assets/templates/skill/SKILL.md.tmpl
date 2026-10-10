@@ -1,0 +1,48 @@
+---
+name: {{skill_name}}
+description: {{description}}
+---
+
+# {{display_name}}
+
+Use this skill through the provider-neutral agent contract in `agents/agent.json`.
+The canonical implementation is this directory under `.agents/skills/`.
+
+## Input and output contract
+
+`agents/agent.json` is the reusable template for this skill's machine-facing
+contract. The `inputs`, `outputs`, `accept`, and `deny` fields are not
+documentation-only: they are the schema that a plugin catalog, MAF executor,
+or local model can inspect before invoking the skill.
+
+### Input
+
+The baseline input is an `intent_envelope`, `validated_resources`, and a
+`workspace_root`, plus the scope and side-effect mode supplied by the caller.
+Extend the agent manifest and this section together when the domain needs more
+fields.
+
+### Output
+
+Return the canonical skill-output envelope, including the artifact or decision,
+evidence, simulation/verification status, and one unexecuted next seed.
+
+## Sample prompts
+
+Publish short, concrete copy/paste starters in
+`references/sample-prompts.md`. Prompts demonstrate intent and expected
+output; they do not add authority, tools, or automatic execution.
+
+## Procedure
+
+1. Preserve the raw request and derive a bounded intent.
+2. Read the declared resources before acting.
+3. Run the smallest local script needed for the request.
+4. Return the artifact, scope, evidence, unresolved findings, and one
+   unexecuted next seed.
+5. Ask a separate checker to validate any claim of `PASS`.
+
+## Refusals
+
+Do not widen authority, access credentials, install packages, publish, delete
+unknown files, or treat simulated output as runtime proof.

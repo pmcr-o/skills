@@ -1,0 +1,34 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "AgentSurface",
+  "independentSurface": true,
+  "id": "pmcro.personal-orchestrator",
+  "version": "0.1.0",
+  "scope": "personal",
+  "owner": "principal:user",
+  "templateRef": "templates/agent-surface.json",
+  "extends": {"ref": "pmcro.global-orchestrator", "version": "0.1.0", "policy": "non-widening"},
+  "role": "orchestrator",
+  "capabilityType": "workflow",
+  "entrypoints": {
+    "inspect": "GET /v1/users/{userId}/agents/pmcro.personal-orchestrator",
+    "simulate": "POST /v1/orchestrator-runs"
+  },
+  "inputs": ["user_intent", "user_grants", "project_ref", "validated_resource_refs"],
+  "outputs": ["personal_intent_envelope", "project_handoff", "trail_ref"],
+  "accept": ["inherits global policy", "uses explicit user grant", "keeps private memory scoped", "routes to checker"],
+  "deny": ["edit global defaults", "export private memory", "widen inherited grant", "self-approval", "seed execution"],
+  "dependencies": ["pmcro.global-orchestrator", "pmcro-agent-surface", "pmcro-memory-ingest"],
+  "modes": ["inspect", "simulate", "replay", "execute", "check"],
+  "grant": {"sideEffects": "declared-only", "resources": ["user.memory.read", "catalog.read", "trail.append"], "expires": "cycle"},
+  "limits": {"maxTurns": 8, "maxDepth": 2, "maxCalls": 6},
+  "delegation": {"canDelegate": true, "canWidenGrant": false, "requiresChecker": true},
+  "status": {
+    "mode": "inspect",
+    "simulation": true,
+    "verified": false,
+    "evidenceTier": "pattern-valid",
+    "checkerRef": null,
+    "trailRef": ".pmcro/trails/0001-source-seed.jsonl"
+  }
+}

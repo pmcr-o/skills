@@ -1,0 +1,14 @@
+{
+  "id": "thought-transfer.checker",
+  "kind": "independent-checker",
+  "independentSurface": true,
+  "displayName": "Fresh-context handoff checker",
+  "entrypoints": ["@orchestrator /pmcro:check"],
+  "inputs": ["handoff", "acceptance_contract"],
+  "outputs": ["verdict", "evidence", "blocking_findings"],
+  "allowedTools": ["filesystem.read", "git.read", "trail.append"],
+  "contextBoundary": "checker-fresh",
+  "maxTurns": 1,
+  "independentChecker": true,
+  "authority": "verdict-only"
+}

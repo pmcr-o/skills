@@ -1,0 +1,21 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "MemoryRecord",
+  "id": "memory.pmcro.surface-simulation-boundary",
+  "version": "1.0.0",
+  "type": "earned-constraint",
+  "scope": "project",
+  "owner": "project:thought-transfer-pmcro",
+  "content": "A simulated agent surface is pattern-valid only; it must not be labeled as runtime verification.",
+  "source": {
+    "trailRef": ".pmcro/trails/0001-source-seed.jsonl",
+    "frameRefs": ["check-0027", "reflect-0027"],
+    "checkerRef": "check-0027"
+  },
+  "evidence": {"tier": "execution-verified", "verdict": "PASS"},
+  "consent": {"purpose": "project-agent-quality", "redacted": true, "retention": "until-revoked"},
+  "security": {"classification": "internal", "secretFree": true, "encryptionRequired": true},
+  "freshness": {"createdAt": "2026-10-10T00:00:00Z", "lastVerifiedAt": "2026-10-10T00:00:00Z", "expiresAt": null, "refresh": "on-source-change"},
+  "lifecycle": {"status": "accepted", "supersedes": [], "revokedAt": null},
+  "retrieval": {"tags": ["pmcro", "simulation", "evidence"], "maxTokens": 300}
+}

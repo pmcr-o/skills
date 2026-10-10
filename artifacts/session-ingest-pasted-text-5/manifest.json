@@ -1,0 +1,120 @@
+{
+  "accept": [
+    "source hash matches",
+    "derived package validates",
+    "checker frame is independent",
+    "reflect seed remains unexecuted"
+  ],
+  "claimSummary": {
+    "blockedIndicators": 9,
+    "explicitFileReferences": [
+      "spire-platform-milestone-1.txt",
+      "inspect_platform.py",
+      "test_inspect_platform.py",
+      "spire-enterprise-milestone-1-report.md",
+      "spire-m2-scoped-mcp-report.md"
+    ],
+    "unknownClaims": 15
+  },
+  "deny": [
+    "private provider logs",
+    "credentials or tokens",
+    "unverified runtime claims",
+    "automatic model training",
+    "automatic promotion",
+    "unbounded recursion"
+  ],
+  "domains": [
+    {
+      "accept": "design candidate only until direct domain evidence is supplied",
+      "deny": "do not claim live access or runtime success from transcript text",
+      "evidenceTier": "unknown",
+      "id": "marketplace",
+      "purpose": "skill catalog, plugin, and promotion surfaces",
+      "simulation": true,
+      "verified": false
+    },
+    {
+      "accept": "design candidate only until direct domain evidence is supplied",
+      "deny": "do not claim live access or runtime success from transcript text",
+      "evidenceTier": "unknown",
+      "id": "mcp",
+      "purpose": "typed tool bridge and structured messages",
+      "simulation": true,
+      "verified": false
+    },
+    {
+      "accept": "design candidate only until direct domain evidence is supplied",
+      "deny": "do not claim live access or runtime success from transcript text",
+      "evidenceTier": "unknown",
+      "id": "maf",
+      "purpose": "workflow and checkpoint runtime adapter",
+      "simulation": true,
+      "verified": false
+    },
+    {
+      "accept": "design candidate only until direct domain evidence is supplied",
+      "deny": "do not claim live access or runtime success from transcript text",
+      "evidenceTier": "unknown",
+      "id": "terminal",
+      "purpose": "filesystem and command execution boundary",
+      "simulation": true,
+      "verified": false
+    },
+    {
+      "accept": "design candidate only until direct domain evidence is supplied",
+      "deny": "do not claim live access or runtime success from transcript text",
+      "evidenceTier": "unknown",
+      "id": "provider",
+      "purpose": "model/provider capability claims",
+      "simulation": true,
+      "verified": false
+    },
+    {
+      "accept": "design candidate only until direct domain evidence is supplied",
+      "deny": "do not claim live access or runtime success from transcript text",
+      "evidenceTier": "unknown",
+      "id": "windows-device",
+      "purpose": "W: or Desktop Commander connectivity",
+      "simulation": true,
+      "verified": false
+    }
+  ],
+  "ingestId": "ingest-f3829d3d2ca3",
+  "input": {
+    "consent": "user-authorized",
+    "maxCycles": 3,
+    "scope": "local-only session transformation",
+    "sourceRef": "source/source-manifest.json"
+  },
+  "nextSeed": {
+    "level": "meta2",
+    "promptIntent": "start Desktop Commander Remote on PMCRO_Company. That unlocks actual W: inspection, verification of “Grok, Bot, and Quad,” and selection of the first change to your existing application.",
+    "unexecuted": true
+  },
+  "output": {
+    "artifacts": [
+      "source/source-manifest.json",
+      "source/redacted-session.txt",
+      "pmcro/frames.jsonl",
+      "marketplace/skill-candidate.json",
+      "training/candidates.jsonl",
+      "reports/architecture-assessment.md"
+    ],
+    "evidenceTier": "candidate"
+  },
+  "promotion": "staged",
+  "simulationPolicy": {
+    "rule": "All unreachable MCP, terminal, MAF, provider, and code behavior remains labeled simulation.",
+    "simulation": true,
+    "verified": false
+  },
+  "source": {
+    "authorized": true,
+    "lineCount": 155,
+    "path": "/workspace/scratch/b58f1a7d9e8f/upload/Pasted text(5).txt",
+    "rawIncluded": true,
+    "redactionCount": 0,
+    "sha256": "f3829d3d2ca3c6c4bade201a012e1384208714354c47172cce770d75b13b60ab"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/product-repo/trail-event.schema.json",
+  "title": "Generic PMCR-O product repository trail event",
+  "type": "object",
+  "required": ["trailId", "cycleId", "eventId", "phase", "role", "iAm", "act", "status", "evidenceRefs"],
+  "properties": {
+    "trailId": {"type": "string"},
+    "cycleId": {"type": "string"},
+    "eventId": {"type": "string"},
+    "parentId": {"type": ["string", "null"]},
+    "phase": {"enum": ["orchestrate", "plan", "make", "check", "reflect"]},
+    "role": {"type": "string"},
+    "iAm": {"type": "object", "required": ["agent", "role", "authority"]},
+    "speaker": {"type": "string"},
+    "addressee": {"type": "string"},
+    "act": {"type": "string"},
+    "scope": {"type": "object"},
+    "artifactRefs": {"type": "array", "items": {"type": "string"}},
+    "evidenceRefs": {"type": "array", "items": {"type": "string"}},
+    "simulation": {"type": "boolean"},
+    "verified": {"type": "boolean"},
+    "status": {"enum": ["candidate", "simulation", "verified", "blocked", "unknown"]},
+    "nextSeed": {"type": ["object", "null"]}
+  },
+  "additionalProperties": true
+}

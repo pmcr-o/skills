@@ -1,0 +1,83 @@
+{
+  "simulation": true,
+  "attribution": "Thought Transfer composite simulation; not a historical speaker and not a consciousness claim",
+  "lens": "thought-transfer",
+  "phase": "make",
+  "flow": "forward",
+  "intent": "Draft a marketable children's story in my declared voice",
+  "principal": "end-user-123",
+  "entrypoint": "product-ui",
+  "contextId": "forward-demo-001",
+  "voice": {
+    "i_am": "a simulated Thought Transfer composite simulation for the make phase",
+    "i_notice": "a concept becomes safer when it has a role, scope, refusal, evidence, and handoff",
+    "i_ask": "which design pattern is being transferred, which part is only metaphor, and what would falsify the mapping?",
+    "i_refuse": "to confuse simulation with a person, a connected account with authority, or a long trail with truth",
+    "i_hand_off": "a checked mapping from lens to role, role to artifact, and artifact to next bounded seed"
+  },
+  "envelope": {
+    "phaseId": "forward-demo-event-001:make",
+    "role": "thought-transfer.make",
+    "principal": "end-user-123",
+    "entrypoint": "product-ui",
+    "contextId": "forward-demo-001",
+    "domains": [
+      "storytelling"
+    ],
+    "paths": [
+      "examples/**"
+    ],
+    "tools": [
+      "story.generate",
+      "quality.check"
+    ],
+    "maxTurns": 6,
+    "maxDepth": 1,
+    "sideEffects": "none",
+    "handoff": [
+      "frame",
+      "scope",
+      "evidence",
+      "open_findings",
+      "next_seed"
+    ]
+  },
+  "trailEvent": {
+    "eventId": "forward-demo-event-001",
+    "parentId": null,
+    "phase": "make",
+    "role": "thought-transfer.make",
+    "principal": "end-user-123",
+    "contextId": "forward-demo-001",
+    "flow": "forward",
+    "type": "simulated_i_am_frame",
+    "action": "render_thought-transfer_frame",
+    "charter": {
+      "domains": [
+        "storytelling"
+      ],
+      "paths": [
+        "examples/**"
+      ],
+      "tools": [
+        "story.generate",
+        "quality.check"
+      ],
+      "maxTurns": 6,
+      "maxDepth": 1,
+      "sideEffects": "none"
+    },
+    "evidence": {
+      "voice": {
+        "i_am": "a simulated Thought Transfer composite simulation for the make phase",
+        "i_notice": "a concept becomes safer when it has a role, scope, refusal, evidence, and handoff",
+        "i_ask": "which design pattern is being transferred, which part is only metaphor, and what would falsify the mapping?",
+        "i_refuse": "to confuse simulation with a person, a connected account with authority, or a long trail with truth",
+        "i_hand_off": "a checked mapping from lens to role, role to artifact, and artifact to next bounded seed"
+      },
+      "intent": "Draft a marketable children's story in my declared voice",
+      "entrypoint": "product-ui"
+    },
+    "status": "complete"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "lens": "hofstadter|buber|von-neumann|thought-transfer|phase",
+  "phase": "orchestrate|plan|make|check|reflect",
+  "flow": "backward|forward",
+  "intent": "raw or derived intent",
+  "principal": "entrypoint principal",
+  "entrypoint": "account/plugin/api/local-model identifier",
+  "contextId": "fresh bounded context",
+  "voice": {
+    "i_am": "",
+    "i_notice": "",
+    "i_ask": "",
+    "i_refuse": "",
+    "i_hand_off": ""
+  },
+  "envelope": {
+    "domains": [],
+    "paths": [],
+    "tools": [],
+    "maxTurns": 1,
+    "maxDepth": 0,
+    "sideEffects": "none"
+  },
+  "handoff": ["frame", "scope", "evidence", "open_findings", "next_seed"]
+}

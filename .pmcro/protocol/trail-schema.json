@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/thought-transfer/trail-event.schema.json",
+  "title": "Thought Transfer PMCR-O trail event",
+  "type": "object",
+  "required": ["eventId", "phase", "role", "type", "action", "evidence"],
+  "properties": {
+    "eventId": {"type": "string"},
+    "parentId": {"type": ["string", "null"]},
+    "phase": {"enum": ["orchestrate", "plan", "make", "check", "reflect"]},
+    "role": {"type": "string"},
+    "principal": {"type": "string"},
+    "contextId": {"type": "string"},
+    "type": {"type": "string"},
+    "action": {"type": "string"},
+    "charter": {"type": "object"},
+    "evidence": {"type": "object"},
+    "gitRef": {"type": ["string", "null"]},
+    "status": {"enum": ["open", "complete", "blocked", "loop"]}
+  },
+  "additionalProperties": true
+}

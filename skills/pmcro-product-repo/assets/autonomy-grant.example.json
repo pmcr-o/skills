@@ -1,0 +1,17 @@
+{
+  "grantId": "replace-before-run",
+  "principal": "replace-with-authorized-principal",
+  "orchestratorRole": "agent",
+  "scope": {
+    "repository": ".",
+    "paths": ["src/", "tests/", "docs/", "artifacts/", ".pmcro/trails/"],
+    "operations": ["read", "write", "build", "test", "format", "local-commit"]
+  },
+  "tools": ["filesystem.read", "filesystem.write", "git.read", "git.commit", "validator", "trail.append"],
+  "dataClass": "local-project-text-no-secrets",
+  "autoApprove": true,
+  "expiresAt": "replace-before-run",
+  "limits": {"iterations": 3, "toolCalls": 24, "deadlineMs": 600000, "maxDepth": 2},
+  "checker": {"separateCall": true, "required": true},
+  "revokeOn": ["scope-change", "deny", "repeat-failure", "expiry"]
+}
