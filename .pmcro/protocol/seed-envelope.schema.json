@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pmcro.seed-envelope/v1",
+  "title": "PMCR-O immutable seed ingress envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "kind",
+    "command",
+    "rawSeed",
+    "rawSeedSha256",
+    "immutable",
+    "phaseInjectionAllowed",
+    "provenance",
+    "admission"
+  ],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "kind": {"const": "pmcro.seed"},
+    "command": {"const": "@orchestrator /pmcro:seed"},
+    "rawSeed": {"type": "string"},
+    "rawSeedSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "immutable": {"const": true},
+    "phaseInjectionAllowed": {"const": false},
+    "projectRef": {"type": ["string", "null"]},
+    "trailRef": {"type": ["string", "null"]},
+    "provenance": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["source"],
+      "properties": {
+        "source": {"type": "string"},
+        "principalRef": {"type": ["string", "null"]},
+        "receivedAt": {"type": ["string", "null"]}
+      }
+    },
+    "admission": {"enum": ["queued", "approved", "rejected"]},
+    "activationRule": {
+      "const": "seed remains request data; activation begins only through a fresh ORCHESTRATE cycle"
+    }
+  }
+}
