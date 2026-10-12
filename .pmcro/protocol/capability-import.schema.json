@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/schemas/capability-import.schema.json",
+  "title": "PMCR-O CAPABILITY_IMPORT intermediate representation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "kind",
+    "status",
+    "importId",
+    "source",
+    "transport",
+    "tools",
+    "resources",
+    "prompts",
+    "schemas",
+    "effects",
+    "provenance",
+    "skillProjection"
+  ],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "kind": {"const": "capability.import"},
+    "status": {"enum": ["generated-unchecked", "checked", "registered"]},
+    "importId": {"type": "string", "minLength": 1},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "sourceRef", "nativeId"],
+      "properties": {
+        "type": {"enum": ["mcp", "openapi", "grpc", "a2a", "function", "other"]},
+        "sourceRef": {"type": "string", "minLength": 1},
+        "nativeId": {"type": "string", "minLength": 1},
+        "nativeVersion": {"type": ["string", "null"]},
+        "description": {"type": ["string", "null"]}
+      }
+    },
+    "transport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol", "binding", "secretMaterialIncluded"],
+      "properties": {
+        "protocol": {"enum": ["mcp", "openapi", "grpc", "a2a", "function", "other"]},
+        "binding": {"type": "string", "minLength": 1},
+        "protocolVersion": {"type": ["string", "null"]},
+        "endpointRef": {"type": ["string", "null"]},
+        "commandRef": {"type": ["string", "null"]},
+        "argsRef": {"type": ["string", "null"]},
+        "authRef": {"type": ["string", "null"]},
+        "secretMaterialIncluded": {"const": false}
+      }
+    },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["capabilityId", "nativeName", "description", "inputSchemaRef", "outputSchemaRef", "effect", "executionAuthorityGranted", "nativeAnnotations"],
+        "properties": {
+          "capabilityId": {"type": "string", "minLength": 1},
+          "nativeName": {"type": "string", "minLength": 1},
+          "description": {"type": ["string", "null"]},
+          "inputSchemaRef": {"type": "string", "minLength": 1},
+          "outputSchemaRef": {"type": ["string", "null"]},
+          "effect": {"enum": ["read", "destructive", "side-effect-unknown", "conflicting-annotations"]},
+          "executionAuthorityGranted": {"const": false},
+          "nativeAnnotations": {"type": "object"}
+        }
+      }
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["resourceId", "nativeName", "kind", "uri", "uriTemplate", "description", "mimeType", "executable"],
+        "properties": {
+          "resourceId": {"type": "string", "minLength": 1},
+          "nativeName": {"type": "string", "minLength": 1},
+          "kind": {"enum": ["resource", "resource-template"]},
+          "uri": {"type": ["string", "null"]},
+          "uriTemplate": {"type": ["string", "null"]},
+          "description": {"type": ["string", "null"]},
+          "mimeType": {"type": ["string", "null"]},
+          "executable": {"const": false}
+        }
+      }
+    },
+    "prompts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["promptId", "nativeName", "description", "argumentsSchemaRef", "inert", "requiresRuntimeGet"],
+        "properties": {
+          "promptId": {"type": "string", "minLength": 1},
+          "nativeName": {"type": "string", "minLength": 1},
+          "description": {"type": ["string", "null"]},
+          "argumentsSchemaRef": {"type": "string", "minLength": 1},
+          "inert": {"const": true},
+          "requiresRuntimeGet": {"type": "boolean"}
+        }
+      }
+    },
+    "schemas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["schemaId", "ownerRef", "role", "schema"],
+        "properties": {
+          "schemaId": {"type": "string", "minLength": 1},
+          "ownerRef": {"type": "string", "minLength": 1},
+          "role": {"enum": ["input", "output", "arguments", "resource"]},
+          "schema": {"type": "object"}
+        }
+      }
+    },
+    "effects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classifications", "containsUnknown", "containsDestructive", "executionAuthorityGranted"],
+      "properties": {
+        "classifications": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["capabilityId", "effect"],
+            "properties": {
+              "capabilityId": {"type": "string", "minLength": 1},
+              "effect": {"enum": ["read", "destructive", "side-effect-unknown", "conflicting-annotations"]}
+            }
+          }
+        },
+        "containsUnknown": {"type": "boolean"},
+        "containsDestructive": {"type": "boolean"},
+        "executionAuthorityGranted": {"const": false}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["importer", "snapshotSha256", "snapshotImmutable"],
+      "properties": {
+        "importer": {"type": "string", "minLength": 1},
+        "snapshotSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "snapshotImmutable": {"const": true},
+        "rawSeed": {"type": "string"},
+        "rawSeedSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "skillProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target", "requiredCore", "suggestedLayers", "reuseByAdapter", "registrationRequiresIndependentCheck", "scriptsRequired"],
+      "properties": {
+        "target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["skill", "plugin"],
+          "properties": {
+            "skill": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+            "plugin": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}
+          }
+        },
+        "requiredCore": {"const": ["SKILL.md", "agents/"]},
+        "suggestedLayers": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"enum": ["references", "assets", "scripts", "tests"]}
+        },
+        "reuseByAdapter": {"const": true},
+        "registrationRequiresIndependentCheck": {"const": true},
+        "scriptsRequired": {"type": "boolean"}
+      }
+    }
+  }
+}
