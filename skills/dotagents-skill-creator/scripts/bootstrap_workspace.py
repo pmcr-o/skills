@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Create or reconcile a provider-neutral DotAgents workspace.
 
-The default is a dry-run. The script has no network or package-install path.
-It only deletes component paths recorded in a prior dotagents manifest when
---clean-managed is explicitly supplied.
+Skill Creator is the registered CREATE lifecycle authority. The default is a
+read-only dry-run. Generated candidates remain untrusted until independent
+CHECK. Optional progressive-disclosure layers are emitted only when requested.
 """
 
 from __future__ import annotations
@@ -16,21 +16,30 @@ import re
 import shutil
 import sys
 from pathlib import Path
-from typing import Dict, Iterable
+from typing import Dict, Iterable, NoReturn, Set
 
 
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-VERSION = "0.1.0"
-SCHEMA_VERSION = 1
+VERSION = "0.2.0"
+SCHEMA_VERSION = 2
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_ROOT = PACKAGE_ROOT / "assets" / "templates" / "skill"
+OPTIONAL_LAYERS = ("references", "assets", "scripts", "tests")
+PMCR_O_MARKERS = (
+    "I AM THE",
+    "I ORCHESTRATE",
+    "I PLAN",
+    "I MAKE",
+    "I CHECK",
+    "I REFLECT",
+)
 
 
 class PlanError(Exception):
     pass
 
 
-def fail(message: str) -> "NoReturn":
+def fail(message: str) -> NoReturn:
     raise PlanError(message)
 
 
@@ -45,19 +54,7 @@ def resolve_root(raw: str) -> Path:
         fail(f"Windows drive path is not mounted in this runtime: {raw}")
     if raw.startswith("\\\\"):
         fail("UNC roots are not accepted by the portable bootstrap")
-    root = Path(raw).expanduser()
-    if root.is_absolute() and os.name != "nt":
-        return root.resolve()
-    if os.name == "nt" and root.is_absolute():
-        return root.resolve()
-    return root.resolve()
-
-
-def rel(path: Path, root: Path) -> str:
-    try:
-        return path.relative_to(root).as_posix()
-    except ValueError:
-        fail(f"generated path escaped workspace root: {path}")
+    return Path(raw).expanduser().resolve()
 
 
 def load_json(path: Path) -> dict:
@@ -83,7 +80,39 @@ def json_text(value: dict) -> str:
     return json.dumps(value, indent=2, sort_keys=True) + "\n"
 
 
-def build_component(root: Path, skill: str, plugin: str, display: str, description: str) -> Dict[str, str]:
+def sha256_text(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def pmcro_agent_markdown(skill: str, display: str, description: str) -> str:
+    role = re.sub(r"[^A-Za-z0-9]+", " ", display).strip().upper() or skill.upper()
+    return (
+        f"# {display} PMCR-O Agent\n\n"
+        f"Purpose: {description}\n\n"
+        f"I AM THE {role} AGENT.\n"
+        f"I ORCHESTRATE requests for the `{skill}` capability within its declared scope and validated resources.\n"
+        "I PLAN the bare-minimum work graph before any execution.\n"
+        "I MAKE changes or invoke admitted capabilities only during MAKE.\n"
+        "I CHECK completed MAKE evidence without corrective execution.\n"
+        "I REFLECT one next seed from checked evidence without executing it.\n\n"
+        "Generated artifacts are candidates until an independent checker validates them.\n"
+    )
+
+
+def requested_layers(args: argparse.Namespace) -> Set[str]:
+    layers: Set[str] = set()
+    if args.with_references:
+        layers.add("references")
+    if args.with_assets:
+        layers.add("assets")
+    if args.with_scripts:
+        layers.add("scripts")
+    if args.with_tests:
+        layers.add("tests")
+    return layers
+
+
+def build_component(skill: str, plugin: str, display: str, description: str, layers: Set[str]) -> Dict[str, str]:
     base = f".agents/skills/{skill}"
     values = {
         "skill_name": skill,
@@ -94,35 +123,41 @@ def build_component(root: Path, skill: str, plugin: str, display: str, descripti
     }
     files: Dict[str, str] = {
         f"{base}/SKILL.md": render("SKILL.md.tmpl", values),
+        f"{base}/agents/agent.md": pmcro_agent_markdown(skill, display, description),
         f"{base}/agents/agent.json": render("agents/agent.json.tmpl", values).replace('"$ ', '"$'),
-        f"{base}/agents/openai.yaml": render("agents/openai.yaml.tmpl", values),
-        f"{base}/scripts/validate.py": (TEMPLATE_ROOT / "scripts/validate.py").read_text(encoding="utf-8"),
-        f"{base}/scripts/README.md": (TEMPLATE_ROOT / "scripts/README.md").read_text(encoding="utf-8"),
-        f"{base}/references/contract.md": (TEMPLATE_ROOT / "references/contract.md").read_text(encoding="utf-8"),
-        f"{base}/references/README.md": (TEMPLATE_ROOT / "references/README.md").read_text(encoding="utf-8"),
-        f"{base}/assets/README.md": (TEMPLATE_ROOT / "assets/README.md").read_text(encoding="utf-8"),
-        f"{base}/tests/test_structure.py": (TEMPLATE_ROOT / "tests/test_structure.py").read_text(encoding="utf-8"),
     }
-    files[f"{base}/assets/manifest.json"] = json_text({
-        "artifactId": f"{plugin}.{skill}",
-        "artifactType": "skill",
-        "version": VERSION,
-        "parent": {"artifactId": "dotagents.workspace", "depth": 1, "maxDepth": 1},
-        "sourceOfTruth": f".agents/skills/{skill}",
-        "providers": ["generic", "chatgpt", "codex", "claude", "ollama"],
-        "requiredFolders": ["agents", "scripts", "references", "assets", "tests"],
-        "promotion": "generated",
-        "evidenceTier": "pattern-valid",
-        "nextSeed": "Run a separate checker against the generated skill before promotion.",
-    })
+    openai_template = TEMPLATE_ROOT / "agents" / "openai.yaml.tmpl"
+    if openai_template.is_file():
+        files[f"{base}/agents/openai.yaml"] = render("agents/openai.yaml.tmpl", values)
+
+    if "scripts" in layers:
+        files[f"{base}/scripts/validate.py"] = (TEMPLATE_ROOT / "scripts/validate.py").read_text(encoding="utf-8")
+        files[f"{base}/scripts/README.md"] = (TEMPLATE_ROOT / "scripts/README.md").read_text(encoding="utf-8")
+    if "references" in layers:
+        files[f"{base}/references/contract.md"] = (TEMPLATE_ROOT / "references/contract.md").read_text(encoding="utf-8")
+        files[f"{base}/references/README.md"] = (TEMPLATE_ROOT / "references/README.md").read_text(encoding="utf-8")
+    if "assets" in layers:
+        files[f"{base}/assets/README.md"] = (TEMPLATE_ROOT / "assets/README.md").read_text(encoding="utf-8")
+        files[f"{base}/assets/manifest.json"] = json_text({
+            "artifactId": f"{plugin}.{skill}",
+            "artifactType": "skill",
+            "version": VERSION,
+            "sourceOfTruth": base,
+            "requiredCore": ["SKILL.md", "agents/"],
+            "generatedLayers": sorted(layers),
+            "promotion": "generated-unchecked",
+            "nextSeed": "Run an independent checker before promotion or use.",
+        })
+    if "tests" in layers:
+        files[f"{base}/tests/test_structure.py"] = (TEMPLATE_ROOT / "tests/test_structure.py").read_text(encoding="utf-8")
+
     files[f"plugins/{plugin}/plugin.json"] = json_text({
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "pluginId": plugin,
         "version": VERSION,
         "projection": True,
-        "sourceOfTruth": f".agents/skills/{skill}",
-        "skills": [{"name": skill, "path": f".agents/skills/{skill}", "version": VERSION}],
-        "providers": ["generic", "chatgpt", "codex", "claude", "ollama"],
+        "sourceOfTruth": base,
+        "skills": [{"name": skill, "path": base, "version": VERSION}],
         "authority": "metadata-only-until-checked",
     })
     files[f"plugins/{plugin}/.claude-plugin/marketplace.json"] = json_text({
@@ -131,7 +166,7 @@ def build_component(root: Path, skill: str, plugin: str, display: str, descripti
         "metadata": {"projection": True, "sourceOfTruth": ".agents/skills"},
         "plugins": [{
             "name": skill,
-            "source": f"../../.agents/skills/{skill}",
+            "source": f"../../{base}",
             "version": VERSION,
             "description": description,
         }],
@@ -149,20 +184,24 @@ def workspace_files(
     previous: dict,
     source_catalog: dict | None,
     source_ref: str | None,
+    raw_seed: str | None,
+    layers: Set[str],
 ) -> Dict[str, str]:
-    files = build_component(root, skill, plugin, display, description)
+    files = build_component(skill, plugin, display, description, layers)
     component_id = f"{plugin}/{skill}"
     request_path = f".agents/requests/create-skill/{plugin}--{skill}.json"
     catalog_path = ".agents/catalog/source-marketplace.json"
     catalog_ref = catalog_path if source_catalog else None
     if source_catalog:
         files[catalog_path] = json_text(source_catalog)
-    files[request_path] = json_text({
-        "schemaVersion": 1,
-        "kind": "create-skill-handoff",
-        "requiredInvoker": "create-skill",
+
+    request = {
+        "schemaVersion": 2,
+        "kind": "skill.create.request",
+        "requiredInvoker": "dotagents-skill-creator",
+        "creatorAuthority": "dotagents-skill-creator",
         "entrypoint": "@skill-creator /create-skill",
-        "status": "ready-for-create-skill",
+        "status": "candidate-created-awaiting-independent-check",
         "target": {"skill": skill, "plugin": plugin},
         "sourceCatalogRef": catalog_ref,
         "sourceRef": source_ref or "local-source-not-declared",
@@ -170,18 +209,27 @@ def workspace_files(
         "rules": {
             "preserveExistingSource": True,
             "reuseByAdapter": True,
-            "copyOnlyAfterChecker": True,
-            "requiredFolders": ["agents", "scripts", "references", "assets"],
+            "registrationRequiresIndependentCheck": True,
+            "requiredCore": ["SKILL.md", "agents/"],
+            "optionalLayers": list(OPTIONAL_LAYERS),
+            "generatedLayers": sorted(layers),
         },
-        "nextSeed": "Invoke create-skill with this handoff, then validate the canonical child before marketplace staging.",
-    })
+        "nextSeed": "Run an independent checker against the generated child before promotion or use.",
+    }
+    if raw_seed is not None:
+        request["rawSeed"] = raw_seed
+        request["rawSeedSha256"] = sha256_text(raw_seed)
+        request["rawSeedImmutable"] = True
+    files[request_path] = json_text(request)
+
     component_paths = set(component_paths)
     component_paths.add(request_path)
     if source_catalog:
         component_paths.add(catalog_path)
+
     control_files = {
         ".pmcro/charter.json": json_text({
-            "schemaVersion": 1,
+            "schemaVersion": 2,
             "domainId": "dotagents.workspace",
             "charterId": "dotagents-local-charter",
             "owner": "local-principal",
@@ -189,13 +237,12 @@ def workspace_files(
             "allowedOperations": ["filesystem.read", "filesystem.write", "validator"],
             "sideEffects": "staged-only",
             "maxDepth": 1,
-            "governanceReferences": ["microsoft.agent-governance-toolkit"],
-            "policyBoundary": "reference-only-until-locally-checked",
             "status": "draft-until-checked",
         }),
         ".pmcro/registry.json": json_text({
-            "schemaVersion": 1,
+            "schemaVersion": 2,
             "sourceOfTruth": ".agents/skills",
+            "createAuthority": "dotagents-skill-creator",
             "capabilityRoots": [".agents/skills", ".agents/agents"],
             "pluginRoots": [".agents/plugins", "plugins"],
             "controlPlaneRoot": ".pmcro",
@@ -203,76 +250,39 @@ def workspace_files(
             "checkpointRoot": ".pmcro/checkpoints",
             "manifestRoot": ".pmcro/manifests",
             "seedRoot": ".pmcro/seeds",
-            "governanceRoot": ".pmcro/governance",
-            "governanceReferences": ["microsoft.agent-governance-toolkit"],
-            "loaderModes": ["generic", "chatgpt", "codex", "claude", "ollama"],
             "authority": "charter-and-grant-required",
-        }),
-        ".pmcro/governance/README.md": (
-            "# PMCR-O governance references\n\n"
-            "References in this folder inform policy and tool-boundary checks.\n"
-            "They do not grant runtime authority; the local charter, explicit grant,\n"
-            "and independent checker evidence remain authoritative.\n\n"
-            "`agent-governance-toolkit.json` records the Microsoft Agent Governance\n"
-            "Toolkit architecture and ADR documents as a re-verifiable boundary\n"
-            "reference. PMCR-O still owns trail, phase, and next-seed semantics.\n"
-        ),
-        ".pmcro/governance/agent-governance-toolkit.json": json_text({
-            "schemaVersion": 1,
-            "kind": "governance-reference",
-            "referenceId": "microsoft.agent-governance-toolkit",
-            "source": "https://github.com/microsoft/agent-governance-toolkit",
-            "documents": {
-                "architecture": "https://github.com/microsoft/agent-governance-toolkit/blob/main/docs/ARCHITECTURE.md",
-                "adrIndex": "https://github.com/microsoft/agent-governance-toolkit/blob/main/docs/adr/index.md",
-                "adrGuide": "https://github.com/microsoft/agent-governance-toolkit/blob/main/docs/adr/README.md",
-            },
-            "role": "policy-enforcement-reference",
-            "scope": "tool-and-policy-boundary",
-            "compatibility": "boundary-implementation-reference",
-            "pmcroRelationship": {
-                "pmcroOwns": ["orchestration", "phase-transitions", "trail", "checker", "next-seed"],
-                "referenceMayInform": ["action-policy", "tool-boundary", "allow-warn-deny-review"],
-            },
-            "authority": {
-                "grantsRuntimeAuthority": False,
-                "requiresLocalCharter": True,
-                "requiresExplicitGrant": True,
-                "requiresCheckerEvidence": True,
-            },
-            "verification": {
-                "sourceRef": "main-is-reference-only",
-                "pinBeforePromotion": True,
-                "reverifyBeforePromotion": True,
-            },
         }),
         ".pmcro/manifests/README.md": "# PMCR-O manifests\n\nStore bounded artifact manifests here.\n",
         ".pmcro/trails/README.md": "# PMCR-O trails\n\nAppend trail events; do not rewrite prior verdicts.\n",
         ".pmcro/checkpoints/README.md": "# PMCR-O checkpoints\n\nStore inspectable staged checkpoints here.\n",
-        ".pmcro/seeds/README.md": "# PMCR-O seeds\n\nStore one unexecuted next seed per reflection.\n",
+        ".pmcro/seeds/README.md": "# PMCR-O seeds\n\nStore immutable raw seeds and one unexecuted next seed per reflection.\n",
     }
     files.update(control_files)
+
     existing_components = dict(previous.get("components", {}))
     existing_components[component_id] = {
         "skill": skill,
         "plugin": plugin,
         "canonicalPath": f".agents/skills/{skill}",
+        "generatedLayers": sorted(layers),
         "paths": sorted(component_paths),
     }
     all_paths = set(previous.get("managedPaths", []))
     all_paths.update(component_paths)
     all_paths.update({"dotagents.manifest.json", ".agents/plugins/marketplace.json", "DOTAGENTS.md"})
     all_paths.update(control_files)
+
     plugins = sorted({item.get("plugin") for item in existing_components.values() if item.get("plugin")})
     creation_routes = dict(previous.get("creationRoutes", {}))
     creation_routes[component_id] = request_path
+
     source_marketplaces = list(previous.get("sourceMarketplaces", []))
     if source_catalog:
         source_marketplaces.append({
             "name": source_catalog.get("sourceRootName", "existing-marketplace"),
             "ref": source_ref or "local-source-not-declared",
             "trust": "candidate",
-            "adapter": "create-skill",
+            "adapter": "dotagents-skill-creator",
             "catalogRef": catalog_ref,
         })
     deduped_sources = []
@@ -282,6 +292,7 @@ def workspace_files(
         if key not in source_keys:
             source_keys.add(key)
             deduped_sources.append(item)
+
     manifest = {
         "schemaVersion": SCHEMA_VERSION,
         "artifactId": "dotagents.workspace",
@@ -289,7 +300,7 @@ def workspace_files(
         "version": VERSION,
         "sourceOfTruth": ".agents/skills",
         "controlPlaneRoot": ".pmcro",
-        "governanceReferences": ["microsoft.agent-governance-toolkit"],
+        "createAuthority": "dotagents-skill-creator",
         "providers": ["generic", "chatgpt", "codex", "claude", "ollama"],
         "plugins": plugins,
         "components": existing_components,
@@ -301,18 +312,19 @@ def workspace_files(
             "packageInstall": False,
             "credentials": False,
         },
-        "promotion": "generated",
+        "promotion": "generated-unchecked",
         "creationRoutes": creation_routes,
         "sourceMarketplaces": deduped_sources,
     }
     files["dotagents.manifest.json"] = json_text(manifest)
     files["DOTAGENTS.md"] = (
         "# DotAgents workspace\n\n"
-        "Canonical skills live under `.agents/skills/`. Plugin files are projections.\n"
+        "Canonical skills live under `.agents/skills/`. Provider/plugin files are projections.\n"
+        "Skill Creator owns CREATE only; generated candidates require independent CHECK before promotion/use.\n"
+        "The core skill shape is `SKILL.md` plus `agents/`; references/assets/scripts/tests are optional.\n"
         "PMCR-O control data lives under `.pmcro/`; it is not executable skill source.\n"
-        "Run the creator in dry-run mode first, then apply explicitly.\n"
-        "Unknown files are preserved; cleanup is limited to recorded managed paths.\n"
     )
+
     plugin_entries = {}
     for item in existing_components.values():
         plugin_id = item.get("plugin")
@@ -322,24 +334,18 @@ def workspace_files(
             "name": item["skill"],
             "canonicalPath": item["canonicalPath"],
             "version": VERSION,
-            "projectionPath": f"plugins/{plugin_id}",
         })
     index = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "marketplaceId": "personal-dotagents",
         "sourceOfTruth": ".agents/skills",
         "controlPlaneRoot": ".pmcro",
-        "createSkillRequired": True,
-        "createSkillHandoffs": creation_routes,
-        "plugins": [{"name": key, "projectionPath": f"plugins/{key}", "skills": sorted(value, key=lambda entry: entry["name"])}
-                    for key, value in sorted(plugin_entries.items())],
-        "providers": {
-            "generic": "agents/agent.json",
-            "chatgpt": "agents/agent.json",
-            "codex": "agents/openai.yaml",
-            "claude": "plugins/<plugin>/.claude-plugin/marketplace.json",
-            "ollama": "scripts/*.py plus agents/agent.json",
-        },
+        "createAuthority": "dotagents-skill-creator",
+        "createRequests": creation_routes,
+        "plugins": [
+            {"name": key, "projectionPath": f"plugins/{key}", "skills": sorted(value, key=lambda entry: entry["name"])}
+            for key, value in sorted(plugin_entries.items())
+        ],
         "promotion": "catalog-only-until-checked",
     }
     files[".agents/plugins/marketplace.json"] = json_text(index)
@@ -349,13 +355,12 @@ def workspace_files(
         for item in existing_components.values() if item.get("plugin") == plugin
     ]
     files[f"plugins/{plugin}/plugin.json"] = json_text({
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "pluginId": plugin,
         "version": VERSION,
         "projection": True,
         "sourceOfTruth": ".agents/skills",
         "skills": sorted(current_plugin_skills, key=lambda entry: entry["name"]),
-        "providers": ["generic", "chatgpt", "codex", "claude", "ollama"],
         "authority": "metadata-only-until-checked",
     })
     files[f"plugins/{plugin}/.claude-plugin/marketplace.json"] = json_text({
@@ -369,10 +374,6 @@ def workspace_files(
         } for item in sorted(current_plugin_skills, key=lambda entry: entry["name"])],
     })
     return files
-
-
-def sha256(text: str) -> str:
-    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
 def safe_remove(root: Path, relative: str) -> None:
@@ -405,17 +406,18 @@ def prepare(root: Path, files: Dict[str, str], previous: dict, component_id: str
         if target.is_file():
             current = target.read_text(encoding="utf-8")
             if current == content:
-                operations.append({"path": relative, "action": "unchanged", "sha256": sha256(content)})
+                action = "unchanged"
             elif relative in previous.get("managedPaths", []) or relative in old_paths:
-                operations.append({"path": relative, "action": "update-managed", "sha256": sha256(content)})
+                action = "update-managed"
             else:
                 fail(f"unknown conflicting file; refusing overwrite: {relative}")
         else:
-            operations.append({"path": relative, "action": "create", "sha256": sha256(content)})
+            action = "create"
+        operations.append({"path": relative, "action": action, "sha256": sha256_text(content)})
     return {"operations": operations, "staleRemoved": stale if clean else [], "componentId": component_id}
 
 
-def apply(root: Path, files: Dict[str, str], plan: dict) -> None:
+def apply(root: Path, files: Dict[str, str]) -> None:
     root.mkdir(parents=True, exist_ok=True)
     for relative, content in files.items():
         target = root / relative
@@ -425,13 +427,18 @@ def apply(root: Path, files: Dict[str, str], plan: dict) -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", required=True, help="workspace root; Windows drive paths work on Windows")
+    parser.add_argument("--root", required=True, help="workspace root")
     parser.add_argument("--skill", required=True, help="new skill name")
     parser.add_argument("--plugin", required=True, help="plugin projection name")
     parser.add_argument("--display-name", default=None)
-    parser.add_argument("--description", default="A bounded provider-neutral agent skill.")
+    parser.add_argument("--description", default="A bounded provider-neutral PMCR-O agent skill.")
+    parser.add_argument("--raw-seed", help="immutable raw seed to preserve verbatim in the create request")
     parser.add_argument("--source-catalog", help="read-only catalog from discover_marketplace.py")
-    parser.add_argument("--source-ref", help="pinned local checkout, tag, or commit reference")
+    parser.add_argument("--source-ref", help="pinned checkout, tag, or commit reference")
+    parser.add_argument("--with-references", action="store_true")
+    parser.add_argument("--with-assets", action="store_true")
+    parser.add_argument("--with-scripts", action="store_true")
+    parser.add_argument("--with-tests", action="store_true")
     parser.add_argument("--apply", action="store_true", help="write the planned files")
     parser.add_argument("--clean-managed", action="store_true", help="remove only stale paths owned by this component")
     parser.add_argument("--json", action="store_true", help="emit a machine-readable plan")
@@ -455,14 +462,30 @@ def main() -> int:
             source_catalog = load_json(Path(args.source_catalog).expanduser())
             if source_catalog.get("kind") != "marketplace-catalog":
                 fail("--source-catalog must be a marketplace-catalog JSON file")
-        component_files = build_component(root, skill, plugin, display, args.description)
+        layers = requested_layers(args)
+        component_files = build_component(skill, plugin, display, args.description, layers)
         component_paths = sorted(component_files)
         files = workspace_files(
-            root, skill, plugin, display, args.description, component_paths, previous,
-            source_catalog, args.source_ref,
+            root,
+            skill,
+            plugin,
+            display,
+            args.description,
+            component_paths,
+            previous,
+            source_catalog,
+            args.source_ref,
+            args.raw_seed,
+            layers,
         )
         plan = prepare(root, files, previous, component_id, args.clean_managed)
-        plan.update({"root": str(root), "mode": "apply" if args.apply else "dry-run", "artifactId": f"{plugin}.{skill}"})
+        plan.update({
+            "root": str(root),
+            "mode": "apply" if args.apply else "dry-run",
+            "artifactId": f"{plugin}.{skill}",
+            "createAuthority": "dotagents-skill-creator",
+            "generatedLayers": sorted(layers),
+        })
         if args.json:
             print(json.dumps(plan, indent=2, sort_keys=True))
         else:
@@ -472,8 +495,8 @@ def main() -> int:
             for relative in plan["staleRemoved"]:
                 print(f"remove-managed: {relative}")
         if args.apply:
-            apply(root, files, plan)
-            print("APPLIED: run validate_workspace.py before promotion")
+            apply(root, files)
+            print("APPLIED: generated candidate requires independent CHECK before promotion/use")
         return 0
     except PlanError as exc:
         print(f"HALT: {exc}", file=sys.stderr)
