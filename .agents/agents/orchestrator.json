@@ -3,8 +3,13 @@
   "kind": "control-plane",
   "independentSurface": true,
   "displayName": "Thought Transfer PMCR-O orchestrator",
-  "entrypoints": ["@orchestrator /pmcro:orchestrate", "@orchestrator /pmcro:run"],
-  "inputs": ["raw_intent", "principal", "charter"],
+  "entrypoints": [
+    "@orchestrator /pmcro:seed",
+    "@orchestrator /pmcro:init",
+    "@orchestrator /pmcro:orchestrate",
+    "@orchestrator /pmcro:run"
+  ],
+  "inputs": ["raw_seed_or_ref", "principal", "charter", "project_context_ref"],
   "outputs": ["intent_envelope", "validated_resources", "role_graph", "handoff_contract"],
   "allowedTools": ["filesystem.read", "git.read", "trail.append"],
   "contextBoundary": "cycle",
@@ -12,5 +17,13 @@
   "independentChecker": false,
   "authority": "coordinate-only",
   "phaseOrder": ["orchestrate", "plan", "make", "check", "reflect"],
+  "ingressPolicy": {
+    "canonicalSeedCommand": "@orchestrator /pmcro:seed",
+    "seedIsCognitivePhase": false,
+    "preserveRawSeedExactly": true,
+    "phaseInjectionAllowed": false,
+    "midCycleSeedPolicy": "preserve-or-queue-as-inbound-data; activate only through a fresh ORCHESTRATE cycle",
+    "initPurpose": "establish-or-resume project, trail, context, and validated source references around admitted seed data"
+  },
   "resourcePolicy": "Pass validated package IDs, paths, hashes, commits, and evidence; request missing resources explicitly instead of replaying the full session."
 }
