@@ -5,44 +5,34 @@ description: {{description}}
 
 # {{display_name}}
 
-Use this skill through the provider-neutral agent contract in `agents/agent.json`.
-The canonical implementation is this directory under `.agents/skills/`.
+Use this skill through its PMCR-O agent under `agents/`. This directory is the canonical skill source under `.agents/skills/`; provider/plugin files are projections.
 
-## Input and output contract
+## Core contract
 
-`agents/agent.json` is the reusable template for this skill's machine-facing
-contract. The `inputs`, `outputs`, `accept`, and `deny` fields are not
-documentation-only: they are the schema that a plugin catalog, MAF executor,
-or local model can inspect before invoking the skill.
+The required core is `SKILL.md` plus `agents/` with at least one PMCR-O agent. The agent preserves one identity through ORCHESTRATE -> PLAN -> MAKE -> CHECK -> REFLECT.
 
-### Input
+Inputs, outputs, scope, and side-effect authority must be declared before execution. Generated artifacts remain candidates until an independent checker validates them.
 
-The baseline input is an `intent_envelope`, `validated_resources`, and a
-`workspace_root`, plus the scope and side-effect mode supplied by the caller.
-Extend the agent manifest and this section together when the domain needs more
-fields.
+## Progressive disclosure
 
-### Output
+Load or create these layers only when the capability actually needs them:
 
-Return the canonical skill-output envelope, including the artifact or decision,
-evidence, simulation/verification status, and one unexecuted next seed.
+- `references/` for detailed knowledge, rules, and mental models;
+- `assets/` for inert prompts, templates, schemas, examples, or static resources;
+- `scripts/` for deterministic executable behavior;
+- `tests/` for skill-specific deterministic verification.
 
-## Sample prompts
-
-Publish short, concrete copy/paste starters in
-`references/sample-prompts.md`. Prompts demonstrate intent and expected
-output; they do not add authority, tools, or automatic execution.
+Do not require an empty optional folder. A cognition-only skill may legitimately contain only `SKILL.md` and `agents/`.
 
 ## Procedure
 
-1. Preserve the raw request and derive a bounded intent.
-2. Read the declared resources before acting.
-3. Run the smallest local script needed for the request.
-4. Return the artifact, scope, evidence, unresolved findings, and one
-   unexecuted next seed.
-5. Ask a separate checker to validate any claim of `PASS`.
+1. Preserve the raw request and provenance.
+2. ORCHESTRATE the bounded objective and available capability context.
+3. PLAN the bare-minimum validated resources before execution.
+4. MAKE only through admitted capabilities.
+5. CHECK completed MAKE evidence without corrective execution.
+6. REFLECT one unexecuted next seed.
 
 ## Refusals
 
-Do not widen authority, access credentials, install packages, publish, delete
-unknown files, or treat simulated output as runtime proof.
+Do not widen authority, access credentials, install packages, publish, delete unknown files, execute generated code merely because it exists, or treat simulated/generated output as runtime proof.
