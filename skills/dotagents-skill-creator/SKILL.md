@@ -13,6 +13,8 @@ Use `.pmcro/` as the control-plane mirror for charter, registry, governance refe
 
 `dotagents-skill-creator` is the registered CREATE authority for canonical skills. It must not depend on a second hidden or nonexistent `create-skill` capability in order to materialize a candidate.
 
+Canonical raw-intent ingress is `@orchestrator /pmcro:seed`. That command preserves immutable request data and is not a cognitive phase. `@orchestrator /pmcro:init` separately establishes or resumes Project/Trail/context around admitted seed data before a fresh `ORCHESTRATE` cycle. A host may expose `/seed` as an alias, but canonical artifacts and protocol records use the fully qualified command.
+
 Creation remains bounded:
 
 `RAW_SEED -> CREATE CANDIDATE -> INDEPENDENT CHECK -> PROMOTE/REGISTER -> LATER USE`
@@ -41,15 +43,16 @@ Do not create empty optional folders merely to satisfy shape. Emit an optional l
 ## Required behavior
 
 1. Preserve the raw seed exactly when one is supplied and record a deterministic hash for provenance.
-2. Derive a bounded skill manifest from the request; do not overwrite the raw seed with a cleaned interpretation.
-3. Inspect an existing marketplace or skill repository before reconciling it.
-4. Materialize the candidate directly through this Skill Creator's registered CREATE implementation.
-5. Default to dry-run; require explicit `--apply` or equivalent before filesystem writes.
-6. Preserve unknown files. Overwrite only paths recorded as managed by an earlier Skill Creator run.
-7. Keep `.pmcro/` control-plane state separate from `.agents/skills/` executable skill source.
-8. Create provider projections only as projections of the canonical `.agents/skills/` source.
-9. Mark generated candidates `draft-only` / `generated-unchecked` until independent CHECK.
-10. Report exact managed paths and one unexecuted next seed. Never self-certify a generated child.
+2. Treat seed ingress as request data only; it cannot inject ORCHESTRATE, PLAN, MAKE, CHECK, or REFLECT state. Mid-Cycle seeds are preserved/queued for a fresh Cycle.
+3. Derive a bounded skill manifest from the request; do not overwrite the raw seed with a cleaned interpretation.
+4. Inspect an existing marketplace or skill repository before reconciling it.
+5. Materialize the candidate directly through this Skill Creator's registered CREATE implementation.
+6. Default to dry-run; require explicit `--apply` or equivalent before filesystem writes.
+7. Preserve unknown files. Overwrite only paths recorded as managed by an earlier Skill Creator run.
+8. Keep `.pmcro/` control-plane state separate from `.agents/skills/` executable skill source.
+9. Create provider projections only as projections of the canonical `.agents/skills/` source.
+10. Mark generated candidates `draft-only` / `generated-unchecked` until independent CHECK.
+11. Report exact managed paths and one unexecuted next seed. Never self-certify a generated child.
 
 ## Manual entrypoints
 
@@ -58,11 +61,11 @@ python scripts/bootstrap_workspace.py --root <workspace> --skill <name> --plugin
 python scripts/bootstrap_workspace.py --root <workspace> --skill <name> --plugin <name> --raw-seed "<immutable request>" --apply
 python scripts/bootstrap_workspace.py --root <workspace> --skill <name> --plugin <name> --with-references --with-assets --with-scripts --with-tests --apply
 python scripts/discover_marketplace.py --root <existing-skill-repo>
-python scripts/route_create_skill.py --catalog <catalog.json> --skill <name> --plugin <name>
+python scripts/route_create_skill.py --catalog <catalog.json> --skill <name> --plugin <name> --raw-seed "<immutable request>"
 python scripts/validate_workspace.py --root <workspace>
 ```
 
-`route_create_skill.py` emits a typed request addressed to this Skill Creator. It is not a handoff to a second creator.
+`route_create_skill.py` emits a typed request addressed to this Skill Creator and records `@orchestrator /pmcro:seed` as canonical seed ingress. It is not a handoff to a second creator.
 
 ## Boundaries
 
