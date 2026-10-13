@@ -24,14 +24,18 @@
     "plan_artifact",
     "capability_refs",
     "grant",
-    "verified_starting_state"
+    "verified_starting_state",
+    "validated_capability_graph",
+    "capability_gap_resolution_plan"
   ],
   "outputs": [
     "make_result",
     "work_products",
     "evidence",
     "resulting_candidate_state",
-    "checker_handoff"
+    "checker_handoff",
+    "capability_candidate",
+    "agent_evolution_candidate"
   ],
   "roleOwnedResult": "make_result",
   "allowedTools": [
@@ -67,5 +71,13 @@
     "model-as-authority",
     "self-promotion",
     "training-without-explicit-eligibility"
-  ]
+  ],
+  "capabilityGapPolicy": {
+    "stopOnUndeclaredGap": true,
+    "mayInvokeRegisteredSkillCreator": true,
+    "skillCreatorRef": "skills/dotagents-skill-creator",
+    "createdCapabilityState": "generated-unchecked",
+    "createdCapabilityAvailableInSameCycle": false,
+    "selfCertificationAllowed": false
+  }
 }

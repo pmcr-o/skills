@@ -54,6 +54,12 @@ Do not create empty optional folders merely to satisfy shape. Emit an optional l
 10. Mark generated candidates `draft-only` / `generated-unchecked` until independent CHECK.
 11. Report exact managed paths and one unexecuted next seed. Never self-certify a generated child.
 
+## Capability gaps and agent evolution
+
+When the Planner declares a gap against a validated capability graph, this Skill Creator may act as the registered CREATE authority from inside an admitted Maker plan. It may create or specialize the minimum missing skill/agent package, but its result is always `generated-unchecked`. The new child is unavailable to the Planner and cannot be invoked for the original goal in the same Cycle. Independent CHECK and registration must occur first; only a later Cycle may select the registered capability.
+
+Agent evolution may target instructions, context, skill bindings, capability bindings, policy, evals, or model bindings. Prefer those cheaper evidence-backed refinements before proposing training. Model training is never implied by CREATE, OPTIMIZE, ENHANCE, REFINE, or SPECIALIZE.
+
 ## Manual entrypoints
 
 ```text

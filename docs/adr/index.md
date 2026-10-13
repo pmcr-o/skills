@@ -15,6 +15,8 @@ Accepted ADRs are architectural law until explicitly superseded. Implementations
 - ADR-0003: Capability and transport calls occur only during MAKE.
 - ADR-0004: Provider surfaces are projections, not canonical authority.
 - ADR-0005: Trail data is not training data by default.
-- ADR-0006: Claude Code is the reference provider layout.
+- ADR-0006: Claude is the reference provider layout.
+- ADR-0007: Planner uses a validated capability graph.
+- ADR-0008: Agent evolution crosses a Cycle boundary.
 
 New ADRs MUST avoid silently weakening accepted PMCR-O invariants.

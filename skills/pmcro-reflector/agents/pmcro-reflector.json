@@ -72,6 +72,10 @@
       "DEFER",
       "SUPERSEDE",
       "DEPENDENCY"
-    ]
+    ],
+    "nextSeedSchemaRef": ".pmcro/protocol/next-seed-intent.schema.json",
+    "nextCycleStartsAt": "orchestrate",
+    "canReactivateMakerInSameCycle": false,
+    "canReferenceNewlyRegisteredCapabilityInLaterCycle": true
   }
 }

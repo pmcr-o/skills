@@ -24,13 +24,17 @@
     "project_context",
     "verified_state",
     "capability_catalog",
-    "policy_context"
+    "policy_context",
+    "agent_catalog",
+    "validated_capability_catalog"
   ],
   "outputs": [
     "orchestrated_intent",
     "planner_handoff",
     "delegation_decision",
-    "cycle_control_state"
+    "cycle_control_state",
+    "selected_agent_refs",
+    "validated_catalog_ref"
   ],
   "roleOwnedResult": "planner_handoff",
   "allowedTools": [
@@ -65,5 +69,11 @@
     "model-as-authority",
     "self-promotion",
     "training-without-explicit-eligibility"
-  ]
+  ],
+  "goalPolicy": {
+    "managesHighLevelGoals": true,
+    "selectsOnlyCatalogedAgents": true,
+    "passesValidatedCatalogToPlanner": true,
+    "doesNotExecuteMakerWork": true
+  }
 }

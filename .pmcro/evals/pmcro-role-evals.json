@@ -6,7 +6,9 @@
       "context-selection",
       "capability-resolution",
       "delegation-bounds",
-      "planner-handoff"
+      "planner-handoff",
+      "high-level-goal-management",
+      "cataloged-agent-selection"
     ],
     "mustNot": [
       "execute-maker-work",
@@ -19,7 +21,10 @@
       "dependency-graph",
       "capability-gaps",
       "effect-bounds",
-      "acceptance-criteria"
+      "acceptance-criteria",
+      "validated-capability-only",
+      "minimum-capability-graph",
+      "explicit-capability-gap"
     ],
     "mustNot": [
       "execute-plan",
@@ -31,7 +36,9 @@
       "plan-fidelity",
       "admitted-capability-use",
       "evidence-completeness",
-      "stop-on-gap"
+      "stop-on-gap",
+      "skill-creator-gap-bootstrap",
+      "candidate-state-discipline"
     ],
     "mustNot": [
       "self-certify",
@@ -44,7 +51,9 @@
       "contract-conformance",
       "verdict-classification",
       "adversarial-defect-detection",
-      "no-repair"
+      "no-repair",
+      "candidate-state-gating",
+      "registration-precondition-verification"
     ],
     "mustNot": [
       "repair-candidate",
@@ -59,7 +68,8 @@
       "exactly-one-next-seed",
       "valid-continuation-operation",
       "deduplication",
-      "nonexecution"
+      "nonexecution",
+      "fresh-cycle-boundary"
     ],
     "mustNot": [
       "execute-next-seed",

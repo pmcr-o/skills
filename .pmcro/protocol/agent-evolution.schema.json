@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/protocol/agent-evolution.schema.json",
+  "title": "PMCR-O agent evolution candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "evolutionId",
+    "agentRef",
+    "baseVersionRef",
+    "objective",
+    "triggerEvidenceRefs",
+    "changeSet",
+    "state",
+    "availableToPlanner",
+    "checkerVerdictRef",
+    "registrationRef",
+    "nextCycleUseAllowed"
+  ],
+  "properties": {
+    "evolutionId": {"type": "string"},
+    "agentRef": {"type": "string"},
+    "baseVersionRef": {"type": ["string", "null"]},
+    "objective": {"enum": ["CREATE", "OPTIMIZE", "ENHANCE", "REFINE", "SPECIALIZE"]},
+    "triggerEvidenceRefs": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "changeSet": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "targetRef", "summary"],
+        "properties": {
+          "kind": {"enum": ["instruction", "context", "skill-binding", "capability-binding", "policy", "eval", "model-binding"]},
+          "targetRef": {"type": "string"},
+          "summary": {"type": "string"}
+        }
+      }
+    },
+    "state": {"enum": ["generated-unchecked", "checked-candidate", "registered"]},
+    "availableToPlanner": {"type": "boolean"},
+    "checkerVerdictRef": {"type": ["string", "null"]},
+    "registrationRef": {"type": ["string", "null"]},
+    "nextCycleUseAllowed": {"type": "boolean"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"state": {"const": "generated-unchecked"}}},
+      "then": {
+        "properties": {
+          "availableToPlanner": {"const": false},
+          "checkerVerdictRef": {"type": "null"},
+          "registrationRef": {"type": "null"},
+          "nextCycleUseAllowed": {"const": false}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"state": {"const": "checked-candidate"}}},
+      "then": {
+        "properties": {
+          "availableToPlanner": {"const": false},
+          "checkerVerdictRef": {"type": "string", "minLength": 1},
+          "registrationRef": {"type": "null"},
+          "nextCycleUseAllowed": {"const": false}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"state": {"const": "registered"}}},
+      "then": {
+        "properties": {
+          "availableToPlanner": {"const": true},
+          "checkerVerdictRef": {"type": "string", "minLength": 1},
+          "registrationRef": {"type": "string", "minLength": 1},
+          "nextCycleUseAllowed": {"const": true}
+        }
+      }
+    }
+  ]
+}

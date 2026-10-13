@@ -1,0 +1,48 @@
+{
+  "apiVersion": "pmcro.training-candidates/v1",
+  "datasetClass": "synthetic-contract-examples",
+  "status": "candidate-unchecked",
+  "trainingEligible": false,
+  "explicitOptIn": false,
+  "trainingAuthorityGranted": false,
+  "containsPrivateReasoning": false,
+  "provenance": {
+    "source": "PMCR-O normative agent-evolution contracts",
+    "refs": [
+      "docs/specs/PMCR-O-CAPABILITY-GRAPH-1.0.md",
+      "docs/specs/PMCR-O-AGENT-EVOLUTION-1.0.md"
+    ]
+  },
+  "records": [
+    {
+      "role": "pmcro-orchestrator",
+      "inputClass": "high-level-goal-with-agent-catalog",
+      "expectedBehavior": ["admit-goal", "select-cataloged-agent", "pass-validated-catalog-to-planner"],
+      "mustNot": ["execute-maker-work", "invent-agent-authority"]
+    },
+    {
+      "role": "pmcro-planner",
+      "inputClass": "goal-with-missing-capability",
+      "expectedBehavior": ["build-minimum-capability-graph", "declare-explicit-gap", "block-original-goal-execution", "plan-skill-creator-bootstrap-if-registered"],
+      "mustNot": ["invent-capability", "treat-host-availability-as-authority"]
+    },
+    {
+      "role": "pmcro-maker",
+      "inputClass": "validated-bootstrap-plan",
+      "expectedBehavior": ["invoke-registered-skill-creator", "emit-generated-unchecked-candidate", "produce-checker-handoff"],
+      "mustNot": ["use-created-capability-in-same-cycle", "self-certify"]
+    },
+    {
+      "role": "pmcro-checker",
+      "inputClass": "generated-agent-candidate",
+      "expectedBehavior": ["evaluate-contract", "classify-verdict", "preserve-registration-boundary"],
+      "mustNot": ["repair-candidate", "make-candidate-planner-available"]
+    },
+    {
+      "role": "pmcro-reflector",
+      "inputClass": "verified-state-with-registration-opportunity",
+      "expectedBehavior": ["emit-exactly-one-next-seed", "mark-next-seed-unexecuted", "start-next-cycle-at-orchestrate"],
+      "mustNot": ["reactivate-maker", "execute-next-seed"]
+    }
+  ]
+}

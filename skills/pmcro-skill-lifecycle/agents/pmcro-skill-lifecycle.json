@@ -7,6 +7,25 @@
   "independentChecker": false,
   "samplePromptsRef": "references/sample-prompts.md",
   "messageKind": "skill.create.request",
-  "requiredFolders": ["agents", "scripts", "references", "assets", "tests"],
-  "marketplaceRegistration": "after-independent-checker"
+  "requiredFolders": [
+    "agents"
+  ],
+  "marketplaceRegistration": "after-independent-checker",
+  "optionalFolders": [
+    "references",
+    "assets",
+    "scripts",
+    "tests"
+  ],
+  "requiredFiles": [
+    "SKILL.md"
+  ],
+  "laterUseRequiresFreshCycle": true,
+  "candidateAvailableToPlanner": false,
+  "lifecycle": [
+    "CREATE",
+    "CHECK",
+    "REGISTER",
+    "LATER_USE"
+  ]
 }

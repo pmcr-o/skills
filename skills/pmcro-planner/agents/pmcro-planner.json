@@ -24,14 +24,18 @@
     "verified_state",
     "available_capabilities",
     "constraints",
-    "acceptance_criteria"
+    "acceptance_criteria",
+    "validated_capability_catalog",
+    "validated_agent_catalog"
   ],
   "outputs": [
     "plan_artifact",
     "maker_handoff",
     "dependency_graph",
     "required_capabilities",
-    "acceptance_plan"
+    "acceptance_plan",
+    "capability_graph",
+    "capability_gaps"
   ],
   "roleOwnedResult": "plan_artifact",
   "allowedTools": [
@@ -66,5 +70,14 @@
     "model-as-authority",
     "self-promotion",
     "training-without-explicit-eligibility"
-  ]
+  ],
+  "capabilityPlanningPolicy": {
+    "schemaRef": ".pmcro/protocol/capability-graph.schema.json",
+    "validatedOnly": true,
+    "minimumSufficient": true,
+    "inventMissingCapability": false,
+    "declareGaps": true,
+    "goalExecutionBlockedByGap": true,
+    "bootstrapGapViaRegisteredSkillCreator": true
+  }
 }

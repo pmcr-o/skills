@@ -8,17 +8,83 @@
     "@skill-creator /dotagents:bootstrap",
     "python scripts/bootstrap_workspace.py"
   ],
-  "providers": ["generic", "chatgpt", "codex", "claude", "ollama"],
-  "inputs": ["workspace_root", "skill_name", "plugin_name", "version", "mode", "existing_marketplace_root", "source_catalog"],
-  "outputs": ["discovery_catalog", "create_skill_handoff", "canonical_skill", "plugin_projections", "manifest", "validation_evidence", "next_seed"],
-  "allowedTools": ["filesystem.read", "filesystem.write", "git.read", "validator"],
+  "providers": [
+    "generic",
+    "chatgpt",
+    "codex",
+    "claude",
+    "ollama"
+  ],
+  "inputs": [
+    "workspace_root",
+    "skill_name",
+    "plugin_name",
+    "version",
+    "mode",
+    "existing_marketplace_root",
+    "source_catalog",
+    "raw_seed",
+    "capability_gap",
+    "desired_agent_role",
+    "validated_catalog_ref",
+    "trigger_evidence_refs"
+  ],
+  "outputs": [
+    "discovery_catalog",
+    "create_skill_handoff",
+    "canonical_skill",
+    "candidate_agent",
+    "capability_gap_resolution",
+    "agent_evolution_candidate",
+    "plugin_projections",
+    "manifest",
+    "validation_evidence",
+    "next_seed"
+  ],
+  "allowedTools": [
+    "filesystem.read",
+    "filesystem.write",
+    "git.read",
+    "validator"
+  ],
   "contextBoundary": "workspace-scoped",
   "maxTurns": 3,
   "maxDepth": 1,
   "independentChecker": false,
   "authority": "staged-local-only",
   "samplePromptsRef": "references/sample-prompts.md",
-  "requiredDelegation": "create-skill",
-  "sideEffects": ["create-missing-files", "update-managed-files", "prune-managed-component-only"],
-  "refusals": ["unknown-conflict", "unbounded-delete", "credential-access", "network-install", "self-certification"]
+  "sideEffects": [
+    "create-missing-files",
+    "update-managed-files",
+    "prune-managed-component-only"
+  ],
+  "refusals": [
+    "unknown-conflict",
+    "unbounded-delete",
+    "credential-access",
+    "network-install",
+    "self-certification"
+  ],
+  "registeredLifecycleAuthority": "CREATE",
+  "capabilityGapPolicy": {
+    "acceptedOnlyFromValidatedPlan": true,
+    "createsCandidateOnly": true,
+    "candidateAvailableToPlanner": false,
+    "requiresIndependentChecker": true,
+    "requiresRegistrationBeforeLaterUse": true
+  },
+  "agentFactoryPolicy": {
+    "canCreateOrSpecializeAgent": true,
+    "minimumCore": [
+      "SKILL.md",
+      "agents/*.json"
+    ],
+    "optionalLayers": [
+      "references",
+      "assets",
+      "scripts",
+      "tests"
+    ],
+    "noEmptyOptionalFolders": true
+  }
 }

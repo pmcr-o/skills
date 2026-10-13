@@ -17,7 +17,9 @@ Use this skill at the authoring boundary for a new or reconciled skill.
 8. Require an independent checker before promotion/registration/use. Creation success is not runtime proof.
 9. Keep READ/RETRIEVE, UPDATE, DELETE, VERSION, INSTALL, PUBLISH, and EXECUTE as separately registered lifecycle capabilities when available.
 10. Register marketplace/provider projections only after the canonical child has checker evidence.
-11. Reflection emits one unexecuted next seed; the next Cycle starts again at ORCHESTRATE.
+11. Reflection emits one unexecuted next seed; the next Cycle starts again at ORCHESTRATE. REFLECT never reactivates MAKE in the same Cycle.
+12. When a validated Planner capability graph declares missing behavior, Maker may invoke the registered Skill Creator only to create or specialize the minimum candidate needed to fill that gap.
+13. A generated or checked candidate remains unavailable to Planner selection until registration; only a later Cycle may use the registered capability.
 
 The canonical seed envelope schema is `.pmcro/protocol/seed-envelope.schema.json`. A child may specialize the generic shape for .NET, Docker, MAUI, MCP, Desktop Commander, documentation, prompt templates, or another domain. Specialization adds typed behavior; it cannot widen authority or turn a maker into its own checker.
 

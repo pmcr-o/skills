@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/protocol/capability-graph.schema.json",
+  "title": "PMCR-O validated capability graph",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "graphId",
+    "goalRef",
+    "catalogRef",
+    "catalogValidationRef",
+    "selectedAgents",
+    "selectedSkills",
+    "capabilityGaps",
+    "goalExecutionEligible",
+    "minimality"
+  ],
+  "properties": {
+    "graphId": {"type": "string"},
+    "goalRef": {"type": "string"},
+    "catalogRef": {"type": "string"},
+    "catalogValidationRef": {"type": "string"},
+    "selectedAgents": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/validatedRef"}
+    },
+    "selectedSkills": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/validatedRef"}
+    },
+    "capabilityGaps": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/gap"}
+    },
+    "goalExecutionEligible": {"type": "boolean"},
+    "bootstrapPlan": {
+      "type": ["object", "null"],
+      "required": ["creatorRef", "gapRefs", "executionEligible"],
+      "properties": {
+        "creatorRef": {"type": "string"},
+        "gapRefs": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "executionEligible": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "minimality": {
+      "type": "object",
+      "required": ["minimumSufficient", "evidenceRef"],
+      "properties": {
+        "minimumSufficient": {"const": true},
+        "evidenceRef": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"goalExecutionEligible": {"const": true}}},
+      "then": {"properties": {"capabilityGaps": {"maxItems": 0}}}
+    }
+  ],
+  "$defs": {
+    "validatedRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "validationState", "evidenceRef"],
+      "properties": {
+        "ref": {"type": "string"},
+        "validationState": {"const": "registered-checked"},
+        "evidenceRef": {"type": "string"}
+      }
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gapId", "requiredBehavior", "resolution"],
+      "properties": {
+        "gapId": {"type": "string"},
+        "requiredBehavior": {"type": "string"},
+        "resolution": {"enum": ["skill-create", "agent-specialize", "defer", "deny"]}
+      }
+    }
+  }
+}

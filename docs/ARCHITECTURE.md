@@ -50,6 +50,14 @@ ADRs explain why architectural law exists. Specifications use normative MUST/SHO
 
 Operational Trail data is not training data by default. Training candidates require explicit opt-in, provenance, sanitization/redaction, an independent checker verdict, and role-specific evaluation. Secrets, credentials, private reasoning, and unapproved user content are excluded. Maker and Checker datasets and evaluation evidence remain distinct to strengthen checker independence.
 
+## Verified capability planning and evolution
+
+The Orchestrator manages admitted high-level goals and selects from cataloged agent identities. The Planner builds the minimum sufficient capability graph from registered, checked agents and skills. Physical host availability is not planning authority. A missing capability is an explicit gap, not an invitation to invent functionality.
+
+Maker may resolve an admitted gap through the registered Skill Creator, producing a `generated-unchecked` skill or agent candidate. CHECK may verify the candidate, registration may make it available, and only a later Cycle may select it. REFLECT never loops directly back into MAKE; it emits exactly one unexecuted next seed that starts a fresh Cycle at ORCHESTRATE.
+
+Agent evolution objectives are CREATE, OPTIMIZE, ENHANCE, REFINE, and SPECIALIZE. Prefer instruction/context/skill/capability/policy/eval refinement before model adaptation or training.
+
 ## Specialization
 
 Specialized product agents MAY add constraints, schemas, validation, and narrower capability selections. Specialization MUST NOT weaken phase order, independent checking, provenance, grant boundaries, secret handling, or next-seed non-execution.

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/protocol/next-seed-intent.schema.json",
+  "title": "PMCR-O reflected next-seed intent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "intentId",
+    "operation",
+    "rawIntent",
+    "sourceCycleRef",
+    "sourceCheckerVerdictRef",
+    "unexecuted",
+    "executesNextSeed",
+    "nextCycleStartsAt"
+  ],
+  "properties": {
+    "intentId": {"type": "string"},
+    "operation": {"enum": ["CREATE", "REFERENCE", "PROMOTE", "DEFER", "SUPERSEDE", "DEPENDENCY"]},
+    "rawIntent": {"type": "string", "minLength": 1},
+    "sourceCycleRef": {"type": "string"},
+    "sourceCheckerVerdictRef": {"type": "string"},
+    "unexecuted": {"const": true},
+    "executesNextSeed": {"const": false},
+    "nextCycleStartsAt": {"const": "orchestrate"},
+    "candidateRefs": {"type": "array", "items": {"type": "string"}}
+  }
+}
