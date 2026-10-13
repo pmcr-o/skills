@@ -42,16 +42,18 @@ class ThoughtTransferRepoTests(unittest.TestCase):
         skill_dirs = [path for path in (ROOT / "skills").iterdir() if (path / "SKILL.md").is_file()]
         self.assertTrue(skill_dirs)
         for skill_dir in skill_dirs:
-            for folder in ("agents", "scripts", "references", "assets", "tests"):
-                self.assertTrue((skill_dir / folder).is_dir(), f"{skill_dir.name}/{folder}")
-            for required_file in ("scripts/validate.ps1", "references/sample-prompts.md", "assets/README.md", "tests/README.md"):
-                self.assertTrue((skill_dir / required_file).is_file(), f"{skill_dir.name}/{required_file}")
-            prompt_file = skill_dir / "references/sample-prompts.md"
-            self.assertTrue(prompt_file.is_file(), f"{skill_dir.name}/references/sample-prompts.md")
-            self.assertGreaterEqual(prompt_file.read_text().count("## Prompt "), 1)
-            agent_files = [path for path in (skill_dir / "agents").iterdir() if path.is_file()]
+            agent_dir = skill_dir / "agents"
+            self.assertTrue(agent_dir.is_dir(), f"{skill_dir.name}/agents")
+            agent_files = [path for path in agent_dir.iterdir() if path.is_file()]
             self.assertTrue(agent_files, skill_dir.name)
-            self.assertTrue(list((skill_dir / "agents").glob("*.json")), f"{skill_dir.name}/agents/*.json")
+            self.assertTrue(list(agent_dir.glob("*.json")), f"{skill_dir.name}/agents/*.json")
+            for folder in ("scripts", "references", "assets", "tests"):
+                optional_dir = skill_dir / folder
+                if optional_dir.is_dir():
+                    self.assertTrue(any(path.is_file() for path in optional_dir.rglob("*")), f"{skill_dir.name}/{folder} must not be empty")
+            prompt_file = skill_dir / "references/sample-prompts.md"
+            if prompt_file.is_file():
+                self.assertGreaterEqual(prompt_file.read_text().count("## Prompt "), 1)
 
     def test_examples_have_nearby_documentation(self):
         for skill_dir in (ROOT / "skills").iterdir():
@@ -68,18 +70,20 @@ class ThoughtTransferRepoTests(unittest.TestCase):
         manifest = json.loads((ROOT / "templates/skill-manifest.json").read_text())
         self.assertEqual(manifest["contractVersion"], "pmcro.skill/v1")
         self.assertEqual(set(manifest["messageContract"]), {"input", "output", "accept", "deny"})
-        self.assertEqual(manifest["exampleDocumentation"]["requiredFile"], "assets/README.md")
-        self.assertEqual(manifest["samplePrompts"]["requiredFile"], "references/sample-prompts.md")
-        self.assertEqual(manifest["samplePrompts"]["maxPrompts"], 5)
-        self.assertIn("tests", manifest["requiredFolders"])
-        self.assertIn("scripts/validate.ps1", manifest["requiredFiles"])
+        self.assertEqual(manifest["requiredFolders"], ["agents"])
+        self.assertEqual(set(manifest["optionalFolders"]), {"references", "assets", "scripts", "tests"})
+        self.assertEqual(manifest["requiredFiles"], ["SKILL.md"])
         self.assertIn("agents/*.json", manifest["requiredFilePatterns"])
+        self.assertEqual(manifest["progressiveDisclosure"]["core"], ["SKILL.md", "agents/"])
+        self.assertFalse(manifest["progressiveDisclosure"]["emptyOptionalFoldersAllowed"])
+        self.assertFalse(manifest["samplePrompts"]["required"])
+        self.assertEqual(manifest["samplePrompts"]["maxPrompts"], 5)
         self.assertEqual(manifest["authoringGate"]["entrypoint"], "@skill-creator /create-skill")
         self.assertEqual(manifest["authoringGate"]["messageKind"], "skill.create.request")
         self.assertEqual(manifest["authoringGate"]["marketplaceRegistration"], "after-independent-checker")
         template = (ROOT / "templates/SKILL.md.tmpl").read_text()
-        for phrase in ("## Input and output contract", "### Input", "### Output", "agents/agent.json", "references/sample-prompts.md"):
-            self.assertIn(phrase, template)
+        for phrase in ("## Input and output contract", "### Input", "### Output", "agents/agent.json", "optional sample prompts"):
+            self.assertIn(phrase.lower(), template.lower())
 
     def test_sample_prompts_are_bounded_copy_paste_surfaces(self):
         import re
@@ -88,7 +92,10 @@ class ThoughtTransferRepoTests(unittest.TestCase):
         for skill_dir in (ROOT / "skills").iterdir():
             if not (skill_dir / "SKILL.md").is_file():
                 continue
-            prompts = pattern.findall((skill_dir / "references/sample-prompts.md").read_text())
+            prompt_file = skill_dir / "references/sample-prompts.md"
+            if not prompt_file.is_file():
+                continue
+            prompts = pattern.findall(prompt_file.read_text())
             self.assertGreaterEqual(len(prompts), 1, skill_dir.name)
             self.assertLessEqual(len(prompts), 5, skill_dir.name)
             self.assertTrue(all(prompt.strip() and len(prompt.strip()) <= 600 for prompt in prompts), skill_dir.name)
@@ -139,8 +146,9 @@ class ThoughtTransferRepoTests(unittest.TestCase):
                 self.assertIn(marker, text, path.name)
 
     def test_activation_bundle_is_progressive_and_text_only(self):
-        source = ROOT.parent / "upload" / "Pasted text(3).txt"
         with tempfile.TemporaryDirectory() as temp_dir:
+            source = Path(temp_dir) / "source-seed.txt"
+            source.write_text("deterministic activation bundle source seed\n", encoding="utf-8")
             out_dir = Path(temp_dir) / "bundle"
             result = subprocess.run(
                 [
