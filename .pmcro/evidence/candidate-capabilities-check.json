@@ -1,0 +1,50 @@
+{
+  "apiVersion": "pmcro.checker-evidence/v1",
+  "kind": "checker.verdict",
+  "checker": "pmcro-checker",
+  "verdict": "PASS",
+  "scope": [
+    "skills/pmcro-resource-registry",
+    "skills/pmcro-message-queue"
+  ],
+  "producer": "dotagents-skill-creator",
+  "independent": true,
+  "registrationAuthorized": false,
+  "plannerAvailabilityGranted": false,
+  "nextCycleUseAllowed": false,
+  "evidence": {
+    "focusedCandidateTestsPassed": 6,
+    "resourceRegistryLocalTestsPassed": 1,
+    "messageQueueLocalTestsPassed": 1,
+    "repositoryTestsPassed": 83,
+    "skillCreatorTestsPassed": 5,
+    "capabilityRouteTestsPassed": 3,
+    "capabilityImportTestsPassed": 3,
+    "structuralValidation": "PASS: 148 required files, 12 agent surfaces, 222 trail events",
+    "jsonFilesParsed": 114,
+    "gitDiffCheck": "PASS",
+    "unregisteredCheck": "PASS",
+    "aDriveStatusSha256Before": "dd4c6d8e7df08f5be5cb6dca428cd18bdef1bb16d8475d58b8e61a708362aec2",
+    "aDriveStatusSha256After": "dd4c6d8e7df08f5be5cb6dca428cd18bdef1bb16d8475d58b8e61a708362aec2",
+    "aDriveUnchanged": true,
+    "resourceRegistry": [
+      "independent checker PASS required",
+      "self-certification rejected",
+      "registered-checked fixture resource resolves admissible",
+      "revocation removes admissibility without erasing record/event history",
+      "hash-chain verification remains valid"
+    ],
+    "messageQueue": [
+      "semantic duplicate is idempotent",
+      "messageId semantic conflict halts",
+      "claim preserves immutable envelope bytes",
+      "ACK preserves envelope and creates immutable receipt",
+      "bounded retry reaches dead-letter",
+      "expired lease is recovered",
+      "reflected seed remains queued data and is not auto-executed",
+      "transport grants no authority"
+    ]
+  },
+  "stateAfterCheck": "checked-candidate",
+  "requiredNextLifecycleOperation": "REGISTER in a fresh later Cycle"
+}

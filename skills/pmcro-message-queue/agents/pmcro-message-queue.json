@@ -1,0 +1,71 @@
+{
+  "id": "pmcro.message-queue",
+  "kind": "candidate-capability-agent",
+  "independentSurface": true,
+  "displayName": "PMCR-O durable message queue",
+  "status": "checked-candidate",
+  "availableToPlanner": false,
+  "checkerVerdictRef": ".pmcro/evidence/candidate-capabilities-check.json",
+  "registrationRef": null,
+  "nextCycleUseAllowed": false,
+  "entrypoints": [
+    "python scripts/queue.py init",
+    "python scripts/queue.py enqueue",
+    "python scripts/queue.py claim",
+    "python scripts/queue.py ack",
+    "python scripts/queue.py nack",
+    "python scripts/queue.py recover",
+    "python scripts/queue.py verify-message",
+    "python scripts/queue.py stats"
+  ],
+  "inputs": [
+    "queue_root",
+    "message_envelope",
+    "worker_id",
+    "grant_refs"
+  ],
+  "outputs": [
+    "immutable_envelope",
+    "delivery_state",
+    "receipt",
+    "queue_evidence"
+  ],
+  "manualParity": {
+    "required": true,
+    "sharedScript": "scripts/queue.py"
+  },
+  "authority": {
+    "candidateOnly": true,
+    "grantsRuntimeAuthority": false,
+    "phaseInjectionAllowed": false,
+    "autoExecutesNextSeed": false,
+    "plannerAdmissible": false
+  },
+  "delivery": {
+    "mode": "at-least-once",
+    "deduplication": "messageId + dedupeDigest",
+    "immutableEnvelope": true,
+    "mutableStateSeparated": true,
+    "ackReceiptImmutable": true,
+    "leaseRecovery": true,
+    "boundedRetry": true,
+    "deadLetter": true
+  },
+  "trailOwnership": {
+    "sharedMutableTrail": false,
+    "receiverCreatesLocalTrail": true,
+    "crossAgentMessagesReferenceSourceTrail": true
+  },
+  "invariants": [
+    "transport does not grant authority",
+    "message kind ownership does not inject cognition",
+    "reflected next seeds remain unexecuted",
+    "delivery correctness does not depend on global FIFO",
+    "consumers must tolerate at-least-once delivery"
+  ],
+  "sourceEvidence": [
+    "docs/specs/PMCR-O-DURABLE-MESSAGING-1.0.md",
+    "A:/marketplace/eng/install-message-queue.py",
+    "A:/marketplace/skill-creator-agent/.pmcro/queue/config.json"
+  ]
+}
