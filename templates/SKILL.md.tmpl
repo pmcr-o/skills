@@ -8,13 +8,14 @@
 
 Every new or reconciled skill begins with a `skill.create.request` emitted by
 `@skill-creator /create-skill`. The request names the plugin, skill, purpose,
-scope, validated resources, required folders/files, sample-prompt reference,
+scope, validated resources, required core, requested optional layers,
 message contract, and simulation/apply mode. Do not plan, make, or register a
 marketplace entry until that request is complete.
 
-The generic shape requires `agents/`, `scripts/`, `references/`, `assets/`, and
-`tests/`; an agent manifest, validator, example documentation, and bounded
-`references/sample-prompts.md` are required files. A child adds domain behavior
+The canonical core is `SKILL.md` plus `agents/` with at least one PMCR-O agent.
+`references/`, `assets/`, `scripts/`, and `tests/` are progressive-disclosure
+layers and are created only when the declared artifact graph needs them. Do not
+create empty optional folders for conformity. A child adds domain behavior
 without widening the inherited grant.
 
 ## Activation
@@ -40,18 +41,18 @@ Return the canonical `SkillOutput` envelope with the artifact or decision,
 evidence, simulation/verification status, unresolved findings, and one
 unexecuted next seed when another cycle is needed.
 
-## Example documentation
+## Optional example documentation
 
-Every example under `assets/`, `examples/`, or `tests/fixtures/` must be
-described in `assets/README.md` (or a more specific linked document). Explain
-its purpose, inputs, expected output, evidence tier, and what it does not
-prove. Example code is not self-authenticating and must not imply runtime or
+When `assets/` contains examples or other non-README artifacts, document them in
+`assets/README.md` (or a more specific linked document). Explain purpose,
+inputs, expected output, evidence tier, and what the examples do not prove.
+Example code is not self-authenticating and must not imply runtime or
 production evidence merely because it is syntactically plausible.
 
-## Sample prompts
+## Optional sample prompts
 
-Short, concrete copy/paste starters live in
-`references/sample-prompts.md`. They are invocation examples, not hidden
+When the skill benefits from bounded copy/paste invocation examples, place them
+in `references/sample-prompts.md`. They are invocation examples, not hidden
 authority or additional tool grants. Keep each prompt within the manifest's
 character limit and make its expected scope and output clear.
 
