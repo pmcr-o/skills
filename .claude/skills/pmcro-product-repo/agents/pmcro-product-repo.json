@@ -1,0 +1,21 @@
+{
+  "id": "pmcro.product-repo",
+  "kind": "agent-product-repository",
+  "independentSurface": true,
+  "independentChecker": false,
+  "displayName": "PMCR-O agent product repository generator",
+  "entrypoints": ["$pmcro-product-repo", "@orchestrator /pmcro:product-repo"],
+  "inputs": ["product_intent", "repository_root", "principal", "autonomy_grant", "provider_adapters", "trail_id"],
+  "outputs": ["product_manifest", "autonomy_grant", "generic_trail", "activation_bundle", "checker_handoff", "next_seed"],
+  "accept": ["grant is finite and revocable", "routine operations are scoped", "trail is generic and provenance-linked", "checker is separate", "activation is progressive"],
+  "deny": ["blanket autonomy", "credential access", "unbounded recursion", "secret or private-reasoning export", "self-approval", "automatic publishing"],
+  "allowedTools": ["filesystem.read", "filesystem.write", "git.read", "validator", "trail.append"],
+  "modes": ["inspect", "simulate", "execute", "check", "package"],
+  "contextBoundary": "product-repository",
+  "maxTurns": 8,
+  "maxDepth": 2,
+  "samplePromptsRef": "references/sample-prompts.md",
+  "grantRef": "assets/autonomy-grant.example.json",
+  "trailContractRef": "references/generic-trail-contract.md",
+  "authority": "bounded-product-repository-only"
+}

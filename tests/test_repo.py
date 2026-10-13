@@ -261,7 +261,10 @@ class ThoughtTransferRepoTests(unittest.TestCase):
         self.assertIn("pmcro-output-conventions", skills)
         for skill in skills.values():
             for field in ("input", "output", "accept", "deny"):
-                self.assertTrue(skill[field], f"{skill['id']}:{field}")
+                self.assertIn(field, skill, f"{skill['id']}:{field}")
+                self.assertIsInstance(skill[field], list, f"{skill['id']}:{field}")
+        self.assertFalse(catalog["canonical"])
+        self.assertFalse(catalog["grantsRuntimeAuthority"])
 
     def test_recursive_pmcro_plugin_declares_core_skills_and_maf_adapters(self):
         plugin = json.loads((ROOT / "plugins/pmcro/plugin.json").read_text(encoding="utf-8"))

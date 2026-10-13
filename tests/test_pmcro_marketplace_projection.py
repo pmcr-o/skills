@@ -34,12 +34,18 @@ class MarketplaceProjectionTests(unittest.TestCase):
         self.assertEqual(agents_projection["projectionOf"], ".pmcro-plugin/marketplace.json")
         self.assertEqual(legacy_plugin["projectionOf"], "plugins/pmcro/.pmcro-plugin/plugin.json")
         self.assertIn(".pmcro-plugin/marketplace.json", agents_projection["sourceOfTruth"])
+        self.assertEqual(agents_projection["version"], marketplace["version"])
+        self.assertEqual(agents_projection["plugins"][0]["version"], plugin["version"])
+        self.assertFalse(agents_projection["canonical"])
+        self.assertFalse(agents_projection["grantsRuntimeAuthority"])
 
     def test_canonical_plugin_declares_five_role_agents_and_skill_packages(self):
         plugin = self.load("plugins/pmcro/.pmcro-plugin/plugin.json")
         self.assertEqual({item["id"] for item in plugin["agents"]}, ROLE_IDS)
         skill_ids = {item["id"] for item in plugin["skills"]}
         self.assertTrue(ROLE_IDS.issubset(skill_ids))
+        self.assertIn("pmcro-init", skill_ids)
+        self.assertNotIn("pmcro-init", {item["id"] for item in plugin["agents"]})
         for skill in plugin["skills"]:
             path = ROOT / skill["sourceRef"]
             self.assertTrue((path / "SKILL.md").is_file(), skill["id"])
@@ -62,7 +68,9 @@ class MarketplaceProjectionTests(unittest.TestCase):
 
             plugin = json.loads((out / "plugins/pmcro/.claude-plugin/plugin.json").read_text(encoding="utf-8"))
             self.assertEqual(plugin["name"], "pmcro")
-            self.assertIn("version", plugin)
+            self.assertEqual(plugin["version"], self.load("plugins/pmcro/.pmcro-plugin/plugin.json")["version"])
+            self.assertTrue((out / ".claude" / "skills" / "pmcro-init" / "SKILL.md").is_file())
+            self.assertFalse((out / ".claude" / "agents" / "pmcro-init.md").exists())
 
             manifest = json.loads((out / "projection-manifest.json").read_text(encoding="utf-8"))
             self.assertFalse(manifest["canonical"])

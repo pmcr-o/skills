@@ -1,0 +1,79 @@
+{
+  "apiVersion": "pmcro.validation/v1",
+  "kind": "MaterializationValidation",
+  "cycle": "MATERIALIZE-030",
+  "makerIdentity": "I-MAKE-030",
+  "artifact": "PMCR-O INIT v0.2-r1",
+  "repositoryBase": "981f8130b1cbf259741b1e53974af068fcfee435",
+  "canonicalMarketplaceVersion": "0.4.1-candidate",
+  "canonicalSkillRef": "skills/pmcro-init",
+  "canonicalSkillTreeDigest": "22748bf4ef11a634e5e5c8d02178e09e5cf03ec5846c4a4bde433a4a6a570a3e",
+  "checks": {
+    "frozenPackageSha256": {
+      "status": "PASS",
+      "value": "d1019453cfe5c23584dcd01485caee3d294886783d4a712a62a32c7338b374da"
+    },
+    "check028ContractMapping": {
+      "status": "PASS",
+      "byteIdenticalFiles": 16
+    },
+    "initBaselineRegression": {
+      "status": "PASS",
+      "result": "50 passed"
+    },
+    "targetedMarketplaceRegistryMaterialization": {
+      "status": "PASS",
+      "result": "26 passed"
+    },
+    "repositoryStructure": {
+      "status": "PASS",
+      "result": "148 required files, 12 agent surfaces, 222 trail events"
+    },
+    "protobufCompile": {
+      "status": "PASS",
+      "compiler": "libprotoc 35.1",
+      "descriptorBytes": 7683
+    },
+    "agentsProjectionDeterminism": {
+      "status": "PASS",
+      "byteIdentical": true,
+      "canonical": false,
+      "grantsRuntimeAuthority": false
+    },
+    "claudeProjectionDeterminism": {
+      "status": "PASS",
+      "byteIdentical": true,
+      "projectAgents": 5,
+      "projectSkills": 20,
+      "projectedRuntimeCacheFiles": 0,
+      "canonical": false,
+      "grantsRuntimeAuthority": false
+    },
+    "activationBundleTextCompatibility": {
+      "status": "PASS",
+      "result": "1 passed; .proto treated as text source"
+    },
+    "canonicalRepositoryPytest": {
+      "status": "PASS",
+      "result": "168 passed",
+      "importMode": "importlib",
+      "excludedGeneratedProjectionTrees": [
+        "plugins/pmcro/skills",
+        ".claude"
+      ],
+      "excludedInertTemplateFixture": "skills/dotagents-skill-creator/assets/templates/skill/tests",
+      "exclusionRationale": "Generated provider copies are verified by byte-for-byte deterministic projection checks; the inert Skill Creator template is validated by the Skill Creator executable test suite rather than collected as an installed live skill."
+    }
+  },
+  "lifecycle": {
+    "registryState": "checked-candidate",
+    "admissibleToPlanner": false,
+    "registered": false,
+    "merged": false,
+    "activated": false,
+    "sameCycleUse": false
+  },
+  "trainingEligible": false,
+  "checkerVerdictRef": ".pmcro/evidence/pmcro-init-materialization-check.json",
+  "makerVerdict": "READY_FOR_INDEPENDENT_CHECK"
+}

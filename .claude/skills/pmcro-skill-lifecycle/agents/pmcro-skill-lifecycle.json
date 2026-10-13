@@ -1,0 +1,31 @@
+{
+  "id": "pmcro-skill-lifecycle",
+  "version": "0.1.0",
+  "role": "authoring-gate",
+  "entrypoint": "@skill-creator /create-skill",
+  "independentSurface": true,
+  "independentChecker": false,
+  "samplePromptsRef": "references/sample-prompts.md",
+  "messageKind": "skill.create.request",
+  "requiredFolders": [
+    "agents"
+  ],
+  "marketplaceRegistration": "after-independent-checker",
+  "optionalFolders": [
+    "references",
+    "assets",
+    "scripts",
+    "tests"
+  ],
+  "requiredFiles": [
+    "SKILL.md"
+  ],
+  "laterUseRequiresFreshCycle": true,
+  "candidateAvailableToPlanner": false,
+  "lifecycle": [
+    "CREATE",
+    "CHECK",
+    "REGISTER",
+    "LATER_USE"
+  ]
+}

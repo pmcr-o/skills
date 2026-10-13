@@ -1,0 +1,20 @@
+{
+  "id": "pmcro.session-marketplace",
+  "kind": "marketplace-constructor",
+  "independentSurface": true,
+  "displayName": "Session-to-PMCR-O marketplace constructor",
+  "entrypoints": ["$pmcro-session-marketplace", "@skill-creator /pmcro:session-marketplace"],
+  "inputs": ["authorized_source_path", "owner_consent", "domain_hints", "max_cycles", "include_raw"],
+  "outputs": ["source_manifest", "pmcro_frames", "skill_candidate", "training_candidates", "checker_evidence", "next_seed"],
+  "accept": ["source is user-authorized", "hash and provenance are recorded", "redaction is applied", "simulation claims are labeled", "checker frame is independent"],
+  "deny": ["private provider logs", "credentials or tokens", "unverified runtime claims", "automatic training", "automatic promotion", "unbounded recursion"],
+  "allowedTools": ["filesystem.read", "filesystem.write", "git.read", "trail.append", "validator"],
+  "contextBoundary": "authorized-source-and-staging",
+  "maxTurns": 6,
+  "maxDepth": 3,
+  "samplePromptsRef": "references/sample-prompts.md",
+  "independentChecker": false,
+  "authority": "stage-only",
+  "childPromotion": "checker-and-policy-required",
+  "simulationPolicy": "Any MCP, terminal, MAF, provider, or code adapter without direct evidence is simulation=true and verified=false."
+}

@@ -1,0 +1,56 @@
+{
+  "id": "pmcro.resource-registry",
+  "kind": "candidate-capability-agent",
+  "independentSurface": true,
+  "displayName": "PMCR-O resource registry",
+  "status": "registered-checked",
+  "availableToPlanner": true,
+  "checkerVerdictRef": ".pmcro/evidence/candidate-capabilities-check.json",
+  "registrationRef": ".pmcro/evidence/capability-registration.json#registrations/0",
+  "nextCycleUseAllowed": true,
+  "entrypoints": [
+    "python scripts/registry.py register",
+    "python scripts/registry.py resolve",
+    "python scripts/registry.py revoke",
+    "python scripts/registry.py verify"
+  ],
+  "inputs": [
+    "registry_root",
+    "resource_id",
+    "resource_kind",
+    "content_path",
+    "producer_agent",
+    "checker_evidence",
+    "trail_ref"
+  ],
+  "outputs": [
+    "registry_record",
+    "registry_event",
+    "verification_result",
+    "planner_resolution"
+  ],
+  "manualParity": {
+    "required": true,
+    "sharedScript": "scripts/registry.py"
+  },
+  "authority": {
+    "candidateOnly": true,
+    "grantsRuntimeAuthority": false,
+    "registersItself": false,
+    "plannerAdmissible": true
+  },
+  "invariants": [
+    "independent checker PASS required before a resource becomes registered-checked",
+    "producer cannot independently validate its own resource",
+    "resolve returns admissible only for verified registered-checked non-revoked state",
+    "revocation is append-only and preserves provenance",
+    "registry membership does not widen grants"
+  ],
+  "sourceEvidence": [
+    "docs/specs/PMCR-O-RESOURCE-REGISTRY-1.0.md",
+    "A:/marketplace/eng/src/resource-registry/lib/registry_core.py"
+  ],
+  "registrationCycleUseAllowed": false,
+  "registeredSourceCommit": "68ff94f306be9ced7942060838af37514adfe22d",
+  "preRegistrationContentDigest": "a3ac9c6e61cec75070d61300450c401a7b9fe4cea103acd180d0db9d8fe284b4"
+}

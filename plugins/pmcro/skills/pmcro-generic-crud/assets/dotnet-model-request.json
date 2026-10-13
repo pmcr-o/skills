@@ -1,0 +1,14 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "CrudRequest",
+  "requestId": "crud-dotnet-model-001",
+  "traceId": "trace-crud-dotnet-001",
+  "resource": {"kind": "dotnet-base-model", "id": "ProjectName.OrchestrationService", "scope": "project", "version": "0.1.0"},
+  "operation": "update",
+  "mode": "simulate",
+  "projection": "contract",
+  "grant": {"sideEffects": "none", "resources": ["project.stage"], "expires": "cycle"},
+  "expectedVersion": "0.1.0",
+  "payload": {"baseModel": "PmcroResource<TId,TVersion>", "concurrency": "optimistic", "architecture": "pmcro-resource"},
+  "outputProfile": "dotnet-console"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "pmcro.clean-architecture",
+  "kind": "application-builder",
+  "independentSurface": true,
+  "contractVersion": "pmcro.skill/v1",
+  "displayName": "PMCR-O Clean Architecture application builder",
+  "entrypoints": ["$pmcro-clean-architecture", "@orchestrator /pmcro:clean-architecture"],
+  "inputs": ["application_name", "root_namespace", "target_framework", "entity_specs", "source_repo_ref", "target_root", "scope", "mode", "grant"],
+  "outputs": ["architecture_plan", "layer_paths", "repository_contract", "unit_of_work_contract", "agent_surface", "validation_evidence", "checker_handoff", "next_seed"],
+  "accept": ["application identity is explicit", "target scope is bounded", "source ref is pinned or local baseline is selected", "EntityBase and generic repository constraints are declared", "checker handoff is separate"],
+  "deny": ["un pinned external source", "unknown overwrite", "credential access", "silent package installation", "simulation as runtime proof", "self-approval", "unbounded child generation"],
+  "allowedTools": ["filesystem.read", "filesystem.write", "git.read", "validator", "trail.append"],
+  "dependencies": ["pmcro-generic-crud", "pmcro-agent-surface", "pmcro-output-conventions", "maf-workflows", "filesystem"],
+  "runtimeMappingRef": "references/runtime-mapping.md",
+  "runtimeAdapters": ["maf-workflows", "codeact-style-executor", "harness-policy-boundary", "maf-mcp-tools"],
+  "contextBoundary": "application-scoped",
+  "maxTurns": 6,
+  "maxDepth": 1,
+  "independentChecker": false,
+  "samplePromptsRef": "references/sample-prompts.md",
+  "authority": "staged-application-only",
+  "simulationPolicy": "simulation=true and verified=false until a separate checker has direct build/runtime evidence"
+}

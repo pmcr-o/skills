@@ -1,0 +1,6 @@
+interface:
+  display_name: "PMCR-O Generic CRUD"
+  short_description: "Stage, inspect, version, and revoke declarative resources"
+  default_prompt: "Use $pmcro-generic-crud to simulate or check one bounded CRUD operation for a PMCR-O skill, plugin, agent, memory, catalog, or trail resource."
+  sample_prompts_ref: "references/sample-prompts.md"
+  independent_surface: true

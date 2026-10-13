@@ -1,0 +1,6 @@
+interface:
+  display_name: "PMCR-O Output Conventions"
+  short_description: "Chain skills through typed, simulated-safe handoffs"
+  default_prompt: "Use $pmcro-output-conventions to validate or render one PMCR-O skill output as canonical JSON, trail evidence, or .NET console-style simulation."
+  sample_prompts_ref: "references/sample-prompts.md"
+  independent_surface: true

@@ -53,6 +53,20 @@
       "revocationRef": null,
       "provenancePreserved": true,
       "physicalDeleteOnRevoke": false
+    },
+    {
+      "resourceId": "skill:pmcro-init",
+      "resourceKind": "skill",
+      "sourceRef": "skills/pmcro-init",
+      "contentDigest": "22748bf4ef11a634e5e5c8d02178e09e5cf03ec5846c4a4bde433a4a6a570a3e",
+      "producerAgentRef": "dotagents-skill-creator",
+      "checkerVerdictRef": ".pmcro/evidence/pmcro-init-materialization-check.json",
+      "state": "checked-candidate",
+      "admissibleToPlanner": false,
+      "registrationRef": null,
+      "revocationRef": null,
+      "provenancePreserved": true,
+      "physicalDeleteOnRevoke": false
     }
   ]
 }

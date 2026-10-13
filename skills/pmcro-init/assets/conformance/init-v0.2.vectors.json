@@ -1,0 +1,440 @@
+{
+  "contract": "pmcro-init-v0.2",
+  "trainingEligible": false,
+  "core": [
+    {
+      "id": "CORE-PHASE-001",
+      "given": {
+        "adapterProposedPhase": "EXECUTE"
+      },
+      "expect": {
+        "accepted": false,
+        "canonicalPhases": [
+          "ORCHESTRATE",
+          "PLAN",
+          "MAKE",
+          "CHECK",
+          "REFLECT"
+        ]
+      }
+    },
+    {
+      "id": "CORE-PHASE-002",
+      "given": {
+        "projectedPhases": [
+          "ORCHESTRATE",
+          "PLAN",
+          "MAKE",
+          "REFLECT"
+        ]
+      },
+      "expect": {
+        "projectionStatus": "BLOCKED"
+      }
+    },
+    {
+      "id": "GRANT-001",
+      "given": {
+        "delegated": [
+          "read"
+        ],
+        "hostMaximum": [
+          "read",
+          "write",
+          "shell"
+        ],
+        "environmentMaximum": [
+          "read",
+          "write"
+        ]
+      },
+      "expect": {
+        "effective": [
+          "read"
+        ]
+      }
+    },
+    {
+      "id": "GRANT-002",
+      "given": {
+        "delegated": [
+          "read",
+          "write"
+        ],
+        "hostMaximum": [
+          "read",
+          "write"
+        ],
+        "environmentMaximum": [
+          "read",
+          "write"
+        ],
+        "denies": [
+          "write"
+        ]
+      },
+      "expect": {
+        "effective": [
+          "read"
+        ]
+      }
+    },
+    {
+      "id": "DELEGATE-001",
+      "given": {
+        "parentEffective": [
+          "read",
+          "write"
+        ],
+        "parentDelegatedToChild": [
+          "read"
+        ]
+      },
+      "expect": {
+        "childMaximum": [
+          "read"
+        ]
+      }
+    },
+    {
+      "id": "SERIAL-001",
+      "given": {
+        "framePhase": "MAKE",
+        "serializedMarker": "/pmcro:check"
+      },
+      "expect": {
+        "valid": false
+      }
+    },
+    {
+      "id": "STATE-001",
+      "given": {
+        "hostMemoryClaim": "tests passed",
+        "checkerVerdict": null
+      },
+      "expect": {
+        "mayEnterVerifiedState": false
+      }
+    },
+    {
+      "id": "RESUME-001",
+      "given": {
+        "continuationLocated": true
+      },
+      "expect": {
+        "requiredBeforeReady": [
+          "REBIND_PRINCIPAL",
+          "REBIND_AUTHORITY",
+          "REVALIDATE_ENVIRONMENT",
+          "REPROJECT_CAPABILITIES",
+          "RECHECK_CONFORMANCE"
+        ]
+      }
+    }
+  ],
+  "hosts": [
+    {
+      "id": "CLAUDE-001",
+      "host": {
+        "vendor": "anthropic",
+        "product": "claude-code",
+        "surface": "subagent",
+        "executionMode": "interactive",
+        "version": "current"
+      },
+      "given": {
+        "hostInheritedPermission": "bypassPermissions",
+        "pmcroDelegatedGrant": [
+          "read"
+        ]
+      },
+      "expect": {
+        "effectiveGrant": [
+          "read"
+        ],
+        "ifCannotEnforce": "BLOCKED"
+      }
+    },
+    {
+      "id": "CLAUDE-002",
+      "host": {
+        "vendor": "anthropic",
+        "product": "claude-code",
+        "surface": "subagent",
+        "executionMode": "forked",
+        "version": "current"
+      },
+      "given": {
+        "ordinarySubagentContext": "isolated",
+        "forkedSubagentContext": "inherited"
+      },
+      "expect": {
+        "inheritanceMustBeExplicitlyRepresented": true,
+        "canonicalCognitionChanges": false
+      }
+    },
+    {
+      "id": "OPENAI-001",
+      "host": {
+        "vendor": "openai",
+        "product": "codex",
+        "surface": "subagent",
+        "executionMode": "sandbox",
+        "version": "current"
+      },
+      "given": {
+        "hostTools": [
+          "read",
+          "write",
+          "shell"
+        ],
+        "pmcroCheckerGrant": [
+          "read"
+        ]
+      },
+      "expect": {
+        "effectiveGrant": [
+          "read"
+        ],
+        "ifRestrictionUnprovable": "BLOCKED"
+      }
+    },
+    {
+      "id": "OPENAI-002",
+      "host": {
+        "vendor": "openai",
+        "product": "agents",
+        "surface": "sandbox",
+        "executionMode": "managed",
+        "version": "current"
+      },
+      "given": {
+        "runStateExists": true,
+        "sandboxSessionExists": true,
+        "snapshotExists": true
+      },
+      "expect": {
+        "normalizeAsSingleSession": false
+      }
+    },
+    {
+      "id": "COPILOT-001",
+      "host": {
+        "vendor": "github",
+        "product": "copilot-cli",
+        "surface": "custom-subagent",
+        "executionMode": "interactive",
+        "version": "current"
+      },
+      "given": {
+        "includeCustomInstructions": false
+      },
+      "expect": {
+        "instructionInheritance": "NONE"
+      }
+    },
+    {
+      "id": "COPILOT-002",
+      "host": {
+        "vendor": "github",
+        "product": "copilot-cli",
+        "surface": "custom-agent",
+        "executionMode": "interactive",
+        "version": "current"
+      },
+      "given": {
+        "hostToolsDefault": "ALL",
+        "pmcroDelegatedGrant": [
+          "read"
+        ]
+      },
+      "expect": {
+        "effectiveGrant": [
+          "read"
+        ]
+      }
+    },
+    {
+      "id": "COPILOT-003",
+      "host": {
+        "vendor": "github",
+        "product": "copilot-cli",
+        "surface": "memory",
+        "executionMode": "interactive",
+        "version": "current"
+      },
+      "given": {
+        "rootMemory": [
+          "read",
+          "write",
+          "vote"
+        ],
+        "subagentMemory": [
+          "read"
+        ]
+      },
+      "expect": {
+        "memoryReadWritePromoteAreDistinct": true
+      }
+    },
+    {
+      "id": "CURSOR-001",
+      "host": {
+        "vendor": "cursor",
+        "product": "agent-sdk",
+        "surface": "local-agent",
+        "executionMode": "resume",
+        "version": "current"
+      },
+      "given": {
+        "previousTools": [
+          "read"
+        ],
+        "resumeToolsSupplied": null
+      },
+      "expect": {
+        "reusePriorSecurityAssumption": false,
+        "authorityRebindRequired": true
+      }
+    },
+    {
+      "id": "CURSOR-002",
+      "host": {
+        "vendor": "cursor",
+        "product": "cloud-agent",
+        "surface": "automation",
+        "executionMode": "managed",
+        "version": "current"
+      },
+      "given": {
+        "persistentMemory": true,
+        "workspaceRecreated": true
+      },
+      "expect": {
+        "memoryAndWorkspacePersistenceSeparate": true
+      }
+    },
+    {
+      "id": "GROK-001",
+      "host": {
+        "vendor": "xai",
+        "product": "grok-build",
+        "surface": "skill",
+        "executionMode": "interactive",
+        "version": "current"
+      },
+      "given": {
+        "allowedToolsMetadata": [
+          "read"
+        ]
+      },
+      "expect": {
+        "treatMetadataAsEnforcement": false
+      }
+    },
+    {
+      "id": "GROK-002",
+      "host": {
+        "vendor": "xai",
+        "product": "grok-build",
+        "surface": "subagent",
+        "executionMode": "plan",
+        "version": "current"
+      },
+      "given": {
+        "parentPlanEditGate": true,
+        "childHostPermissionAllowsWrite": true,
+        "pmcroChildGrant": [
+          "read"
+        ]
+      },
+      "expect": {
+        "effectiveGrant": [
+          "read"
+        ]
+      }
+    },
+    {
+      "id": "MCP-001",
+      "host": {
+        "vendor": "mcp",
+        "product": "protocol",
+        "surface": "tools",
+        "executionMode": "stateless",
+        "version": "2026-07-28"
+      },
+      "given": {
+        "cachedToolListed": true,
+        "currentGrantKnown": false
+      },
+      "expect": {
+        "discovered": true,
+        "invokableNow": false
+      }
+    },
+    {
+      "id": "MCP-002",
+      "host": {
+        "vendor": "mcp",
+        "product": "protocol",
+        "surface": "tasks",
+        "executionMode": "stateless",
+        "version": "2026-07-28"
+      },
+      "given": {
+        "protocolSessionExists": false,
+        "durableTaskExists": true
+      },
+      "expect": {
+        "contradiction": false,
+        "protocolAndPersistenceSeparate": true
+      }
+    },
+    {
+      "id": "MAF-001",
+      "host": {
+        "vendor": "microsoft",
+        "product": "agent-framework",
+        "surface": "self-host",
+        "executionMode": "server",
+        "version": "current"
+      },
+      "given": {
+        "validContinuationId": true,
+        "principalOwnsContinuation": false
+      },
+      "expect": {
+        "resumeAllowed": false
+      }
+    },
+    {
+      "id": "MAF-002",
+      "host": {
+        "vendor": "microsoft",
+        "product": "agent-framework",
+        "surface": "hosting",
+        "executionMode": "server",
+        "version": "current"
+      },
+      "given": {
+        "hosting": "self-hosted",
+        "protocolBefore": "responses",
+        "protocolAfter": "a2a"
+      },
+      "expect": {
+        "hostingChanged": false,
+        "protocolChanged": true
+      }
+    }
+  ],
+  "candidateRevision": "r1",
+  "repairSource": "CHECK-027",
+  "repairedDefects": [
+    "DEFECT-027-01",
+    "DEFECT-027-02",
+    "DEFECT-027-03",
+    "DEFECT-027-04",
+    "DEFECT-027-05",
+    "DEFECT-027-06"
+  ]
+}

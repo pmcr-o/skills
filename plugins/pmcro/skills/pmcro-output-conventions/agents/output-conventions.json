@@ -1,0 +1,19 @@
+{
+  "id": "pmcro.output-conventions",
+  "kind": "handoff-contract-agent",
+  "independentSurface": true,
+  "displayName": "PMCR-O typed skill output",
+  "entrypoints": ["$pmcro-output-conventions", "@orchestrator /pmcro:output"],
+  "inputs": ["skill_output_envelope", "output_profile", "next_role", "trail_ref"],
+  "outputs": ["canonical_json", "dotnet_console_projection", "trail_projection", "handoff_decision"],
+  "accept": ["required envelope fields", "phase transition is allowed", "simulation labels are preserved", "next seed is unexecuted"],
+  "deny": ["free-form untyped handoff", "simulation as execution", "phase jump", "self-approval", "implicit tool grant"],
+  "allowedTools": ["filesystem.read", "validator", "trail.append"],
+  "profiles": ["json", "dotnet-console", "trail"],
+  "contextBoundary": "message-scoped",
+  "maxTurns": 2,
+  "maxDepth": 1,
+  "samplePromptsRef": "references/sample-prompts.md",
+  "independentChecker": false,
+  "authority": "format-and-route-only"
+}

@@ -1,0 +1,47 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "skill.create.request",
+  "requestId": "req-example-001",
+  "trailId": "trail-example",
+  "cycleId": "cycle-example",
+  "sourceIntent": "Create a bounded console-output skill.",
+  "plugin": "pmcro",
+  "skill": "dotnet-console-output",
+  "description": "Render checked PMCR-O output for a .NET console projection.",
+  "purpose": "Provide a reusable, documented console output adapter.",
+  "scope": "project",
+  "validatedResources": [
+    "pmcro-output-conventions",
+    "pmcro-agent-surface"
+  ],
+  "requiredFolders": [
+    "agents"
+  ],
+  "requiredFiles": [
+    "SKILL.md"
+  ],
+  "samplePromptsRef": null,
+  "messageContract": {
+    "input": [
+      "intent"
+    ],
+    "output": [
+      "SkillOutput"
+    ],
+    "accept": [
+      "checker passes"
+    ],
+    "deny": [
+      "unscoped authority"
+    ]
+  },
+  "mode": "simulate",
+  "optionalFolders": [
+    "references",
+    "assets",
+    "scripts",
+    "tests"
+  ],
+  "candidateState": "generated-unchecked",
+  "registrationRequiredBeforeUse": true
+}

@@ -1,0 +1,44 @@
+{
+  "apiVersion": "pmcro.projection-result/v1",
+  "provider": "claude-code",
+  "canonicalMarketplaceRef": ".pmcro-plugin/marketplace.json",
+  "canonical": false,
+  "grantsRuntimeAuthority": false,
+  "plugins": [
+    {
+      "id": "pmcro",
+      "canonicalManifestRef": "plugins/pmcro/.pmcro-plugin/plugin.json",
+      "providerManifestRef": "plugins/pmcro/.claude-plugin/plugin.json"
+    }
+  ],
+  "projectAgents": [
+    "pmcro-checker",
+    "pmcro-maker",
+    "pmcro-orchestrator",
+    "pmcro-planner",
+    "pmcro-reflector"
+  ],
+  "projectSkills": [
+    "desktop-commander",
+    "pmcro-agent-surface",
+    "pmcro-capability-import",
+    "pmcro-checker",
+    "pmcro-clean-architecture",
+    "pmcro-generic-crud",
+    "pmcro-init",
+    "pmcro-maker",
+    "pmcro-memory-governance",
+    "pmcro-message-queue",
+    "pmcro-messages-protocol",
+    "pmcro-orchestrator",
+    "pmcro-output-conventions",
+    "pmcro-planner",
+    "pmcro-product-repo",
+    "pmcro-reflector",
+    "pmcro-resource-registry",
+    "pmcro-session-marketplace",
+    "pmcro-skill-lifecycle",
+    "reflect"
+  ],
+  "generatedFileCount": 366
+}

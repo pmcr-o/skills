@@ -1,0 +1,15 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "CleanArchitectureRequest",
+  "requestId": "clean-architecture-simulation-001",
+  "traceId": "trace-clean-architecture-001",
+  "applicationName": "ProjectName.OrchestrationService",
+  "rootNamespace": "ProjectName.OrchestrationService",
+  "targetFramework": "net8.0",
+  "entities": ["Customer", "Order"],
+  "source": {"type": "local-template", "ref": null},
+  "target": {"root": "staged/ProjectName.OrchestrationService", "scope": "project"},
+  "mode": "simulate",
+  "grant": {"sideEffects": "none", "resources": ["project.stage"], "expires": "cycle"},
+  "outputProfile": "dotnet-console"
+}

@@ -1,0 +1,37 @@
+{
+  "cycle": "REPAIR-028",
+  "makerIdentity": "I-MAKE-028",
+  "checkerIdentity": "I-CHECK-028",
+  "sourceCheck": "CHECK-027",
+  "candidate": "PMCR-O INIT v0.2-r1",
+  "aggregateVerdict": "PASS",
+  "candidateIntegrity": "PASS",
+  "failedOriginalCandidateIntegrity": "PASS",
+  "trainingEligible": false,
+  "registrationState": "UNREGISTERED",
+  "activation": "NONE",
+  "repairs": [
+    "DEFECT-027-01",
+    "DEFECT-027-02",
+    "DEFECT-027-03",
+    "DEFECT-027-04",
+    "DEFECT-027-05",
+    "DEFECT-027-06"
+  ],
+  "baseline": {
+    "jsonDocuments": "14/14 PASS",
+    "draft202012Schemas": "12/12 PASS",
+    "wrapperRefs": "11/11 PASS",
+    "protobuf": "PASS",
+    "candidatePytest": "50/50 PASS"
+  },
+  "independentChecker": {
+    "checks": {
+      "total": 21,
+      "pass": 21,
+      "fail": 0
+    },
+    "verdict": "PASS"
+  },
+  "promotionEffect": "NONE; CHECK PASS does not register or activate candidate"
+}

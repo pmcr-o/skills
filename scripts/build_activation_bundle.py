@@ -25,6 +25,7 @@ TEXT_SUFFIXES = {
     ".sln",
     ".py",
     ".ps1",
+    ".proto",
     ".txt",
     ".tmpl",
     ".yaml",

@@ -1,0 +1,45 @@
+{
+  "apiVersion": "pmcro.check/v1",
+  "kind": "checker.verdict",
+  "cycle": "MATERIALIZE-030",
+  "check": "CHECK-030",
+  "checkerIdentity": "I-CHECK-030",
+  "checker": "I-CHECK-030",
+  "makerIdentity": "I-MAKE-030",
+  "independent": true,
+  "repositoryBase": "981f8130b1cbf259741b1e53974af068fcfee435",
+  "artifact": "PMCR-O INIT v0.2-r1 marketplace materialization",
+  "canonicalSkillTreeDigest": "22748bf4ef11a634e5e5c8d02178e09e5cf03ec5846c4a4bde433a4a6a570a3e",
+  "checks": {
+    "total": 51,
+    "pass": 50,
+    "fail": 1
+  },
+  "verdict": "FAIL",
+  "defects": [
+    {
+      "id": "DEFECT-030-01",
+      "invariant": "generated provider projection working surfaces contain no runtime cache artifacts",
+      "observed": "5 ignored/untracked __pycache__/*.pyc files exist under plugins/pmcro/skills after an earlier root-pytest collection attempt",
+      "stagedIndexRuntimeCacheCount": 0,
+      "workingSurfaceRuntimeCacheCount": 5,
+      "effect": "materialized migration cannot receive independent PASS in this Cycle even though the staged index itself contains no cache files",
+      "repairAllowedInCheck": false
+    }
+  ],
+  "executionRecheck": {
+    "haltedBeforeIndependentExecutableRecheck": true,
+    "reason": "CHECK is verification-only and halted on the first materialized-surface invariant failure",
+    "makerEvidenceRef": ".pmcro/evidence/pmcro-init-materialization-validation.json"
+  },
+  "lifecycle": {
+    "registrationAuthorized": false,
+    "mergeAuthorized": false,
+    "activationAuthorized": false,
+    "sameCycleUseAllowed": false,
+    "plannerAdmissible": false
+  },
+  "trainingEligible": false,
+  "nextRegistrationCycleMayBeSeeded": false,
+  "result": "LOOP"
+}

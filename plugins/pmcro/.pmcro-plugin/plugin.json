@@ -5,7 +5,7 @@
   "name": "pmcro",
   "displayName": "PMCR-O",
   "description": "Canonical PMCR-O plugin package contract.",
-  "version": "0.4.0-candidate",
+  "version": "0.4.1-candidate",
   "authority": "canonical",
   "status": "candidate-unregistered",
   "entrypoint": "@orchestrator /pmcro",
@@ -123,6 +123,13 @@
       "registryRef": ".pmcro/registry/index.json#resources/1",
       "registrationState": "registered-checked",
       "firstUsePolicy": "fresh-later-cycle-only"
+    },
+    {
+      "id": "pmcro-init",
+      "sourceRef": "skills/pmcro-init",
+      "registryRef": ".pmcro/registry/index.json#resources/2",
+      "registrationState": "checked-candidate",
+      "plannerAdmissible": false
     }
   ],
   "providerProjectionAuthority": false,

@@ -1,0 +1,6 @@
+interface:
+  display_name: "PMCR-O Messages Protocol"
+  short_description: "Validate role-owned PMCR-O frames"
+  default_prompt: "Use $pmcro-messages-protocol to create or validate role-owned PMCR-O message frames."
+  sample_prompts_ref: "references/sample-prompts.md"
+  independent_surface: true

@@ -1,0 +1,6 @@
+interface:
+  display_name: "PMCR-O Memory Governance"
+  short_description: "Promote scoped, checked agent memory safely"
+  default_prompt: "Use $pmcro-memory-governance to validate one memory record, its provenance, scope, retention, evidence, and promotion state."
+  sample_prompts_ref: "references/sample-prompts.md"
+  independent_surface: true

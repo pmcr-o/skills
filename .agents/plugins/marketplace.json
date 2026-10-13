@@ -1,1 +1,611 @@
-{"marketplaceId":"thought-transfer-pmcro","version":"0.3.4","sourceOfTruth":[".pmcro-plugin/marketplace.json","plugins/pmcro/.pmcro-plugin/plugin.json","skills/"],"plugins":[{"id":"pmcro","displayName":"PMCR-O control and marketplace plugin","version":"0.3.4","manifest":"plugins/pmcro/plugin.json","defaultOutputContract":"templates/skill-output-envelope.json","samplePromptContract":"templates/skill-manifest.json#samplePrompts","outputProfiles":["json","dotnet-console","trail"],"promotion":"checker-verified-only","skills":[{"id":"reflect","path":"skills/reflect","agent":"skills/reflect/agents/reflect.json","entrypoint":"$reflect","phase":"reflect","waitFor":"checker.verdict(status=complete, independent=true)","input":["checker_verdict","trail_ref","queue_ref","next_seed_request"],"output":["reflector_frame","earned_constraint","unexecuted_next_seed","wait_state"],"accept":["checker frame is complete and independent","next seed is unexecuted"],"deny":["self-approval","seed execution","phase jump","credential access","trail rewrite"]},{"id":"pmcro-messages-protocol","path":"skills/pmcro-messages-protocol","agent":"skills/pmcro-messages-protocol/agents/pmcro-messages-protocol.json","entrypoint":"$pmcro-messages-protocol","phase":"control-plane","input":["frame_jsonl","validated_resource_refs","charter"],"output":["protocol_files","frame_validation","handoff_evidence","unexecuted_next_seed"],"accept":["role-owned kinds","hash chain","contiguous sequence","bounded caps"],"deny":["broken chain","role impersonation","non-independent checker","automatic seed execution"]},{"id":"pmcro-session-marketplace","path":"skills/pmcro-session-marketplace","agent":"skills/pmcro-session-marketplace/agents/session-marketplace.json","entrypoint":"$pmcro-session-marketplace","phase":"make","input":["authorized_source_path","owner_consent","domain_hints","max_cycles","include_raw"],"output":["source_manifest","pmcro_frames","skill_candidate","training_candidates","checker_evidence","next_seed"],"accept":["source hash","redaction","candidate labeling","separate checker"],"deny":["private provider history","credentials","unverified runtime claims","automatic training","automatic promotion","unbounded recursion"]},{"id":"pmcro-agent-surface","path":"skills/pmcro-agent-surface","agent":"skills/pmcro-agent-surface/agents/agent-surface.json","entrypoint":"$pmcro-agent-surface","phase":"orchestrate","input":["component_ref","scope","activation_mode","grant","dependency_refs","acceptance_cases"],"output":["activation_envelope","api_response","simulation_trace","parity_result","checker_handoff","next_seed"],"accept":["scope and inheritance are explicit","simulation is labeled","grant is non-widening","checker is separate"],"deny":["implicit authority cascade","dry-run runtime claim","self-approval","credential discovery","unbounded delegation"]},{"id":"pmcro-output-conventions","path":"skills/pmcro-output-conventions","agent":"skills/pmcro-output-conventions/agents/output-conventions.json","entrypoint":"$pmcro-output-conventions","phase":"control-plane","input":["skill_output_envelope","output_profile","next_role","trail_ref"],"output":["canonical_json","dotnet_console_projection","trail_projection","handoff_decision"],"accept":["required envelope fields","phase transition is allowed","simulation labels are preserved","next seed is unexecuted"],"deny":["free-form untyped handoff","simulation as execution","phase jump","self-approval","implicit tool grant"]},{"id":"pmcro-bip","path":"plugins/pmcro/plugin.json#skills/pmcro-bip","entrypoint":"$pmcro-bip","phase":"orchestrate","input":["raw_seed","constraints","examples","validated_resources"],"output":["intent_envelope","behavior_contract","acceptance_cases","next_seed"],"accept":["behavior is observable","authority is explicit","examples are provenance-linked","checker is required"],"deny":["hidden reasoning export","authority from examples","unbounded recursion","self-promotion"]},{"id":"pmcro-marketplace","path":"plugins/pmcro/plugin.json#skills/pmcro-marketplace","entrypoint":"$pmcro-marketplace","phase":"make","input":["catalog","manifest","validated_resources","parent_grant","depth"],"output":["staged_artifact","dependency_graph","checker_handoff","next_seed"],"accept":["source/ref is pinned","required skill folders exist","child depth is bounded","promotion is staged"],"deny":["automatic promotion","grant widening","unbounded child generation","unverified runtime claim"]},{"id":"pmcro-github-marketplace","path":"plugins/pmcro/plugin.json#skills/pmcro-github-marketplace","entrypoint":"$pmcro-github-marketplace","phase":"make","input":["repository","exact_ref","license","catalog_query","domain_charter"],"output":["progressive_catalog_entry","adapter","source_provenance","checker_handoff","next_seed"],"accept":["repository/ref is exact","disclosure is progressive","trust is explicit","checker validates child"],"deny":["branch as executable authority","silent network access","automatic publish","unverified repository claim"]},{"id":"pmcro-trail-product","path":"plugins/pmcro/plugin.json#skills/pmcro-trail-product","entrypoint":"$pmcro-trail-product","phase":"reflect","input":["authorized_trail","consent","audience","product_type","checker_verdict"],"output":["progressive_product_views","provenance","redaction_report","promotion_state","next_seed"],"accept":["trail is authorized","raw source is read-only","redaction and provenance are present","checker is separate"],"deny":["private reasoning export","credential exposure","simulation as execution","automatic publication"]},{"id":"pmcro-memory-governance","path":"skills/pmcro-memory-governance","agent":"skills/pmcro-memory-governance/agents/memory-governance.json","entrypoint":"$pmcro-memory-governance","phase":"reflect","input":["memory_record","scope","owner","consent","trail_refs","checker_verdict"],"output":["validated_record","promotion_decision","redaction_report","retention_policy","next_seed"],"accept":["schema valid","secret-free","scope explicit","provenance present","freshness and retention present","checker/policy gate present"],"deny":["credential storage","private reasoning export","candidate as active lesson","unbounded prompt growth","silent cross-user sharing","self-promotion"]},{"id":"pmcro-generic-crud","path":"skills/pmcro-generic-crud","agent":"skills/pmcro-generic-crud/agents/generic-crud.json","entrypoint":"$pmcro-generic-crud","phase":"make","input":["resource_ref","operation","projection","grant","expected_version","base_model","repository_contract"],"output":["crud_result","version_ref","disclosure_refs","simulation_status","checker_handoff","dotnet_base_model","generic_repository_contract","unit_of_work_contract"],"accept":["operation is explicit","resource scope is explicit","updates are versioned","delete is revocation-safe","output envelope is valid"],"deny":["implicit overwrite","physical delete by default","scope widening","simulation as execution","self-approval"]},{"id":"pmcro-clean-architecture","path":"skills/pmcro-clean-architecture","agent":"skills/pmcro-clean-architecture/agents/clean-architecture.json","entrypoint":"$pmcro-clean-architecture","phase":"make","input":["application_name","root_namespace","target_framework","entity_specs","source_repo_ref","target_root","scope","mode","grant"],"output":["architecture_plan","layer_paths","repository_contract","unit_of_work_contract","agent_surface","validation_evidence","checker_handoff","next_seed"],"accept":["application identity is explicit","target scope is bounded","source ref is pinned or local baseline is selected","EntityBase and generic repository constraints are declared","checker handoff is separate"],"deny":["un pinned external source","unknown overwrite","credential access","silent package installation","simulation as runtime proof","self-approval","unbounded child generation"]},{"id":"pmcro-product-repo","path":"skills/pmcro-product-repo","agent":"skills/pmcro-product-repo/agents/pmcro-product-repo.json","entrypoint":"$pmcro-product-repo","phase":"make","input":["product_intent","repository_root","principal","autonomy_grant","provider_adapters","trail_id"],"output":["product_manifest","autonomy_grant","generic_trail","activation_bundle","checker_handoff","next_seed"],"accept":["grant is finite","trail is generic","checker is separate","activation is progressive"],"deny":["blanket autonomy","credential access","unbounded recursion","automatic publishing","self-approval"]},{"id":"pmcro-capability-import","path":"skills/pmcro-capability-import","agent":"skills/pmcro-capability-import/agents/capability-import.json","entrypoint":"$pmcro-capability-import","phase":"make","input":["source_snapshot","source_ref","target_skill","target_plugin","raw_seed"],"output":["capability_import_ir","skill_creator_handoff","checker_handoff","next_seed"],"accept":["source/ref is pinned","secret material is excluded","import grants no execution authority","independent checker is required"],"deny":["imported-tool execution","credential-value capture","transport as authority","automatic promotion","self-approval"]},{"id":"pmcro-resource-registry","path":"skills/pmcro-resource-registry","agent":"skills/pmcro-resource-registry/agents/pmcro-resource-registry.json","entrypoint":"$pmcro-resource-registry","phase":"control-plane","input":["registry_root","resource_id","resource_kind","content_path","producer_agent","checker_evidence","trail_ref"],"output":["registry_record","registry_event","verification_result","planner_resolution"],"accept":["independent checker PASS","registered-checked Planner resolution","append-only revocation","provenance preserved"],"deny":["self-certification","grant widening","physical provenance erasure","same-cycle use after registration"],"registryRef":".pmcro/registry/index.json#resources/0","registrationState":"registered-checked"},{"id":"pmcro-message-queue","path":"skills/pmcro-message-queue","agent":"skills/pmcro-message-queue/agents/pmcro-message-queue.json","entrypoint":"$pmcro-message-queue","phase":"runtime-adapter","input":["queue_root","target_agent","message_envelope","worker_id","retry_policy"],"output":["queue_config","delivery_state","immutable_receipt","dead_letter_evidence"],"accept":["semantic idempotency","atomic claim","bounded retries","immutable ACK receipt","local trail ownership"],"deny":["transport as authority","phase injection","automatic REFLECT seed execution","shared mutable trail"],"registryRef":".pmcro/registry/index.json#resources/1","registrationState":"registered-checked"}]}],"projectionOf":".pmcro-plugin/marketplace.json"}
+{
+  "apiVersion": "pmcro.agents-projection/v1",
+  "marketplaceId": "thought-transfer-pmcro",
+  "version": "0.4.1-candidate",
+  "sourceOfTruth": [
+    ".pmcro-plugin/marketplace.json",
+    "plugins/pmcro/.pmcro-plugin/plugin.json",
+    "skills/"
+  ],
+  "plugins": [
+    {
+      "id": "pmcro",
+      "displayName": "PMCR-O",
+      "version": "0.4.1-candidate",
+      "manifest": "plugins/pmcro/.pmcro-plugin/plugin.json",
+      "promotion": "checker-verified-only",
+      "skills": [
+        {
+          "id": "reflect",
+          "path": "skills/reflect",
+          "agent": "skills/reflect/agents/reflect.json",
+          "entrypoint": "$reflect",
+          "input": [
+            "checker_verdict",
+            "trail_ref",
+            "queue_ref",
+            "next_seed_request"
+          ],
+          "output": [
+            "reflector_frame",
+            "earned_constraint",
+            "unexecuted_next_seed",
+            "wait_state"
+          ],
+          "accept": [],
+          "deny": []
+        },
+        {
+          "id": "pmcro-messages-protocol",
+          "path": "skills/pmcro-messages-protocol",
+          "agent": "skills/pmcro-messages-protocol/agents/pmcro-messages-protocol.json",
+          "entrypoint": "$pmcro-messages-protocol",
+          "input": [
+            "target_protocol_path",
+            "frame_jsonl",
+            "validated_resource_refs",
+            "charter"
+          ],
+          "output": [
+            "protocol_files",
+            "frame_validation",
+            "handoff_evidence",
+            "unexecuted_next_seed"
+          ],
+          "accept": [],
+          "deny": []
+        },
+        {
+          "id": "pmcro-session-marketplace",
+          "path": "skills/pmcro-session-marketplace",
+          "agent": "skills/pmcro-session-marketplace/agents/session-marketplace.json",
+          "entrypoint": "$pmcro-session-marketplace",
+          "input": [
+            "authorized_source_path",
+            "owner_consent",
+            "domain_hints",
+            "max_cycles",
+            "include_raw"
+          ],
+          "output": [
+            "source_manifest",
+            "pmcro_frames",
+            "skill_candidate",
+            "training_candidates",
+            "checker_evidence",
+            "next_seed"
+          ],
+          "accept": [
+            "source is user-authorized",
+            "hash and provenance are recorded",
+            "redaction is applied",
+            "simulation claims are labeled",
+            "checker frame is independent"
+          ],
+          "deny": [
+            "private provider logs",
+            "credentials or tokens",
+            "unverified runtime claims",
+            "automatic training",
+            "automatic promotion",
+            "unbounded recursion"
+          ]
+        },
+        {
+          "id": "pmcro-agent-surface",
+          "path": "skills/pmcro-agent-surface",
+          "agent": "skills/pmcro-agent-surface/agents/agent-surface.json",
+          "entrypoint": "$pmcro-agent-surface",
+          "input": [
+            "component_ref",
+            "scope",
+            "activation_mode",
+            "grant",
+            "dependency_refs",
+            "acceptance_cases"
+          ],
+          "output": [
+            "activation_envelope",
+            "api_response",
+            "simulation_trace",
+            "parity_result",
+            "checker_handoff",
+            "next_seed"
+          ],
+          "accept": [
+            "scope and inheritance are explicit",
+            "simulation is labeled",
+            "grant is non-widening",
+            "checker is separate"
+          ],
+          "deny": [
+            "implicit authority cascade",
+            "dry-run runtime claim",
+            "self-approval",
+            "credential discovery",
+            "unbounded delegation"
+          ]
+        },
+        {
+          "id": "pmcro-output-conventions",
+          "path": "skills/pmcro-output-conventions",
+          "agent": "skills/pmcro-output-conventions/agents/output-conventions.json",
+          "entrypoint": "$pmcro-output-conventions",
+          "input": [
+            "skill_output_envelope",
+            "output_profile",
+            "next_role",
+            "trail_ref"
+          ],
+          "output": [
+            "canonical_json",
+            "dotnet_console_projection",
+            "trail_projection",
+            "handoff_decision"
+          ],
+          "accept": [
+            "required envelope fields",
+            "phase transition is allowed",
+            "simulation labels are preserved",
+            "next seed is unexecuted"
+          ],
+          "deny": [
+            "free-form untyped handoff",
+            "simulation as execution",
+            "phase jump",
+            "self-approval",
+            "implicit tool grant"
+          ]
+        },
+        {
+          "id": "pmcro-memory-governance",
+          "path": "skills/pmcro-memory-governance",
+          "agent": "skills/pmcro-memory-governance/agents/memory-governance.json",
+          "entrypoint": "$pmcro-memory-governance",
+          "input": [
+            "memory_record",
+            "scope",
+            "owner",
+            "consent",
+            "trail_refs",
+            "checker_verdict"
+          ],
+          "output": [
+            "validated_record",
+            "promotion_decision",
+            "redaction_report",
+            "retention_policy",
+            "next_seed"
+          ],
+          "accept": [
+            "schema valid",
+            "secret-free",
+            "scope explicit",
+            "provenance present",
+            "freshness and retention present",
+            "checker/policy gate present"
+          ],
+          "deny": [
+            "credential storage",
+            "private reasoning export",
+            "candidate as active lesson",
+            "unbounded prompt growth",
+            "silent cross-user sharing",
+            "self-promotion"
+          ]
+        },
+        {
+          "id": "pmcro-generic-crud",
+          "path": "skills/pmcro-generic-crud",
+          "agent": "skills/pmcro-generic-crud/agents/generic-crud.json",
+          "entrypoint": "$pmcro-generic-crud",
+          "input": [
+            "resource_ref",
+            "operation",
+            "projection",
+            "grant",
+            "expected_version",
+            "base_model",
+            "repository_contract"
+          ],
+          "output": [
+            "crud_result",
+            "version_ref",
+            "disclosure_refs",
+            "simulation_status",
+            "checker_handoff",
+            "dotnet_base_model",
+            "generic_repository_contract",
+            "unit_of_work_contract"
+          ],
+          "accept": [
+            "operation is explicit",
+            "resource scope is explicit",
+            "updates are versioned",
+            "delete is revocation-safe",
+            "output envelope is valid"
+          ],
+          "deny": [
+            "implicit overwrite",
+            "physical delete by default",
+            "scope widening",
+            "simulation as execution",
+            "self-approval"
+          ]
+        },
+        {
+          "id": "pmcro-clean-architecture",
+          "path": "skills/pmcro-clean-architecture",
+          "agent": "skills/pmcro-clean-architecture/agents/clean-architecture.json",
+          "entrypoint": "$pmcro-clean-architecture",
+          "input": [
+            "application_name",
+            "root_namespace",
+            "target_framework",
+            "entity_specs",
+            "source_repo_ref",
+            "target_root",
+            "scope",
+            "mode",
+            "grant"
+          ],
+          "output": [
+            "architecture_plan",
+            "layer_paths",
+            "repository_contract",
+            "unit_of_work_contract",
+            "agent_surface",
+            "validation_evidence",
+            "checker_handoff",
+            "next_seed"
+          ],
+          "accept": [
+            "application identity is explicit",
+            "target scope is bounded",
+            "source ref is pinned or local baseline is selected",
+            "EntityBase and generic repository constraints are declared",
+            "checker handoff is separate"
+          ],
+          "deny": [
+            "un pinned external source",
+            "unknown overwrite",
+            "credential access",
+            "silent package installation",
+            "simulation as runtime proof",
+            "self-approval",
+            "unbounded child generation"
+          ]
+        },
+        {
+          "id": "desktop-commander",
+          "path": "skills/desktop-commander",
+          "agent": "skills/desktop-commander/agents/desktop-commander.json",
+          "entrypoint": "@desktop-commander",
+          "input": [],
+          "output": [],
+          "accept": [],
+          "deny": []
+        },
+        {
+          "id": "pmcro-skill-lifecycle",
+          "path": "skills/pmcro-skill-lifecycle",
+          "agent": "skills/pmcro-skill-lifecycle/agents/pmcro-skill-lifecycle.json",
+          "entrypoint": "@skill-creator /create-skill",
+          "input": [],
+          "output": [],
+          "accept": [],
+          "deny": []
+        },
+        {
+          "id": "pmcro-product-repo",
+          "path": "skills/pmcro-product-repo",
+          "agent": "skills/pmcro-product-repo/agents/pmcro-product-repo.json",
+          "entrypoint": "$pmcro-product-repo",
+          "input": [
+            "product_intent",
+            "repository_root",
+            "principal",
+            "autonomy_grant",
+            "provider_adapters",
+            "trail_id"
+          ],
+          "output": [
+            "product_manifest",
+            "autonomy_grant",
+            "generic_trail",
+            "activation_bundle",
+            "checker_handoff",
+            "next_seed"
+          ],
+          "accept": [
+            "grant is finite and revocable",
+            "routine operations are scoped",
+            "trail is generic and provenance-linked",
+            "checker is separate",
+            "activation is progressive"
+          ],
+          "deny": [
+            "blanket autonomy",
+            "credential access",
+            "unbounded recursion",
+            "secret or private-reasoning export",
+            "self-approval",
+            "automatic publishing"
+          ]
+        },
+        {
+          "id": "pmcro-capability-import",
+          "path": "skills/pmcro-capability-import",
+          "agent": "skills/pmcro-capability-import/agents/capability-import.json",
+          "entrypoint": "$pmcro-capability-import",
+          "input": [
+            "source_snapshot",
+            "source_ref",
+            "target_skill",
+            "target_plugin",
+            "raw_seed"
+          ],
+          "output": [
+            "capability_import_ir",
+            "skill_creator_handoff",
+            "checker_handoff",
+            "next_seed"
+          ],
+          "accept": [],
+          "deny": [
+            "credential-value-copy",
+            "network-discovery-without-registered-transport",
+            "imported-tool-execution",
+            "self-promotion",
+            "self-certification"
+          ]
+        },
+        {
+          "id": "pmcro-orchestrator",
+          "path": "skills/pmcro-orchestrator",
+          "agent": "skills/pmcro-orchestrator/agents/pmcro-orchestrator.json",
+          "entrypoint": null,
+          "input": [
+            "seed_envelope",
+            "project_context",
+            "verified_state",
+            "capability_catalog",
+            "policy_context",
+            "agent_catalog",
+            "validated_capability_catalog"
+          ],
+          "output": [
+            "orchestrated_intent",
+            "planner_handoff",
+            "delegation_decision",
+            "cycle_control_state",
+            "selected_agent_refs",
+            "validated_catalog_ref"
+          ],
+          "accept": [],
+          "deny": [
+            "credential-value-capture",
+            "phase-skip",
+            "grant-widening",
+            "model-as-authority",
+            "self-promotion",
+            "training-without-explicit-eligibility"
+          ]
+        },
+        {
+          "id": "pmcro-planner",
+          "path": "skills/pmcro-planner",
+          "agent": "skills/pmcro-planner/agents/pmcro-planner.json",
+          "entrypoint": null,
+          "input": [
+            "planner_handoff",
+            "verified_state",
+            "available_capabilities",
+            "constraints",
+            "acceptance_criteria",
+            "validated_capability_catalog",
+            "validated_agent_catalog"
+          ],
+          "output": [
+            "plan_artifact",
+            "maker_handoff",
+            "dependency_graph",
+            "required_capabilities",
+            "acceptance_plan",
+            "capability_graph",
+            "capability_gaps"
+          ],
+          "accept": [],
+          "deny": [
+            "credential-value-capture",
+            "phase-skip",
+            "grant-widening",
+            "model-as-authority",
+            "self-promotion",
+            "training-without-explicit-eligibility"
+          ]
+        },
+        {
+          "id": "pmcro-maker",
+          "path": "skills/pmcro-maker",
+          "agent": "skills/pmcro-maker/agents/pmcro-maker.json",
+          "entrypoint": null,
+          "input": [
+            "maker_handoff",
+            "plan_artifact",
+            "capability_refs",
+            "grant",
+            "verified_starting_state",
+            "validated_capability_graph",
+            "capability_gap_resolution_plan"
+          ],
+          "output": [
+            "make_result",
+            "work_products",
+            "evidence",
+            "resulting_candidate_state",
+            "checker_handoff",
+            "capability_candidate",
+            "agent_evolution_candidate"
+          ],
+          "accept": [],
+          "deny": [
+            "credential-value-capture",
+            "phase-skip",
+            "grant-widening",
+            "model-as-authority",
+            "self-promotion",
+            "training-without-explicit-eligibility"
+          ]
+        },
+        {
+          "id": "pmcro-checker",
+          "path": "skills/pmcro-checker",
+          "agent": "skills/pmcro-checker/agents/pmcro-checker.json",
+          "entrypoint": null,
+          "input": [
+            "checker_handoff",
+            "plan_artifact",
+            "make_result",
+            "evidence",
+            "acceptance_criteria",
+            "starting_state"
+          ],
+          "output": [
+            "checker_verdict",
+            "verified_state_delta",
+            "defects",
+            "evidence_assessment"
+          ],
+          "accept": [],
+          "deny": [
+            "credential-value-capture",
+            "phase-skip",
+            "grant-widening",
+            "model-as-authority",
+            "self-promotion",
+            "training-without-explicit-eligibility"
+          ]
+        },
+        {
+          "id": "pmcro-reflector",
+          "path": "skills/pmcro-reflector",
+          "agent": "skills/pmcro-reflector/agents/pmcro-reflector.json",
+          "entrypoint": null,
+          "input": [
+            "checker_verdict",
+            "verified_state",
+            "defects",
+            "trail_ref",
+            "queue_state"
+          ],
+          "output": [
+            "next_seed_intent"
+          ],
+          "accept": [],
+          "deny": [
+            "credential-value-capture",
+            "phase-skip",
+            "grant-widening",
+            "model-as-authority",
+            "self-promotion",
+            "training-without-explicit-eligibility"
+          ]
+        },
+        {
+          "id": "pmcro-resource-registry",
+          "path": "skills/pmcro-resource-registry",
+          "agent": "skills/pmcro-resource-registry/agents/pmcro-resource-registry.json",
+          "entrypoint": "python scripts/registry.py register",
+          "input": [
+            "registry_root",
+            "resource_id",
+            "resource_kind",
+            "content_path",
+            "producer_agent",
+            "checker_evidence",
+            "trail_ref"
+          ],
+          "output": [
+            "registry_record",
+            "registry_event",
+            "verification_result",
+            "planner_resolution"
+          ],
+          "accept": [],
+          "deny": [],
+          "registryRef": ".pmcro/registry/index.json#resources/0",
+          "registrationState": "registered-checked",
+          "firstUsePolicy": "fresh-later-cycle-only"
+        },
+        {
+          "id": "pmcro-message-queue",
+          "path": "skills/pmcro-message-queue",
+          "agent": "skills/pmcro-message-queue/agents/pmcro-message-queue.json",
+          "entrypoint": "python scripts/queue.py init",
+          "input": [
+            "queue_root",
+            "message_envelope",
+            "worker_id",
+            "grant_refs"
+          ],
+          "output": [
+            "immutable_envelope",
+            "delivery_state",
+            "receipt",
+            "queue_evidence"
+          ],
+          "accept": [],
+          "deny": [],
+          "registryRef": ".pmcro/registry/index.json#resources/1",
+          "registrationState": "registered-checked",
+          "firstUsePolicy": "fresh-later-cycle-only"
+        },
+        {
+          "id": "pmcro-init",
+          "path": "skills/pmcro-init",
+          "agent": "skills/pmcro-init/agents/pmcro-init.json",
+          "entrypoint": "@orchestrator /pmcro:init",
+          "input": [
+            "project_context",
+            "trail_context",
+            "host_observation",
+            "delegated_grant",
+            "verified_state_ref",
+            "continuation_state"
+          ],
+          "output": [
+            "init_frame",
+            "environment_state",
+            "authority_envelope",
+            "capability_projection",
+            "projection_status",
+            "resume_rebind",
+            "evidence_refs"
+          ],
+          "accept": [
+            "typed verified provenance",
+            "non-widening authority",
+            "five-phase cognition unchanged",
+            "resume rebind completed when resuming"
+          ],
+          "deny": [
+            "sixth cognitive phase",
+            "top-level role promotion",
+            "host adapter as authority",
+            "implicit registration",
+            "same-cycle use",
+            "automatic next-seed execution",
+            "training eligibility escalation"
+          ],
+          "registryRef": ".pmcro/registry/index.json#resources/2",
+          "registrationState": "checked-candidate",
+          "plannerAdmissible": false
+        }
+      ]
+    }
+  ],
+  "projectionOf": ".pmcro-plugin/marketplace.json",
+  "canonical": false,
+  "grantsRuntimeAuthority": false
+}

@@ -1,0 +1,21 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "CrudRequest",
+  "requestId": "crud-clean-architecture-001",
+  "traceId": "trace-clean-architecture-001",
+  "resource": {"kind": "clean-architecture-repository", "id": "ProjectName.OrchestrationService", "scope": "project", "version": "0.1.0"},
+  "operation": "create",
+  "mode": "simulate",
+  "projection": "dotnet-clean-architecture",
+  "grant": {"sideEffects": "none", "resources": ["project.stage"], "expires": "cycle"},
+  "expectedVersion": null,
+  "payload": {
+    "architecture": "clean-architecture",
+    "baseModel": "EntityBase",
+    "identity": "Guid.NewGuid()",
+    "repositoryInterface": "IGenericRepository<TEntity>",
+    "repositoryConstraint": "where TEntity : EntityBase",
+    "repositoryImplementation": "InMemoryGenericRepository<TEntity>"
+  },
+  "outputProfile": "dotnet-console"
+}

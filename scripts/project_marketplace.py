@@ -55,7 +55,11 @@ def copy_skill(source: Path, destination: Path) -> int:
         raise ValueError(f"skill source lacks SKILL.md: {source}")
     if destination.exists():
         shutil.rmtree(destination)
-    shutil.copytree(source, destination)
+    shutil.copytree(
+        source,
+        destination,
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo", ".pytest_cache", ".mypy_cache", ".ruff_cache"),
+    )
     return sum(1 for path in destination.rglob("*") if path.is_file())
 
 

@@ -1,0 +1,1534 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/schemas/init/v0.2/pmcro-init.schema.json",
+  "title": "PMCR-O INIT v0.2 Canonical Contract \u2014 candidate repair r1",
+  "type": "object",
+  "$defs": {
+    "Ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "Digest": {
+      "type": "string",
+      "pattern": "^[A-Fa-f0-9]{64}$"
+    },
+    "CognitivePhase": {
+      "type": "string",
+      "enum": [
+        "ORCHESTRATE",
+        "PLAN",
+        "MAKE",
+        "CHECK",
+        "REFLECT"
+      ]
+    },
+    "ProjectionStatus": {
+      "type": "string",
+      "enum": [
+        "FULL",
+        "ADAPTED",
+        "DEGRADED",
+        "BLOCKED",
+        "UNSUPPORTED"
+      ]
+    },
+    "HostSurfaceKey": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "vendor",
+        "product",
+        "surface",
+        "executionMode",
+        "version"
+      ],
+      "properties": {
+        "vendor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "product": {
+          "type": "string",
+          "minLength": 1
+        },
+        "surface": {
+          "type": "string",
+          "minLength": 1
+        },
+        "executionMode": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "GrantAtom": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capabilityRef",
+        "actions",
+        "resourceScope",
+        "effectClass"
+      ],
+      "properties": {
+        "capabilityRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "resourceScope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effectClass": {
+          "type": "string",
+          "enum": [
+            "READ",
+            "WRITE",
+            "EXECUTE",
+            "NETWORK",
+            "SECRET",
+            "ADMIN"
+          ]
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "expiresAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      }
+    },
+    "EnvironmentState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hostSurface",
+        "workspace",
+        "filesystem",
+        "execution",
+        "network",
+        "sandbox",
+        "lifecycle",
+        "evidenceRefs"
+      ],
+      "properties": {
+        "hostSurface": {
+          "$ref": "#/$defs/HostSurfaceKey"
+        },
+        "workspace": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "available",
+            "dirty"
+          ],
+          "properties": {
+            "available": {
+              "type": "boolean"
+            },
+            "workspaceId": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "root": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "repositoryRef": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "revision": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "branch": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "dirty": {
+              "type": "boolean"
+            },
+            "dirtyEvidenceRef": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "filesystem": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "readBoundary",
+            "writeBoundary",
+            "persistence"
+          ],
+          "properties": {
+            "readBoundary": {
+              "type": "string"
+            },
+            "writeBoundary": {
+              "type": "string"
+            },
+            "persistence": {
+              "type": "string",
+              "enum": [
+                "NONE",
+                "EPHEMERAL",
+                "SESSION",
+                "DURABLE"
+              ]
+            }
+          }
+        },
+        "execution": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "shell",
+            "processes",
+            "packageInstall",
+            "computerUse",
+            "browser"
+          ],
+          "properties": {
+            "shell": {
+              "type": "boolean"
+            },
+            "processes": {
+              "type": "boolean"
+            },
+            "packageInstall": {
+              "type": "boolean"
+            },
+            "computerUse": {
+              "type": "boolean"
+            },
+            "browser": {
+              "type": "boolean"
+            }
+          }
+        },
+        "network": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "available",
+            "boundary"
+          ],
+          "properties": {
+            "available": {
+              "type": "boolean"
+            },
+            "boundary": {
+              "type": "string"
+            }
+          }
+        },
+        "sandbox": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "available"
+          ],
+          "properties": {
+            "available": {
+              "type": "boolean"
+            },
+            "mechanism": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "filesystemBoundary": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "networkBoundary": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "lifecycle": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ephemeral",
+            "resumable",
+            "durable",
+            "background"
+          ],
+          "properties": {
+            "ephemeral": {
+              "type": "boolean"
+            },
+            "resumable": {
+              "type": "boolean"
+            },
+            "durable": {
+              "type": "boolean"
+            },
+            "background": {
+              "type": "boolean"
+            }
+          }
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Ref"
+          }
+        }
+      }
+    },
+    "AuthorityEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authorityId",
+        "principalRef",
+        "delegatedGrant",
+        "hostMaximum",
+        "environmentMaximum",
+        "denies",
+        "revocationState",
+        "rebindRequiredOnResume",
+        "evidenceRefs"
+      ],
+      "properties": {
+        "authorityId": {
+          "$ref": "#/$defs/Ref"
+        },
+        "principalRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "delegatedFrom": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "delegatedGrant": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GrantAtom"
+          }
+        },
+        "hostMaximum": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GrantAtom"
+          }
+        },
+        "environmentMaximum": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GrantAtom"
+          }
+        },
+        "denies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GrantAtom"
+          }
+        },
+        "approvalRequirements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "expiration": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "revocationState": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "REVOKED",
+            "EXPIRED"
+          ]
+        },
+        "rebindRequiredOnResume": {
+          "const": true
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Ref"
+          }
+        }
+      }
+    },
+    "VerifiedStateRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stateId",
+        "originatingProjectRef",
+        "originatingTrailRef",
+        "originatingCycleRef",
+        "checkerVerdict",
+        "evidenceProof",
+        "stateDigest",
+        "verifiedAt"
+      ],
+      "properties": {
+        "stateId": {
+          "$ref": "#/$defs/Ref"
+        },
+        "originatingProjectRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "originatingTrailRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "originatingCycleRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "checkerVerdict": {
+          "$ref": "#/$defs/CheckerVerdict"
+        },
+        "evidenceProof": {
+          "$ref": "#/$defs/EvidenceProof"
+        },
+        "stateDigest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "verifiedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "validityConstraints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "checkerVerdict": {
+              "properties": {
+                "verdict": {
+                  "const": "PASS"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CapabilityProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hostObservation",
+        "pmcro"
+      ],
+      "properties": {
+        "hostObservation": {
+          "$ref": "#/$defs/HostCapabilityObservation"
+        },
+        "pmcro": {
+          "$ref": "#/$defs/PmcroCapabilityState"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "hostObservation": {
+                "properties": {
+                  "hostAvailable": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "pmcro": {
+                "properties": {
+                  "invokableNow": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "hostObservation": {
+                "properties": {
+                  "hostGranted": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "pmcro": {
+                "properties": {
+                  "invokableNow": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CapabilitySurface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "discovery",
+        "instruction",
+        "memory",
+        "grant",
+        "execution",
+        "persistence",
+        "protocol",
+        "hosting",
+        "registration"
+      ],
+      "properties": {
+        "discovery": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityProjection"
+          }
+        },
+        "instruction": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityProjection"
+          }
+        },
+        "memory": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityProjection"
+          }
+        },
+        "grant": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityProjection"
+          }
+        },
+        "execution": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityProjection"
+          }
+        },
+        "persistence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityProjection"
+          }
+        },
+        "protocol": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityProjection"
+          }
+        },
+        "hosting": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityProjection"
+          }
+        },
+        "registration": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CapabilityProjection"
+          }
+        }
+      }
+    },
+    "ContinuationState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "continuationId",
+        "kind",
+        "hostSurface",
+        "createdAt",
+        "rebindRequired"
+      ],
+      "properties": {
+        "continuationId": {
+          "$ref": "#/$defs/Ref"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "SESSION",
+            "TASK",
+            "RUN_STATE",
+            "SANDBOX",
+            "SNAPSHOT",
+            "WORKSPACE",
+            "COMPOSITE"
+          ]
+        },
+        "hostSurface": {
+          "$ref": "#/$defs/HostSurfaceKey"
+        },
+        "sessionRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "taskRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "runStateRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sandboxStateRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "snapshotRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workspaceRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "memoryRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Ref"
+          },
+          "default": []
+        },
+        "originatingPrincipalRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "originatingAuthorityRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lastVerifiedStateRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastAdvancedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "rebindRequired": {
+          "const": true
+        }
+      }
+    },
+    "HostAuthorityObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hostMaximum",
+        "denies",
+        "approvalMechanisms",
+        "enforceability"
+      ],
+      "properties": {
+        "hostMaximum": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GrantAtom"
+          }
+        },
+        "denies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GrantAtom"
+          }
+        },
+        "approvalMechanisms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "enforceability": {
+          "type": "string",
+          "enum": [
+            "ENFORCED",
+            "PARTIAL",
+            "GUIDANCE_ONLY",
+            "UNKNOWN"
+          ]
+        }
+      }
+    },
+    "HostAdapterObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapterId",
+        "hostSurface",
+        "environment",
+        "authority",
+        "capabilityObservations",
+        "enforcementAssessment"
+      ],
+      "properties": {
+        "adapterId": {
+          "$ref": "#/$defs/Ref"
+        },
+        "hostSurface": {
+          "$ref": "#/$defs/HostSurfaceKey"
+        },
+        "environment": {
+          "$ref": "#/$defs/EnvironmentState"
+        },
+        "authority": {
+          "$ref": "#/$defs/HostAuthorityObservation"
+        },
+        "capabilityObservations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HostCapabilityObservation"
+          }
+        },
+        "enforcementAssessment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "unsupportedInvariants"
+          ],
+          "properties": {
+            "status": {
+              "$ref": "#/$defs/ProjectionStatus"
+            },
+            "unsupportedInvariants": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "CognitiveFrame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "frameId",
+        "trailRef",
+        "cycleRef",
+        "agentRef",
+        "role",
+        "phase",
+        "serializedPhaseMarker",
+        "authorityEnvelopeRef",
+        "status",
+        "provenance",
+        "frameDigest"
+      ],
+      "properties": {
+        "frameId": {
+          "$ref": "#/$defs/Ref"
+        },
+        "trailRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "cycleRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "agentRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "phase": {
+          "$ref": "#/$defs/CognitivePhase"
+        },
+        "serializedPhaseMarker": {
+          "type": "string",
+          "enum": [
+            "/pmcro:orchestrate",
+            "/pmcro:plan",
+            "/pmcro:make",
+            "/pmcro:check",
+            "/pmcro:reflect"
+          ]
+        },
+        "predecessorFrameRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parentFrameRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "inputRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Ref"
+          },
+          "default": []
+        },
+        "argumentRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "authorityEnvelopeRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "outputRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Ref"
+          },
+          "default": []
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Ref"
+          },
+          "default": []
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "COMPLETE",
+            "BLOCKED",
+            "FAILED"
+          ]
+        },
+        "provenance": {
+          "$ref": "#/$defs/FrameProvenance"
+        },
+        "priorFrameDigest": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Digest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "frameDigest": {
+          "$ref": "#/$defs/Digest"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "ORCHESTRATE"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "serializedPhaseMarker": {
+                "const": "/pmcro:orchestrate"
+              }
+            },
+            "required": [
+              "serializedPhaseMarker"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "PLAN"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "serializedPhaseMarker": {
+                "const": "/pmcro:plan"
+              }
+            },
+            "required": [
+              "serializedPhaseMarker"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "MAKE"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "serializedPhaseMarker": {
+                "const": "/pmcro:make"
+              }
+            },
+            "required": [
+              "serializedPhaseMarker"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "CHECK"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "serializedPhaseMarker": {
+                "const": "/pmcro:check"
+              }
+            },
+            "required": [
+              "serializedPhaseMarker"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "phase": {
+                "const": "REFLECT"
+              }
+            },
+            "required": [
+              "phase"
+            ]
+          },
+          "then": {
+            "properties": {
+              "serializedPhaseMarker": {
+                "const": "/pmcro:reflect"
+              }
+            },
+            "required": [
+              "serializedPhaseMarker"
+            ]
+          }
+        }
+      ]
+    },
+    "InitFrame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "frameId",
+        "architecture",
+        "initVersion",
+        "actor",
+        "hostSurface",
+        "environmentRef",
+        "authorityRef",
+        "capabilitySurfaceRef",
+        "projectionStatus",
+        "trainingEligible",
+        "registrationState"
+      ],
+      "properties": {
+        "frameId": {
+          "$ref": "#/$defs/Ref"
+        },
+        "architecture": {
+          "const": "PMCR-O"
+        },
+        "initVersion": {
+          "const": "0.2"
+        },
+        "actor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "agentId",
+            "role"
+          ],
+          "properties": {
+            "agentId": {
+              "$ref": "#/$defs/Ref"
+            },
+            "role": {
+              "type": "string"
+            },
+            "parentAgentRef": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "projectRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "trailRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parentFrameRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "hostSurface": {
+          "$ref": "#/$defs/HostSurfaceKey"
+        },
+        "environmentRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "authorityRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "verifiedStateRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "capabilitySurfaceRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "continuationRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "projectionStatus": {
+          "$ref": "#/$defs/ProjectionStatus"
+        },
+        "trainingEligible": {
+          "const": false
+        },
+        "registrationState": {
+          "const": "UNREGISTERED"
+        }
+      }
+    },
+    "ResumeRebind": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "continuationRef",
+        "currentHostSurface",
+        "currentPrincipalRef",
+        "steps",
+        "result"
+      ],
+      "properties": {
+        "continuationRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "currentHostSurface": {
+          "$ref": "#/$defs/HostSurfaceKey"
+        },
+        "currentPrincipalRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "steps": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "const": "LOCATE_CONTINUATION"
+            },
+            {
+              "const": "REPROBE_HOST"
+            },
+            {
+              "const": "REBIND_PRINCIPAL"
+            },
+            {
+              "const": "REBIND_AUTHORITY"
+            },
+            {
+              "const": "REVALIDATE_ENVIRONMENT"
+            },
+            {
+              "const": "REHYDRATE_AUTHORIZED_STATE"
+            },
+            {
+              "const": "REPROJECT_CAPABILITIES"
+            },
+            {
+              "const": "RECHECK_CONFORMANCE"
+            }
+          ],
+          "items": false,
+          "minItems": 8,
+          "maxItems": 8
+        },
+        "result": {
+          "$ref": "#/$defs/ProjectionStatus"
+        }
+      }
+    },
+    "EffectiveAuthorityResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceAuthorityRef",
+        "derivedBy",
+        "effectiveGrant",
+        "evidenceRefs"
+      ],
+      "properties": {
+        "sourceAuthorityRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "derivedBy": {
+          "const": "PMCR-O_CORE"
+        },
+        "effectiveGrant": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GrantAtom"
+          }
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/Ref"
+          }
+        }
+      }
+    },
+    "FrameProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "proofType",
+        "algorithm",
+        "canonicalization",
+        "evidenceRefs"
+      ],
+      "properties": {
+        "proofType": {
+          "const": "HASH_CHAIN"
+        },
+        "algorithm": {
+          "const": "SHA-256"
+        },
+        "canonicalization": {
+          "const": "PMCR-O-JSON-SORTED-V1"
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/Ref"
+          }
+        }
+      }
+    },
+    "CheckerVerdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verdictId",
+        "checkerIdentityRef",
+        "makerIdentityRef",
+        "verdict"
+      ],
+      "properties": {
+        "verdictId": {
+          "$ref": "#/$defs/Ref"
+        },
+        "checkerIdentityRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "makerIdentityRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "verdict": {
+          "type": "string",
+          "enum": [
+            "PASS",
+            "FAIL",
+            "INCOMPLETE",
+            "BLOCKED"
+          ]
+        }
+      }
+    },
+    "EvidenceProof": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "proofKind",
+        "evidenceRefs",
+        "evidenceDigest"
+      ],
+      "properties": {
+        "proofKind": {
+          "const": "CHECKER_EVIDENCE"
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/CheckerEvidenceArtifact"
+          }
+        },
+        "evidenceDigest": {
+          "$ref": "#/$defs/Digest"
+        }
+      }
+    },
+    "HostCapabilityObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capabilityRef",
+        "class",
+        "hostSurface",
+        "discovered",
+        "hostAvailable",
+        "hostGranted",
+        "scope",
+        "enforcementKind",
+        "evidenceRefs"
+      ],
+      "properties": {
+        "capabilityRef": {
+          "$ref": "#/$defs/Ref"
+        },
+        "class": {
+          "type": "string",
+          "enum": [
+            "DISCOVERY",
+            "INSTRUCTION",
+            "MEMORY",
+            "GRANT",
+            "EXECUTION",
+            "PERSISTENCE",
+            "PROTOCOL",
+            "HOSTING",
+            "REGISTRATION"
+          ]
+        },
+        "hostSurface": {
+          "$ref": "#/$defs/HostSurfaceKey"
+        },
+        "discovered": {
+          "type": "boolean"
+        },
+        "hostAvailable": {
+          "type": "boolean"
+        },
+        "hostGranted": {
+          "type": "boolean"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "scope": {
+          "type": "string"
+        },
+        "persistence": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "NONE",
+            "SESSION",
+            "PROJECT",
+            "USER",
+            "DURABLE"
+          ]
+        },
+        "inheritancePolicy": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "NONE",
+            "EXPLICIT",
+            "INHERITED",
+            "HOST_DEFINED"
+          ]
+        },
+        "enforcementKind": {
+          "type": "string",
+          "enum": [
+            "NONE",
+            "METADATA",
+            "GUIDANCE",
+            "HOST_ENFORCED",
+            "PMCR_O_ENFORCED"
+          ]
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Ref"
+          }
+        }
+      }
+    },
+    "PmcroCapabilityState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registrationState",
+        "grantState",
+        "invokableNow",
+        "registrationEvidenceRefs",
+        "grantEvidenceRefs",
+        "invocationEvidenceRefs"
+      ],
+      "properties": {
+        "registrationState": {
+          "type": "string",
+          "enum": [
+            "UNREGISTERED",
+            "REGISTERED"
+          ]
+        },
+        "grantState": {
+          "type": "string",
+          "enum": [
+            "NOT_GRANTED",
+            "GRANTED"
+          ]
+        },
+        "invokableNow": {
+          "type": "boolean"
+        },
+        "registrationEvidenceRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Ref"
+          }
+        },
+        "grantEvidenceRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Ref"
+          }
+        },
+        "invocationEvidenceRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Ref"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "registrationState": {
+                "const": "REGISTERED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "registrationEvidenceRefs": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "grantState": {
+                "const": "GRANTED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "registrationState": {
+                "const": "REGISTERED"
+              },
+              "grantEvidenceRefs": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "invokableNow": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "registrationState": {
+                "const": "REGISTERED"
+              },
+              "grantState": {
+                "const": "GRANTED"
+              },
+              "invocationEvidenceRefs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CheckerEvidenceArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "ref",
+        "digest",
+        "producerCheckerIdentityRef"
+      ],
+      "properties": {
+        "kind": {
+          "const": "CHECKER_EVIDENCE_ARTIFACT"
+        },
+        "ref": {
+          "$ref": "#/$defs/Ref"
+        },
+        "digest": {
+          "$ref": "#/$defs/Digest"
+        },
+        "producerCheckerIdentityRef": {
+          "$ref": "#/$defs/Ref"
+        }
+      }
+    }
+  }
+}

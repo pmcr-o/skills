@@ -1,0 +1,136 @@
+{
+  "id": "pmcro-init-v0.2",
+  "version": "0.2",
+  "trainingEligible": false,
+  "registrationState": "UNREGISTERED",
+  "states": [
+    "UNINITIALIZED",
+    "PREFLIGHT",
+    "HOST_IDENTIFIED",
+    "AUTHORITY_BOUND",
+    "BOUNDED_HYDRATION",
+    "CAPABILITY_PROJECTED",
+    "CONFORMANCE_EVALUATED",
+    "READY",
+    "DEGRADED",
+    "BLOCKED"
+  ],
+  "initial": "UNINITIALIZED",
+  "terminal": [
+    "READY",
+    "DEGRADED",
+    "BLOCKED"
+  ],
+  "transitions": [
+    [
+      "UNINITIALIZED",
+      "PREFLIGHT"
+    ],
+    [
+      "PREFLIGHT",
+      "HOST_IDENTIFIED"
+    ],
+    [
+      "PREFLIGHT",
+      "BLOCKED"
+    ],
+    [
+      "HOST_IDENTIFIED",
+      "AUTHORITY_BOUND"
+    ],
+    [
+      "HOST_IDENTIFIED",
+      "BLOCKED"
+    ],
+    [
+      "AUTHORITY_BOUND",
+      "BOUNDED_HYDRATION"
+    ],
+    [
+      "AUTHORITY_BOUND",
+      "BLOCKED"
+    ],
+    [
+      "BOUNDED_HYDRATION",
+      "CAPABILITY_PROJECTED"
+    ],
+    [
+      "BOUNDED_HYDRATION",
+      "DEGRADED"
+    ],
+    [
+      "BOUNDED_HYDRATION",
+      "BLOCKED"
+    ],
+    [
+      "CAPABILITY_PROJECTED",
+      "CONFORMANCE_EVALUATED"
+    ],
+    [
+      "CONFORMANCE_EVALUATED",
+      "READY"
+    ],
+    [
+      "CONFORMANCE_EVALUATED",
+      "DEGRADED"
+    ],
+    [
+      "CONFORMANCE_EVALUATED",
+      "BLOCKED"
+    ]
+  ],
+  "forbiddenTransitions": [
+    [
+      "UNINITIALIZED",
+      "READY"
+    ],
+    [
+      "PREFLIGHT",
+      "READY"
+    ],
+    [
+      "HOST_IDENTIFIED",
+      "READY"
+    ],
+    [
+      "AUTHORITY_BOUND",
+      "READY"
+    ],
+    [
+      "BOUNDED_HYDRATION",
+      "READY"
+    ]
+  ],
+  "canonicalCognition": [
+    "ORCHESTRATE",
+    "PLAN",
+    "MAKE",
+    "CHECK",
+    "REFLECT"
+  ],
+  "invariants": [
+    "adapter_cannot_mutate_canonical_cognition",
+    "adapter_cannot_emit_effective_grant",
+    "effective_grant_subset_of_delegated_grant",
+    "child_grant_subset_of_parent_delegated_grant",
+    "resume_requires_authority_rebind",
+    "host_memory_is_not_verified_state",
+    "discovery_is_not_registration",
+    "transport_is_not_authority",
+    "sandbox_is_not_permission",
+    "serialization_must_match_cognitive_frame",
+    "trainingEligible_false_until_explicitly_promoted",
+    "effective_grant_is_core_derived_not_authorable",
+    "verified_state_requires_typed_distinct_checker_pass",
+    "adapter_capability_observations_are_host_only"
+  ],
+  "candidateRevision": "r1",
+  "provenancePolicy": {
+    "proofType": "HASH_CHAIN",
+    "algorithm": "SHA-256",
+    "canonicalization": "PMCR-O-JSON-SORTED-V1",
+    "frameDigestInput": "CognitiveFrame excluding frameDigest",
+    "predecessorRule": "If predecessor exists, current.priorFrameDigest MUST equal predecessor.frameDigest",
+    "rootRule": "If predecessor does not exist, priorFrameDigest MUST be null"
+  }
+}

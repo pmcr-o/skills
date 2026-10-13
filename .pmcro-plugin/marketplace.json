@@ -4,7 +4,7 @@
   "id": "thought-transfer-pmcro",
   "name": "thought-transfer-pmcro",
   "description": "Canonical PMCR-O marketplace catalog and projection source.",
-  "version": "0.4.0-candidate",
+  "version": "0.4.1-candidate",
   "authority": "canonical",
   "controlPlaneRef": ".pmcro/",
   "pluginRoot": "plugins/",

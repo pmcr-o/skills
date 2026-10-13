@@ -1,0 +1,8 @@
+{
+  "name": "pmcro",
+  "version": "0.4.1-candidate",
+  "description": "Canonical PMCR-O plugin package contract.",
+  "author": {
+    "name": "PMCR-O"
+  }
+}

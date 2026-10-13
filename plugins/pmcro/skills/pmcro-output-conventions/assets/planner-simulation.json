@@ -1,0 +1,21 @@
+{
+  "apiVersion": "pmcro.dev/v1",
+  "kind": "SkillOutput",
+  "messageId": "msg-plan-sim-001",
+  "traceId": "trace-pmcro-console-001",
+  "parentMessageId": "msg-orchestrate-001",
+  "from": {"skillId": "pmcro-planner", "surfaceId": "pmcro.planner"},
+  "to": {"skillId": "pmcro-make", "role": "maker"},
+  "phase": "plan",
+  "mode": "simulate",
+  "status": "complete",
+  "simulation": true,
+  "verified": false,
+  "evidenceTier": "pattern-valid",
+  "input": {"refs": ["plugins/pmcro/plugin.json", "validated:pmcro-agent-surface"], "summary": "Plan a typed ProjectName.OrchestrationService surface."},
+  "output": {"summary": "The smallest graph is planner -> maker -> independent checker -> reflector.", "artifacts": ["plan:cycle-0028"], "decisions": ["keep MAF workflow and filesystem grants separate"]},
+  "accept": ["validated resources present", "one bounded graph", "checker handoff explicit"],
+  "deny": ["runtime claim", "implicit filesystem write", "phase jump"],
+  "evidence": ["simulation:role-graph", "required:independent-checker"],
+  "next": {"action": "handoff", "unexecuted": true, "seedLevel": null}
+}

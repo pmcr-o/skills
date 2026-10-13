@@ -1,4 +1,4 @@
-import hashlib
+﻿import hashlib
 import json
 import subprocess
 import sys
@@ -21,7 +21,7 @@ def tree_digest(skill):
         key=lambda p: p.relative_to(ROOT).as_posix(),
     )
     entries = [
-        {"path": p.relative_to(ROOT).as_posix(), "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
+        {"path": p.relative_to(ROOT).as_posix(), "sha256": hashlib.sha256(p.read_bytes().replace(b"\r\n", b"\n")).hexdigest()}
         for p in files
     ]
     payload = json.dumps(entries, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
@@ -32,7 +32,7 @@ class CapabilityRegistrationTests(unittest.TestCase):
     def test_registry_records_are_registered_checked_and_digest_bound(self):
         registry = load(".pmcro/registry/index.json")
         records = {row["resourceId"]: row for row in registry["resources"]}
-        self.assertEqual(set(records), {f"skill:{s}" for s in SKILLS})
+        self.assertTrue({f"skill:{s}" for s in SKILLS}.issubset(set(records)))
         for skill in SKILLS:
             record = records[f"skill:{skill}"]
             self.assertEqual(record["state"], "registered-checked")
@@ -42,6 +42,19 @@ class CapabilityRegistrationTests(unittest.TestCase):
             self.assertEqual(record["contentDigest"], tree_digest(skill))
             self.assertEqual(record["checkerVerdictRef"], ".pmcro/evidence/candidate-capabilities-check.json")
             self.assertTrue(record["registrationRef"].startswith(".pmcro/evidence/capability-registration.json#"))
+
+    def test_init_is_checked_candidate_not_planner_admissible(self):
+        registry = load(".pmcro/registry/index.json")
+        record = next(row for row in registry["resources"] if row["resourceId"] == "skill:pmcro-init")
+        self.assertEqual(record["sourceRef"], "skills/pmcro-init")
+        self.assertEqual(record["state"], "checked-candidate")
+        self.assertFalse(record["admissibleToPlanner"])
+        self.assertIsNone(record["registrationRef"])
+        self.assertIsNone(record["revocationRef"])
+        self.assertTrue(record["provenancePreserved"])
+        self.assertFalse(record["physicalDeleteOnRevoke"])
+        self.assertEqual(record["checkerVerdictRef"], ".pmcro/evidence/pmcro-init-materialization-check.json")
+        self.assertEqual(record["contentDigest"], tree_digest("pmcro-init"))
 
     def test_registration_is_not_execution_or_grant_widening(self):
         evidence = load(".pmcro/evidence/capability-registration.json")
@@ -84,6 +97,13 @@ class CapabilityRegistrationTests(unittest.TestCase):
             self.assertEqual(canonical_skills[skill]["firstUsePolicy"], "fresh-later-cycle-only")
             self.assertEqual(legacy_skills[skill]["registrationState"], "registered-checked")
             self.assertEqual(agent_skills[skill]["registrationState"], "registered-checked")
+
+        init_canonical = canonical_skills["pmcro-init"]
+        init_agents = agent_skills["pmcro-init"]
+        self.assertEqual(init_canonical["registrationState"], "checked-candidate")
+        self.assertFalse(init_canonical["plannerAdmissible"])
+        self.assertEqual(init_agents["registrationState"], "checked-candidate")
+        self.assertFalse(init_agents["plannerAdmissible"])
 
     def test_claude_projection_contains_registered_skills_without_authority_widening(self):
         with tempfile.TemporaryDirectory() as td:

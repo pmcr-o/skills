@@ -1,0 +1,232 @@
+syntax = "proto3";
+
+package pmcro.init.v0_2;
+option csharp_namespace = "Pmcro.Init.V0_2";
+
+enum CognitivePhase {
+  COGNITIVE_PHASE_UNSPECIFIED = 0;
+  ORCHESTRATE = 1;
+  PLAN = 2;
+  MAKE = 3;
+  CHECK = 4;
+  REFLECT = 5;
+}
+
+enum ProjectionStatus {
+  PROJECTION_STATUS_UNSPECIFIED = 0;
+  FULL = 1;
+  ADAPTED = 2;
+  DEGRADED = 3;
+  BLOCKED = 4;
+  UNSUPPORTED = 5;
+}
+
+enum EffectClass {
+  EFFECT_CLASS_UNSPECIFIED = 0;
+  READ = 1;
+  WRITE = 2;
+  EXECUTE = 3;
+  NETWORK = 4;
+  SECRET = 5;
+  ADMIN = 6;
+}
+
+message HostSurfaceKey {
+  string vendor = 1;
+  string product = 2;
+  string surface = 3;
+  string execution_mode = 4;
+  string version = 5;
+}
+
+message GrantAtom {
+  string capability_ref = 1;
+  repeated string actions = 2;
+  string resource_scope = 3;
+  EffectClass effect_class = 4;
+  repeated string constraints = 5;
+  optional string expires_at = 6;
+}
+
+// Input facts only. effective_grant is intentionally absent.
+message AuthorityEnvelope {
+  string authority_id = 1;
+  string principal_ref = 2;
+  optional string delegated_from = 3;
+  repeated GrantAtom delegated_grant = 4;
+  repeated GrantAtom host_maximum = 5;
+  repeated GrantAtom environment_maximum = 6;
+  repeated GrantAtom denies = 7;
+  repeated string approval_requirements = 8;
+  bool rebind_required_on_resume = 9;
+}
+
+// Output of PMCR-O core authority resolution, never HostAdapter-authored.
+message EffectiveAuthorityResult {
+  string source_authority_ref = 1;
+  string derived_by = 2; // MUST be PMCR-O_CORE.
+  repeated GrantAtom effective_grant = 3;
+  repeated string evidence_refs = 4;
+}
+
+message CheckerVerdict {
+  string verdict_id = 1;
+  string checker_identity_ref = 2;
+  string maker_identity_ref = 3;
+  string verdict = 4;
+}
+
+message CheckerEvidenceArtifact {
+  string kind = 1; // MUST be CHECKER_EVIDENCE_ARTIFACT.
+  string ref = 2;
+  string digest = 3;
+  string producer_checker_identity_ref = 4;
+}
+
+message EvidenceProof {
+  string proof_kind = 1; // MUST be CHECKER_EVIDENCE.
+  repeated CheckerEvidenceArtifact evidence_refs = 2;
+  string evidence_digest = 3;
+}
+
+message VerifiedStateRef {
+  string state_id = 1;
+  string originating_project_ref = 2;
+  string originating_trail_ref = 3;
+  string originating_cycle_ref = 4;
+  CheckerVerdict checker_verdict = 5;
+  EvidenceProof evidence_proof = 6;
+  string state_digest = 7;
+  string verified_at = 8;
+}
+
+message HostCapabilityObservation {
+  string capability_ref = 1;
+  string capability_class = 2;
+  HostSurfaceKey host_surface = 3;
+  bool discovered = 4;
+  bool host_available = 5;
+  bool host_granted = 6;
+  repeated string actions = 7;
+  string scope = 8;
+  string enforcement_kind = 9;
+  repeated string evidence_refs = 10;
+}
+
+message PmcroCapabilityState {
+  string registration_state = 1;
+  string grant_state = 2;
+  bool invokable_now = 3;
+  repeated string registration_evidence_refs = 4;
+  repeated string grant_evidence_refs = 5;
+  repeated string invocation_evidence_refs = 6;
+}
+
+message CapabilityProjection {
+  HostCapabilityObservation host_observation = 1;
+  PmcroCapabilityState pmcro = 2;
+}
+
+message ContinuationState {
+  string continuation_id = 1;
+  string kind = 2;
+  HostSurfaceKey host_surface = 3;
+  optional string session_ref = 4;
+  optional string task_ref = 5;
+  optional string run_state_ref = 6;
+  optional string sandbox_state_ref = 7;
+  optional string snapshot_ref = 8;
+  optional string workspace_ref = 9;
+  repeated string memory_refs = 10;
+  optional string originating_principal_ref = 11;
+  optional string originating_authority_ref = 12;
+  optional string last_verified_state_ref = 13;
+  string created_at = 14;
+  optional string last_advanced_at = 15;
+  bool rebind_required = 16;
+}
+
+message FrameProvenance {
+  string proof_type = 1;       // HASH_CHAIN
+  string algorithm = 2;        // SHA-256
+  string canonicalization = 3; // PMCR-O-JSON-SORTED-V1
+  repeated string evidence_refs = 4;
+}
+
+message CognitiveFrame {
+  string frame_id = 1;
+  string trail_ref = 2;
+  string cycle_ref = 3;
+  string agent_ref = 4;
+  string role = 5;
+  CognitivePhase phase = 6;
+  string serialized_phase_marker = 7;
+  optional string predecessor_frame_ref = 8;
+  optional string parent_frame_ref = 9;
+  repeated string input_refs = 10;
+  optional string argument_ref = 11;
+  string authority_envelope_ref = 12;
+  repeated string output_refs = 13;
+  repeated string evidence_refs = 14;
+  string status = 15;
+  optional string prior_frame_digest = 16;
+  string frame_digest = 17;
+  FrameProvenance provenance = 18;
+}
+
+message HostAuthorityObservation {
+  repeated GrantAtom host_maximum = 1;
+  repeated GrantAtom denies = 2;
+  repeated string approval_mechanisms = 3;
+  string enforceability = 4;
+}
+
+message HostAdapterObservation {
+  string adapter_id = 1;
+  HostSurfaceKey host_surface = 2;
+  HostAuthorityObservation authority = 3;
+  repeated HostCapabilityObservation capability_observations = 4;
+  ProjectionStatus enforcement_status = 5;
+  repeated string unsupported_invariants = 6;
+  // PMCR-O-owned fields are intentionally absent.
+}
+
+message InitFrame {
+  string frame_id = 1;
+  string architecture = 2;
+  string init_version = 3;
+  string actor_agent_id = 4;
+  string actor_role = 5;
+  optional string parent_agent_ref = 6;
+  optional string project_ref = 7;
+  optional string trail_ref = 8;
+  HostSurfaceKey host_surface = 9;
+  string environment_ref = 10;
+  string authority_ref = 11;
+  optional string verified_state_ref = 12;
+  string capability_surface_ref = 13;
+  optional string continuation_ref = 14;
+  ProjectionStatus projection_status = 15;
+  bool training_eligible = 16;
+  string registration_state = 17;
+}
+
+message ResumeRebindRequest {
+  ContinuationState continuation = 1;
+  HostSurfaceKey current_host_surface = 2;
+  string current_principal_ref = 3;
+}
+
+message ResumeRebindResult {
+  ProjectionStatus status = 1;
+  string rebound_authority_ref = 2;
+  string rebound_environment_ref = 3;
+  string projected_capability_surface_ref = 4;
+  repeated string evidence_refs = 5;
+}
+
+service PmcroInitProjection {
+  rpc ObserveHost(HostSurfaceKey) returns (HostAdapterObservation);
+  rpc Rebind(ResumeRebindRequest) returns (ResumeRebindResult);
+  rpc GetInitFrame(InitFrame) returns (InitFrame);
+}

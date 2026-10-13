@@ -1,0 +1,206 @@
+{
+  "checkId": "CHECK-028",
+  "checkerIdentity": "I-CHECK-028",
+  "makerIdentity": "I-MAKE-028",
+  "candidate": "PMCR-O INIT v0.2-r1",
+  "trainingEligible": false,
+  "registrationState": "UNREGISTERED",
+  "activation": "NONE",
+  "results": [
+    {
+      "id": "BASE-JSON",
+      "verdict": "PASS",
+      "observed": "14/14 parsed",
+      "evidence": []
+    },
+    {
+      "id": "BASE-SCHEMA",
+      "verdict": "PASS",
+      "observed": "12/12 Draft 2020-12 schemas valid",
+      "evidence": []
+    },
+    {
+      "id": "BASE-REFS",
+      "verdict": "PASS",
+      "observed": "11/11 wrapper refs resolve",
+      "evidence": []
+    },
+    {
+      "id": "BASE-PROTO",
+      "verdict": "PASS",
+      "observed": "exit=0",
+      "evidence": []
+    },
+    {
+      "id": "BASE-PYTEST",
+      "verdict": "PASS",
+      "observed": "exit=0",
+      "evidence": [
+        "..................................................                       [100%]",
+        "50 passed in 0.99s"
+      ]
+    },
+    {
+      "id": "MUT-GRANT-WIDEN-001",
+      "verdict": "PASS",
+      "observed": "rejected",
+      "evidence": [
+        "Additional properties are not allowed ('effectiveGrant' was unexpected)"
+      ]
+    },
+    {
+      "id": "REG-GRANT-MONOTONIC-EXHAUSTIVE",
+      "verdict": "PASS",
+      "observed": "all finite combinations preserve effective \u2286 delegated",
+      "evidence": []
+    },
+    {
+      "id": "MUT-PHASE-REMOVE-001",
+      "verdict": "PASS",
+      "observed": "pytest_exit=1",
+      "evidence": [
+        "  At index 3 diff: 'REFLECT' != 'CHECK'",
+        "  Right contains one more item: 'REFLECT'",
+        "  ",
+        "  Full diff:",
+        "    [",
+        "        'ORCHESTRATE',",
+        "        'PLAN',",
+        "        'MAKE',",
+        "  -     'CHECK',",
+        "        'REFLECT',",
+        "    ]",
+        "1 failed, 49 passed in 0.98s"
+      ]
+    },
+    {
+      "id": "MUT-PHASE-REORDER-001",
+      "verdict": "PASS",
+      "observed": "pytest_exit=1",
+      "evidence": [
+        "  At index 1 diff: 'MAKE' != 'PLAN'",
+        "  ",
+        "  Full diff:",
+        "    [",
+        "        'ORCHESTRATE',",
+        "  +     'MAKE',",
+        "        'PLAN',",
+        "  -     'MAKE',",
+        "        'CHECK',",
+        "        'REFLECT',",
+        "    ]",
+        "1 failed, 49 passed in 1.06s"
+      ]
+    },
+    {
+      "id": "MUT-SERIALIZATION-001",
+      "verdict": "PASS",
+      "observed": "rejected",
+      "evidence": [
+        "'/pmcro:make' was expected"
+      ]
+    },
+    {
+      "id": "MUT-PROVENANCE-FORGE-001",
+      "verdict": "PASS",
+      "observed": "rejected",
+      "evidence": [
+        "Additional properties are not allowed ('claimed' was unexpected)",
+        "'proofType' is a required property",
+        "'algorithm' is a required property",
+        "'canonicalization' is a required property",
+        "'evidenceRefs' is a required property"
+      ]
+    },
+    {
+      "id": "REG-PROVENANCE-FORGE-WELLFORMED",
+      "verdict": "PASS",
+      "observed": "schema_ok=True, integrity=False",
+      "evidence": []
+    },
+    {
+      "id": "MUT-RESUME-NO-REBIND-001",
+      "verdict": "PASS",
+      "observed": "rejected",
+      "evidence": [
+        "'REBIND_AUTHORITY' was expected",
+        "'REVALIDATE_ENVIRONMENT' was expected",
+        "'REHYDRATE_AUTHORIZED_STATE' was expected",
+        "'REPROJECT_CAPABILITIES' was expected",
+        "['LOCATE_CONTINUATION', 'REPROBE_HOST', 'REBIND_PRINCIPAL', 'REVALIDATE_ENVIRONMENT', 'REHYDRATE_AUTHORIZED_STATE', 'REPROJECT_CAPABILITIES', 'RECHECK_CONFORMANCE'] is too short"
+      ]
+    },
+    {
+      "id": "MUT-HOST-MEMORY-PROMOTION-001",
+      "verdict": "PASS",
+      "observed": "rejected",
+      "evidence": [
+        "Additional properties are not allowed ('checkerIdentityRef', 'checkerVerdictRef', 'evidenceRefs' were unexpected)",
+        "'checkerVerdict' is a required property",
+        "'evidenceProof' is a required property"
+      ]
+    },
+    {
+      "id": "REG-VERIFIED-STATE-INDEPENDENCE",
+      "verdict": "PASS",
+      "observed": "same Maker/Checker rejected by executable proof",
+      "evidence": []
+    },
+    {
+      "id": "REG-EVIDENCE-PRODUCER-BINDING",
+      "verdict": "PASS",
+      "observed": "evidence producer mismatch rejected by executable proof",
+      "evidence": []
+    },
+    {
+      "id": "MUT-DISCOVERY-AS-REGISTRATION-001",
+      "verdict": "PASS",
+      "observed": "rejected",
+      "evidence": [
+        "Additional properties are not allowed ('actions', 'capabilityRef', 'class', 'discovered', 'enforcementKind', 'evidenceRefs', 'hostAvailable', 'hostGranted', 'hostSurface', 'invokableNow', 'pmcroGranted', 'pmcroRegistered', 'scope' were unexpected)",
+        "'hostObservation' is a required property",
+        "'pmcro' is a required property"
+      ]
+    },
+    {
+      "id": "REG-DISCOVERY-NOT-INVOKABLE-WITHOUT-HOST-GRANT",
+      "verdict": "PASS",
+      "observed": "rejected",
+      "evidence": [
+        "False was expected"
+      ]
+    },
+    {
+      "id": "REG-PMCRO-STATE-REQUIRES-EVIDENCE",
+      "verdict": "PASS",
+      "observed": "rejected",
+      "evidence": [
+        "[] should be non-empty",
+        "[] should be non-empty",
+        "[] should be non-empty"
+      ]
+    },
+    {
+      "id": "MUT-ADAPTER-EFFECTIVE-GRANT-DIRECT-001",
+      "verdict": "PASS",
+      "observed": "rejected",
+      "evidence": [
+        "Additional properties are not allowed ('effectiveGrant' was unexpected)"
+      ]
+    },
+    {
+      "id": "MUT-ADAPTER-EFFECTIVE-GRANT-INDIRECT-001",
+      "verdict": "PASS",
+      "observed": "rejected",
+      "evidence": [
+        "Additional properties are not allowed ('invokableNow', 'pmcroGranted', 'pmcroRegistered' were unexpected)"
+      ]
+    }
+  ],
+  "summary": {
+    "total": 21,
+    "pass": 21,
+    "fail": 0
+  },
+  "aggregateVerdict": "PASS"
+}

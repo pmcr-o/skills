@@ -1,0 +1,9 @@
+display_name: PMCR-O Product Repository
+short_description: Generate a bounded near-autonomous agent product repository
+default_prompt: |
+  Generate a product repository from the generic PMCR-O template. Preserve the
+  raw seed, issue a finite grant, append generic trail events, and require a
+  separate checker before staging or publishing.
+sample_prompts_ref: "references/sample-prompts.md"
+independent_surface: true
+independent_checker: false

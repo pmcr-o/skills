@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/thought-transfer/session-marketplace.schema.json",
+  "title": "PMCR-O session marketplace staging manifest",
+  "type": "object",
+  "required": ["ingestId", "source", "input", "output", "accept", "deny", "promotion"],
+  "properties": {
+    "ingestId": {"type": "string"},
+    "source": {"type": "object", "required": ["path", "sha256", "lineCount", "authorized"]},
+    "input": {"type": "object", "required": ["sourceRef", "consent", "scope"]},
+    "output": {"type": "object", "required": ["artifacts", "evidenceTier"]},
+    "accept": {"type": "array", "items": {"type": "string"}},
+    "deny": {"type": "array", "items": {"type": "string"}},
+    "simulationPolicy": {"type": "object", "required": ["simulation", "verified"]},
+    "promotion": {"enum": ["staged", "checked", "rejected", "promoted"]}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,21 @@
+{
+  "id": "pmcro.reflect",
+  "kind": "marketplace-skill-agent",
+  "independentSurface": true,
+  "displayName": "PMCR-O reflector skill",
+  "entrypoints": ["$reflect", "@orchestrator /pmcro:reflect"],
+  "inputs": ["checker_verdict", "trail_ref", "queue_ref", "next_seed_request"],
+  "outputs": ["reflector_frame", "earned_constraint", "unexecuted_next_seed", "wait_state"],
+  "allowedTools": ["filesystem.read", "trail.append"],
+  "waitFor": "checker.verdict(status=complete, independent=true)",
+  "contextBoundary": "reflection",
+  "maxTurns": 1,
+  "maxDepth": 1,
+  "samplePromptsRef": "references/sample-prompts.md",
+  "independentChecker": false,
+  "authority": "record-and-seed",
+  "nextSeedLevels": ["meta", "meta2", "meta3"],
+  "displaySeedLevels": ["meta", "meta-meta", "meta-meta-meta"],
+  "nextSeedPolicy": "Emit one unexecuted prompt intent at the smallest level that explains the checked finding; the next orchestrate cycle re-derives intent.",
+  "refuses": ["self-approval", "seed-execution", "phase-jump", "credential-access", "trail-rewrite"]
+}

@@ -43,10 +43,12 @@ existing skills, required-folder status, agent files, and hashes. A local
 checkout of `dotnet/skills` is treated like any other upstream source.
 
 Every creation request then emits `.agents/requests/create-skill/*.json` with
-`requiredInvoker: "create-skill"`. A consuming agent must invoke the existing
-`create-skill` capability using that handoff before treating the child as a
-created skill. The handoff may identify an existing compatible skill, but it
-never grants permission to copy, overwrite, or promote it.
+`requiredInvoker: "dotagents-skill-creator"` and
+`creatorAuthority: "dotagents-skill-creator"`. Skill Creator is the registered
+CREATE lifecycle authority and materializes the candidate directly; it MUST NOT
+depend on a second hidden or nonexistent `create-skill` capability. The handoff
+may identify an existing compatible skill, but it never grants permission to
+copy, overwrite, register, promote, or use it.
 
 ## Repeatability
 
