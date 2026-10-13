@@ -1,0 +1,24 @@
+{
+  "apiVersion": "pmcro.checker-evidence/v1",
+  "kind": "checker.verdict",
+  "checker": "pmcro-checker",
+  "producer": "dotagents-skill-creator",
+  "independent": true,
+  "verdict": "PASS",
+  "scope": [
+    "skills/pmcro-planner-resolution"
+  ],
+  "registrationAuthorized": false,
+  "plannerAvailabilityGranted": false,
+  "nextCycleUseAllowed": false,
+  "evidence": {
+    "plannerResolutionTestsPassed": 3,
+    "registeredLaterUseObservationTestsPassed": 1,
+    "minimumRegisteredCheckedSelection": true,
+    "explicitGrantRequired": true,
+    "resolutionInvokesCapabilities": false,
+    "candidateRemainsUnregistered": true
+  },
+  "stateAfterCheck": "checked-candidate",
+  "requiredNextLifecycleOperation": "REGISTER in a fresh later Cycle"
+}

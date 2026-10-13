@@ -1,0 +1,45 @@
+{
+    "id":  "pmcro.planner-resolution",
+    "kind":  "candidate-capability-agent",
+    "displayName":  "PMCR-O Planner registry resolver",
+    "status":  "checked-candidate",
+    "availableToPlanner":  false,
+    "checkerVerdictRef":  ".pmcro/evidence/planner-resolution-check.json",
+    "registrationRef":  null,
+    "nextCycleUseAllowed":  false,
+    "manualParity":  {
+                         "required":  true,
+                         "sharedScript":  "scripts/resolve_plan.py"
+                     },
+    "authority":  {
+                      "readOnlyRegistry":  true,
+                      "grantsRuntimeAuthority":  false,
+                      "invokesSelectedCapabilities":  false,
+                      "phaseInjectionAllowed":  false,
+                      "autoExecutesNextSeed":  false
+                  },
+    "inputs":  [
+                   "canonical_registry",
+                   "goal_ref",
+                   "required_resource_ids",
+                   "grant_refs"
+               ],
+    "outputs":  [
+                    "capability_graph",
+                    "capability_gaps"
+                ],
+    "invariants":  [
+                       "select only registered-checked non-revoked Planner-admissible resources",
+                       "every selection requires an explicit matching grant",
+                       "resolution never invokes a capability",
+                       "missing or ungranted resources remain explicit gaps",
+                       "minimum sufficient means no unrequested resource is selected"
+                   ],
+    "sourceEvidence":  [
+                           ".pmcro/protocol/capability-graph.schema.json",
+                           ".pmcro/registry/index.json",
+                           "docs/specs/PMCR-O-RESOURCE-REGISTRY-1.0.md",
+                           ".pmcro/evidence/planner-resolution-create-request.json"
+                       ],
+    "independentSurface":  true
+}

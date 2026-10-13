@@ -1,0 +1,42 @@
+{
+  "apiVersion": "pmcro.training-candidates/v1",
+  "datasetClass": "synthetic-contract-examples",
+  "sourceClass": "authored-later-use-example",
+  "sourceEvidenceRefs": [
+    "docs/specs/PMCR-O-PLANNER-RESOLUTION-1.0.md",
+    ".pmcro/registry/index.json",
+    "tests/test_pmcro_registered_later_use.py"
+  ],
+  "trainingEligible": false,
+  "explicitOptIn": false,
+  "trainingAuthorityGranted": false,
+  "containsPrivateReasoning": false,
+  "containsSecrets": false,
+  "records": [
+    {
+      "role": "pmcro-orchestrator",
+      "objective": "admit one bounded later-use goal after registration without widening its grant",
+      "mustNot": "treat registration or queue availability as permission to execute arbitrary work"
+    },
+    {
+      "role": "pmcro-planner",
+      "objective": "resolve the minimum requested graph from canonical registered-checked records and explicit grants",
+      "mustNot": "select unregistered, revoked, ungranted, or merely filesystem-present capability"
+    },
+    {
+      "role": "pmcro-maker",
+      "objective": "use only the admitted registered registry and queue capabilities and preserve grant refs in the immutable handoff",
+      "mustNot": "execute functionality not present in the admitted graph"
+    },
+    {
+      "role": "pmcro-checker",
+      "objective": "verify observed registry resolution, immutable transport, local-trail evidence, and no authority widening",
+      "mustNot": "repair the result while issuing a verdict"
+    },
+    {
+      "role": "pmcro-reflector",
+      "objective": "emit exactly one future seed after checked later-use evidence",
+      "mustNot": "allow the queue or registration layer to auto-consume that seed"
+    }
+  ]
+}

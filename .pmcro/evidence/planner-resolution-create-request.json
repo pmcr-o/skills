@@ -1,0 +1,45 @@
+{
+  "creatorAuthority": "dotagents-skill-creator",
+  "entrypoint": "@skill-creator /create-skill",
+  "kind": "skill.create.request",
+  "nextSeed": "Run Skill Creator during MAKE, then independently CHECK the generated child before promotion or use.",
+  "rawSeed": "Create a deterministic Planner registry-resolution capability that selects only minimum registered-checked grant-admitted resources and declares gaps without invoking them.",
+  "rawSeedImmutable": true,
+  "rawSeedSha256": "ede5987d4a3695d61472c5759eac1fc4a47e1c373643dcd4231df55b20b828c4",
+  "requiredInvoker": "dotagents-skill-creator",
+  "rules": {
+    "generatedLayers": [
+      "references",
+      "scripts",
+      "tests"
+    ],
+    "importDoesNotGrantExecutionAuthority": true,
+    "optionalLayers": [
+      "references",
+      "assets",
+      "scripts",
+      "tests"
+    ],
+    "phaseInjectionAllowed": false,
+    "preserveExistingSource": true,
+    "preserveImportedSchemas": true,
+    "registrationRequiresIndependentCheck": true,
+    "requiredCore": [
+      "SKILL.md",
+      "agents/"
+    ],
+    "reuseByAdapter": true
+  },
+  "schemaVersion": 2,
+  "seedEntrypoint": "@orchestrator /pmcro:seed",
+  "sourceCatalog": {
+    "existingMatches": [],
+    "kind": "Marketplace",
+    "path": "marketplace.json"
+  },
+  "status": "ready-for-skill-creator",
+  "target": {
+    "plugin": "pmcro",
+    "skill": "pmcro-planner-resolution"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "apiVersion": "pmcro.evidence/v1",
+  "kind": "later-use.observation",
+  "sourceCommit": "a76d484fd53fa2c094fb2bc5fc12e2abeab68853",
+  "goal": "Resolve one bounded synthetic registered resource and carry one immutable cross-agent handoff through enqueue, claim, and ACK.",
+  "plannerInputs": {
+    "canonicalRegistry": ".pmcro/registry/index.json",
+    "requiredResources": [
+      "skill:pmcro-resource-registry",
+      "skill:pmcro-message-queue"
+    ],
+    "grantRefs": [
+      "skill:pmcro-resource-registry",
+      "skill:pmcro-message-queue"
+    ]
+  },
+  "observed": {
+    "canonicalResourcesRegisteredChecked": true,
+    "syntheticRegistryRoundTrip": true,
+    "queueEnqueue": true,
+    "queueSemanticIdempotency": true,
+    "queueClaim": true,
+    "immutableEnvelopeBytesAcrossClaim": true,
+    "queueAck": true,
+    "immutableAckReceipt": true,
+    "grantRefsPreserved": true,
+    "sourceTrailRefPreserved": true,
+    "receiverLocalTrailEvidenceDigestPreserved": true,
+    "transportGrantsAuthority": false,
+    "transportAutoExecutesNextSeed": false,
+    "reflectedNextSeedObservedAsUnexecutedData": true
+  },
+  "conformanceBlocker": {
+    "present": true,
+    "id": "queue-v1-missing-transport-context",
+    "canonicalSchemaRef": ".pmcro/protocol/message-envelope.schema.json",
+    "requiredField": "transportContext",
+    "observedEnvelopeContainsField": false,
+    "meaning": "The registered queue v1 completes its functional spool round-trip but its emitted immutable envelope does not yet conform to the full canonical message schema. Repair requires a checked replacement followed by a later registration Cycle before retrying USE."
+  },
+  "overallState": "INCOMPLETE",
+  "automaticContinuation": false
+}
