@@ -205,50 +205,45 @@ def main() -> int:
     if not skill_dirs:
         fail("expected at least one installable skill")
     for skill_dir in skill_dirs:
-        for folder in ("agents", "scripts", "references", "assets", "tests"):
-            if not (skill_dir / folder).is_dir():
-                fail(f"skill is missing required folder {folder}: {skill_dir.name}")
-        required_skill_files = (
-            "SKILL.md",
-            "agents/openai.yaml",
-            "scripts/validate.ps1",
-            "references/sample-prompts.md",
-            "assets/README.md",
-            "tests/README.md",
-        )
-        for relative in required_skill_files:
-            if not (skill_dir / relative).is_file():
-                fail(f"skill is missing required file {relative}: {skill_dir.name}")
         if len((skill_dir / "SKILL.md").read_text(encoding="utf-8").splitlines()) > 150:
             fail(f"SKILL.md exceeds the 150-line authoring limit: {skill_dir.name}")
-        sample_prompts = skill_dir / "references/sample-prompts.md"
-        if not sample_prompts.is_file():
-            fail(f"skill is missing its copy/paste prompt surface: {skill_dir.name}")
-        prompt_blocks = re.findall(
-            r"(?ms)^## Prompt [^\n]*\n+```text\s*\n(.*?)\n```",
-            sample_prompts.read_text(encoding="utf-8"),
-        )
-        if not 1 <= len(prompt_blocks) <= 5:
-            fail(f"skill must expose 1-5 sample prompts: {skill_dir.name}")
-        if any(not prompt.strip() or len(prompt.strip()) > 600 for prompt in prompt_blocks):
-            fail(f"skill sample prompts must be concrete and <=600 characters: {skill_dir.name}")
-        asset_files = [path for path in (skill_dir / "assets").rglob("*") if path.is_file() and path.name != "README.md"]
-        if asset_files and not (skill_dir / "assets/README.md").is_file():
-            fail(f"skill examples/assets require assets/README.md documentation: {skill_dir.name}")
         agent_dir = skill_dir / "agents"
         if not agent_dir.is_dir() or not any(path.is_file() for path in agent_dir.iterdir()):
             fail(f"skill must include an agent file in its agents directory: {skill_dir.name}")
         if not any(path.is_file() for path in agent_dir.glob("*.json")):
             fail(f"skill must include a machine-readable agents/*.json manifest: {skill_dir.name}")
+        for folder in ("references", "assets", "scripts", "tests"):
+            optional_dir = skill_dir / folder
+            if optional_dir.is_dir() and not any(path.is_file() for path in optional_dir.rglob("*")):
+                fail(f"optional skill layer must not be empty: {skill_dir.name}/{folder}")
+        sample_prompts = skill_dir / "references/sample-prompts.md"
+        if sample_prompts.is_file():
+            prompt_blocks = re.findall(
+                r"(?ms)^## Prompt [^\n]*\n+```text\s*\n(.*?)\n```",
+                sample_prompts.read_text(encoding="utf-8"),
+            )
+            if not 1 <= len(prompt_blocks) <= 5:
+                fail(f"sample-prompt layer must expose 1-5 prompts when present: {skill_dir.name}")
+            if any(not prompt.strip() or len(prompt.strip()) > 600 for prompt in prompt_blocks):
+                fail(f"skill sample prompts must be concrete and <=600 characters: {skill_dir.name}")
+        assets = skill_dir / "assets"
+        if assets.is_dir():
+            asset_files = [path for path in assets.rglob("*") if path.is_file() and path.name != "README.md"]
+            if asset_files and not (assets / "README.md").is_file():
+                fail(f"skill examples/assets require assets/README.md documentation: {skill_dir.name}")
         openai_surface = agent_dir / "openai.yaml"
-        if openai_surface.is_file() and 'sample_prompts_ref: "references/sample-prompts.md"' not in openai_surface.read_text(encoding="utf-8"):
-            fail(f"OpenAI agent surface must point to sample prompts: {openai_surface}")
+        if openai_surface.is_file():
+            text = openai_surface.read_text(encoding="utf-8")
+            marker = 'sample_prompts_ref: "references/sample-prompts.md"'
+            if marker in text and not sample_prompts.is_file():
+                fail(f"OpenAI agent surface points to missing sample prompts: {openai_surface}")
         for agent_path in agent_dir.glob("*.json"):
             agent = load_json(agent_path)
             if agent.get("independentSurface") is not True:
                 fail(f"agent surface must declare independentSurface=true: {agent_path}")
-            if agent.get("samplePromptsRef") != "references/sample-prompts.md":
-                fail(f"agent surface must point to sample prompts: {agent_path}")
+            prompt_ref = agent.get("samplePromptsRef")
+            if prompt_ref is not None and not (skill_dir / prompt_ref).is_file():
+                fail(f"agent surface points to missing sample prompts: {agent_path}")
 
     agent_files = sorted((ROOT / ".agents/agents").glob("*.json"))
     if len(agent_files) < 5:
@@ -345,25 +340,33 @@ def main() -> int:
         fail("generic skill template must declare the PMCR-O contract version")
     if set(manifest.get("messageContract", {})) != {"input", "output", "accept", "deny"}:
         fail("generic skill template must expose input/output/accept/deny")
+    if manifest.get("requiredFolders") != ["agents"]:
+        fail("generic skill template core must require only agents/")
+    if set(manifest.get("optionalFolders", [])) != {"references", "assets", "scripts", "tests"}:
+        fail("generic skill template must declare progressive optional layers")
+    if manifest.get("requiredFiles") != ["SKILL.md"]:
+        fail("generic skill template core must require only SKILL.md plus agents/")
+    if "agents/*.json" not in manifest.get("requiredFilePatterns", []):
+        fail("skill manifest must require a machine-readable agents/*.json file")
+    progressive = manifest.get("progressiveDisclosure", {})
+    if progressive.get("core") != ["SKILL.md", "agents/"]:
+        fail("progressive disclosure core must be SKILL.md plus agents/")
+    if set(progressive.get("optionalLayers", [])) != {"references", "assets", "scripts", "tests"}:
+        fail("progressive disclosure optional layers are incomplete")
+    if progressive.get("emptyOptionalFoldersAllowed") is not False:
+        fail("empty optional folders must not be created for conformity")
     example_docs = manifest.get("exampleDocumentation", {})
-    if example_docs.get("requiredFile") != "assets/README.md" or set(example_docs.get("requiredSections", [])) != {"Purpose", "Inputs", "Expected output", "Evidence and limits"}:
-        fail("generic skill template must require documented examples")
+    if example_docs.get("file") != "assets/README.md" or "assets" not in example_docs.get("requiredWhen", ""):
+        fail("generic skill template must conditionally document asset examples")
     sample_prompts = manifest.get("samplePrompts", {})
     if (
-        sample_prompts.get("requiredFile") != "references/sample-prompts.md"
+        sample_prompts.get("file") != "references/sample-prompts.md"
+        or sample_prompts.get("required") is not False
         or sample_prompts.get("maxPrompts") != 5
         or sample_prompts.get("maxCharactersPerPrompt") != 600
         or sample_prompts.get("format") != "markdown-copy-paste"
     ):
-        fail("generic skill template must require bounded sample prompts")
-    for folder in ("agents", "scripts", "references", "assets", "tests"):
-        if folder not in manifest["requiredFolders"]:
-            fail(f"skill manifest missing required folder: {folder}")
-    for required_file in ("scripts/validate.ps1", "references/sample-prompts.md", "assets/README.md", "tests/README.md"):
-        if required_file not in manifest.get("requiredFiles", []):
-            fail(f"skill manifest missing required file: {required_file}")
-    if "agents/*.json" not in manifest.get("requiredFilePatterns", []):
-        fail("skill manifest must require a machine-readable agents/*.json file")
+        fail("generic skill template must declare bounded optional sample prompts")
     manifest_gate = manifest.get("authoringGate", {})
     if manifest_gate.get("entrypoint") != "@skill-creator /create-skill" or manifest_gate.get("messageKind") != "skill.create.request":
         fail("skill manifest must declare the skill.create.request authoring gate")
