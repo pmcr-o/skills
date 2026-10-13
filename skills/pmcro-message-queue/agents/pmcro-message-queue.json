@@ -3,11 +3,11 @@
   "kind": "candidate-capability-agent",
   "independentSurface": true,
   "displayName": "PMCR-O durable message queue",
-  "status": "checked-candidate",
-  "availableToPlanner": false,
+  "status": "registered-checked",
+  "availableToPlanner": true,
   "checkerVerdictRef": ".pmcro/evidence/candidate-capabilities-check.json",
-  "registrationRef": null,
-  "nextCycleUseAllowed": false,
+  "registrationRef": ".pmcro/evidence/capability-registration.json#registrations/1",
+  "nextCycleUseAllowed": true,
   "entrypoints": [
     "python scripts/queue.py init",
     "python scripts/queue.py enqueue",
@@ -39,7 +39,7 @@
     "grantsRuntimeAuthority": false,
     "phaseInjectionAllowed": false,
     "autoExecutesNextSeed": false,
-    "plannerAdmissible": false
+    "plannerAdmissible": true
   },
   "delivery": {
     "mode": "at-least-once",
@@ -67,5 +67,8 @@
     "docs/specs/PMCR-O-DURABLE-MESSAGING-1.0.md",
     "A:/marketplace/eng/install-message-queue.py",
     "A:/marketplace/skill-creator-agent/.pmcro/queue/config.json"
-  ]
+  ],
+  "registrationCycleUseAllowed": false,
+  "registeredSourceCommit": "68ff94f306be9ced7942060838af37514adfe22d",
+  "preRegistrationContentDigest": "bf25d53faa08b9a8476e3a067b5ae07d08ca7c7252572aad19285526cae09f90"
 }

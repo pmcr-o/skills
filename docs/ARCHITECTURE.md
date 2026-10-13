@@ -66,3 +66,7 @@ Agent evolution objectives are CREATE, OPTIMIZE, ENHANCE, REFINE, and SPECIALIZE
 ## Specialization
 
 Specialized product agents MAY add constraints, schemas, validation, and narrower capability selections. Specialization MUST NOT weaken phase order, independent checking, provenance, grant boundaries, secret handling, or next-seed non-execution.
+
+### Registration boundary
+
+`CHECK -> REGISTER` changes canonical admissibility, not execution state. Registration may make a resource visible to Planner, but the registration Cycle MUST NOT invoke that resource. The first USE is a fresh later Cycle, and registration evidence preserves both the independently checked source digest and the registered-state digest.

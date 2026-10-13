@@ -175,13 +175,14 @@ class CandidateLifecycleTests(unittest.TestCase):
             agents = list((root / "agents").glob("*.json"))
             self.assertEqual(len(agents), 1)
             agent = json.loads(agents[0].read_text(encoding="utf-8"))
-            self.assertEqual(agent["status"], "checked-candidate")
+            self.assertEqual(agent["status"], "registered-checked")
             self.assertEqual(agent["checkerVerdictRef"], ".pmcro/evidence/candidate-capabilities-check.json")
-            self.assertFalse(agent["availableToPlanner"])
-            self.assertFalse(agent["nextCycleUseAllowed"])
+            self.assertTrue(agent["availableToPlanner"])
+            self.assertFalse(agent["registrationCycleUseAllowed"])
+            self.assertTrue(agent["nextCycleUseAllowed"])
             self.assertTrue(agent["manualParity"]["required"])
             self.assertFalse(agent["authority"]["grantsRuntimeAuthority"])
-            self.assertIsNone(agent["registrationRef"])
+            self.assertIsNotNone(agent["registrationRef"])
 
 
 if __name__ == "__main__":

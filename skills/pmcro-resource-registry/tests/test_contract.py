@@ -13,9 +13,11 @@ SPEC.loader.exec_module(registry)
 class ResourceRegistryContractTests(unittest.TestCase):
     def test_checked_candidate_and_registry_round_trip(self):
         agent = json.loads((SKILL / "agents/pmcro-resource-registry.json").read_text(encoding="utf-8"))
-        self.assertEqual(agent["status"], "checked-candidate")
-        self.assertFalse(agent["availableToPlanner"])
-        self.assertIsNone(agent["registrationRef"])
+        self.assertEqual(agent["status"], "registered-checked")
+        self.assertTrue(agent["availableToPlanner"])
+        self.assertFalse(agent["registrationCycleUseAllowed"])
+        self.assertTrue(agent["nextCycleUseAllowed"])
+        self.assertIsNotNone(agent["registrationRef"])
         with tempfile.TemporaryDirectory() as td:
             root = Path(td) / "registry"
             content = Path(td) / "resource.txt"

@@ -28,11 +28,11 @@ class RegistryQueueReconciliationTests(unittest.TestCase):
         self.assertIn("only during MAKE", " ".join(kinds["invariants"]))
         self.assertIn("never executes", " ".join(kinds["invariants"]))
 
-    def test_filesystem_spool_is_candidate_and_cannot_auto_continue(self):
+    def test_filesystem_spool_is_registered_but_cannot_auto_continue(self):
         index = load(".pmcro/registry/index.json")
         transport = index["transports"][0]
         self.assertEqual(transport["transportId"], "filesystem-spool-v1")
-        self.assertEqual(transport["state"], "candidate-unregistered")
+        self.assertEqual(transport["state"], "registered-checked")
         self.assertFalse(transport["grantsAuthority"])
         self.assertFalse(transport["autoExecutesNextSeed"])
 

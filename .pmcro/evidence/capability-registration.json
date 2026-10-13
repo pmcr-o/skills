@@ -1,0 +1,58 @@
+{
+  "apiVersion": "pmcro.registration/v1",
+  "kind": "CapabilityRegistration",
+  "registrationId": "registration:68ff94f:registry-queue",
+  "sourceCheckedCommit": "68ff94f306be9ced7942060838af37514adfe22d",
+  "checkerVerdictRef": ".pmcro/evidence/candidate-capabilities-check.json",
+  "checkerEvidenceSha256": "acd373bc292cb5ffbf2c2a1116aacecf9b6793c869453e1e4fd1e6243850cfa5",
+  "independentChecker": true,
+  "registrationAuthorizedBySeed": true,
+  "grantsWidened": false,
+  "invokedDuringRegistration": false,
+  "reflectedSeedConsumed": false,
+  "firstUsePolicy": "fresh-later-cycle-only",
+  "aDriveMutationAllowed": false,
+  "modelAuthorityChanged": false,
+  "registrations": [
+    {
+      "resourceId": "skill:pmcro-resource-registry",
+      "resourceKind": "skill",
+      "sourceRef": "skills/pmcro-resource-registry",
+      "preRegistrationContentDigest": "a3ac9c6e61cec75070d61300450c401a7b9fe4cea103acd180d0db9d8fe284b4",
+      "registeredContentDigest": "33c03774600443eedd5ac6612b5c029e65bf7f2acecd186f84af7260e367dc18",
+      "state": "registered-checked",
+      "admissibleToPlanner": true,
+      "registrationCycleUseAllowed": false,
+      "nextCycleUseAllowed": true
+    },
+    {
+      "resourceId": "skill:pmcro-message-queue",
+      "resourceKind": "skill",
+      "sourceRef": "skills/pmcro-message-queue",
+      "preRegistrationContentDigest": "bf25d53faa08b9a8476e3a067b5ae07d08ca7c7252572aad19285526cae09f90",
+      "registeredContentDigest": "59337d1c216aa62bbd3d08fbe488d6cf7909328339c80127ca76ed6fead4c22d",
+      "state": "registered-checked",
+      "admissibleToPlanner": true,
+      "registrationCycleUseAllowed": false,
+      "nextCycleUseAllowed": true
+    }
+  ],
+  "postRegistrationValidation": {
+    "registrationTestsPassed": 5,
+    "candidateBehaviorTestsPassed": 6,
+    "registryQueueReconciliationTestsPassed": 9,
+    "marketplaceProjectionTestsPassed": 4,
+    "resourceRegistryPackageTestsPassed": 1,
+    "messageQueuePackageTestsPassed": 1,
+    "repositoryTestsPassed": 88,
+    "skillCreatorTestsPassed": 5,
+    "capabilityRouteTestsPassed": 3,
+    "capabilityImportTestsPassed": 3,
+    "structuralValidation": "PASS: 148 required files, 12 agent surfaces, 222 trail events",
+    "jsonFilesParsed": 115,
+    "gitDiffCheck": "PASS",
+    "aDriveStatusSha256Before": "dd4c6d8e7df08f5be5cb6dca428cd18bdef1bb16d8475d58b8e61a708362aec2",
+    "aDriveStatusSha256After": "dd4c6d8e7df08f5be5cb6dca428cd18bdef1bb16d8475d58b8e61a708362aec2",
+    "aDriveUnchanged": true
+  }
+}

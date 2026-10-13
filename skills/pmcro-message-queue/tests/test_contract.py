@@ -14,8 +14,10 @@ SPEC.loader.exec_module(queue)
 class MessageQueueContractTests(unittest.TestCase):
     def test_checked_candidate_transport_invariants(self):
         agent = json.loads((SKILL / "agents/pmcro-message-queue.json").read_text(encoding="utf-8"))
-        self.assertEqual(agent["status"], "checked-candidate")
-        self.assertFalse(agent["availableToPlanner"])
+        self.assertEqual(agent["status"], "registered-checked")
+        self.assertTrue(agent["availableToPlanner"])
+        self.assertFalse(agent["registrationCycleUseAllowed"])
+        self.assertTrue(agent["nextCycleUseAllowed"])
         self.assertFalse(agent["authority"]["grantsRuntimeAuthority"])
         self.assertFalse(agent["authority"]["phaseInjectionAllowed"])
         self.assertFalse(agent["authority"]["autoExecutesNextSeed"])

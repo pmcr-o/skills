@@ -12,10 +12,11 @@
   "transports": [
     {
       "transportId": "filesystem-spool-v1",
-      "state": "candidate-unregistered",
+      "state": "registered-checked",
       "sourceEvidenceRef": "A:/marketplace/.pmcro/queue",
       "grantsAuthority": false,
-      "autoExecutesNextSeed": false
+      "autoExecutesNextSeed": false,
+      "registrationRef": ".pmcro/evidence/capability-registration.json#registrations/1"
     }
   ],
   "invariants": [
@@ -23,5 +24,35 @@
     "registered resource does not widen an existing grant",
     "transport availability does not imply execution authorization",
     "revocation never erases provenance"
+  ],
+  "resources": [
+    {
+      "resourceId": "skill:pmcro-resource-registry",
+      "resourceKind": "skill",
+      "sourceRef": "skills/pmcro-resource-registry",
+      "contentDigest": "33c03774600443eedd5ac6612b5c029e65bf7f2acecd186f84af7260e367dc18",
+      "producerAgentRef": "dotagents-skill-creator",
+      "checkerVerdictRef": ".pmcro/evidence/candidate-capabilities-check.json",
+      "state": "registered-checked",
+      "admissibleToPlanner": true,
+      "registrationRef": ".pmcro/evidence/capability-registration.json#registrations/0",
+      "revocationRef": null,
+      "provenancePreserved": true,
+      "physicalDeleteOnRevoke": false
+    },
+    {
+      "resourceId": "skill:pmcro-message-queue",
+      "resourceKind": "skill",
+      "sourceRef": "skills/pmcro-message-queue",
+      "contentDigest": "59337d1c216aa62bbd3d08fbe488d6cf7909328339c80127ca76ed6fead4c22d",
+      "producerAgentRef": "dotagents-skill-creator",
+      "checkerVerdictRef": ".pmcro/evidence/candidate-capabilities-check.json",
+      "state": "registered-checked",
+      "admissibleToPlanner": true,
+      "registrationRef": ".pmcro/evidence/capability-registration.json#registrations/1",
+      "revocationRef": null,
+      "provenancePreserved": true,
+      "physicalDeleteOnRevoke": false
+    }
   ]
 }

@@ -1,6 +1,6 @@
 ---
 name: pmcro-message-queue
-description: Provider-neutral candidate capability for durable PMCR-O message transport over a filesystem spool with immutable envelopes, explicit state, bounded retries, and no authority grant. Use only after later lifecycle registration; this package is not Planner-admissible in its creation Cycle.
+description: Provider-neutral registered capability for durable PMCR-O message transport over a filesystem spool with immutable envelopes, explicit state, bounded retries, and no authority grant. Use only after later lifecycle registration; this package is not Planner-admissible in its creation Cycle.
 ---
 # PMCR-O message queue
 

@@ -1,6 +1,6 @@
 ---
 name: pmcro-resource-registry
-description: Provider-neutral candidate capability for content-addressed PMCR-O resource registration, revocation, verification, and Planner-safe resolution. Use only after lifecycle registration; this package is currently a checked candidate and is not Planner-admissible.
+description: Provider-neutral registered capability for content-addressed PMCR-O resource registration, revocation, verification, and Planner-safe resolution. Registered in the canonical PMCR-O registry; Planner may resolve it now, but first execution is permitted only from a later fresh Cycle than the registration Cycle.
 ---
 # PMCR-O resource registry
 
@@ -8,7 +8,7 @@ This skill implements the accepted PMCR-O resource-registry contract with one sh
 
 ## Authority
 
-The package is a **generated candidate** until independent validation evidence is attached. Its existence or self-tests do not make it available to Planner. Registration remains a later fresh-Cycle operation.
+The package is **registered-checked** through canonical registry evidence. Registration makes it Planner-resolvable but does not execute it, widen grants, or permit same-Cycle use; first invocation remains a later fresh-Cycle operation.
 
 ## Operations
 

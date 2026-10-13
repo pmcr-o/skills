@@ -20,30 +20,110 @@
     "bin": "bin/"
   },
   "agents": [
-    {"id": "pmcro-orchestrator", "sourceRef": "skills/pmcro-orchestrator/agents/pmcro-orchestrator.json"},
-    {"id": "pmcro-planner", "sourceRef": "skills/pmcro-planner/agents/pmcro-planner.json"},
-    {"id": "pmcro-maker", "sourceRef": "skills/pmcro-maker/agents/pmcro-maker.json"},
-    {"id": "pmcro-checker", "sourceRef": "skills/pmcro-checker/agents/pmcro-checker.json"},
-    {"id": "pmcro-reflector", "sourceRef": "skills/pmcro-reflector/agents/pmcro-reflector.json"}
+    {
+      "id": "pmcro-orchestrator",
+      "sourceRef": "skills/pmcro-orchestrator/agents/pmcro-orchestrator.json"
+    },
+    {
+      "id": "pmcro-planner",
+      "sourceRef": "skills/pmcro-planner/agents/pmcro-planner.json"
+    },
+    {
+      "id": "pmcro-maker",
+      "sourceRef": "skills/pmcro-maker/agents/pmcro-maker.json"
+    },
+    {
+      "id": "pmcro-checker",
+      "sourceRef": "skills/pmcro-checker/agents/pmcro-checker.json"
+    },
+    {
+      "id": "pmcro-reflector",
+      "sourceRef": "skills/pmcro-reflector/agents/pmcro-reflector.json"
+    }
   ],
   "skills": [
-    {"id": "reflect", "sourceRef": "skills/reflect"},
-    {"id": "pmcro-messages-protocol", "sourceRef": "skills/pmcro-messages-protocol"},
-    {"id": "pmcro-session-marketplace", "sourceRef": "skills/pmcro-session-marketplace"},
-    {"id": "pmcro-agent-surface", "sourceRef": "skills/pmcro-agent-surface"},
-    {"id": "pmcro-output-conventions", "sourceRef": "skills/pmcro-output-conventions"},
-    {"id": "pmcro-memory-governance", "sourceRef": "skills/pmcro-memory-governance"},
-    {"id": "pmcro-generic-crud", "sourceRef": "skills/pmcro-generic-crud"},
-    {"id": "pmcro-clean-architecture", "sourceRef": "skills/pmcro-clean-architecture"},
-    {"id": "desktop-commander", "sourceRef": "skills/desktop-commander"},
-    {"id": "pmcro-skill-lifecycle", "sourceRef": "skills/pmcro-skill-lifecycle"},
-    {"id": "pmcro-product-repo", "sourceRef": "skills/pmcro-product-repo"},
-    {"id": "pmcro-capability-import", "sourceRef": "skills/pmcro-capability-import"},
-    {"id": "pmcro-orchestrator", "sourceRef": "skills/pmcro-orchestrator"},
-    {"id": "pmcro-planner", "sourceRef": "skills/pmcro-planner"},
-    {"id": "pmcro-maker", "sourceRef": "skills/pmcro-maker"},
-    {"id": "pmcro-checker", "sourceRef": "skills/pmcro-checker"},
-    {"id": "pmcro-reflector", "sourceRef": "skills/pmcro-reflector"}
+    {
+      "id": "reflect",
+      "sourceRef": "skills/reflect"
+    },
+    {
+      "id": "pmcro-messages-protocol",
+      "sourceRef": "skills/pmcro-messages-protocol"
+    },
+    {
+      "id": "pmcro-session-marketplace",
+      "sourceRef": "skills/pmcro-session-marketplace"
+    },
+    {
+      "id": "pmcro-agent-surface",
+      "sourceRef": "skills/pmcro-agent-surface"
+    },
+    {
+      "id": "pmcro-output-conventions",
+      "sourceRef": "skills/pmcro-output-conventions"
+    },
+    {
+      "id": "pmcro-memory-governance",
+      "sourceRef": "skills/pmcro-memory-governance"
+    },
+    {
+      "id": "pmcro-generic-crud",
+      "sourceRef": "skills/pmcro-generic-crud"
+    },
+    {
+      "id": "pmcro-clean-architecture",
+      "sourceRef": "skills/pmcro-clean-architecture"
+    },
+    {
+      "id": "desktop-commander",
+      "sourceRef": "skills/desktop-commander"
+    },
+    {
+      "id": "pmcro-skill-lifecycle",
+      "sourceRef": "skills/pmcro-skill-lifecycle"
+    },
+    {
+      "id": "pmcro-product-repo",
+      "sourceRef": "skills/pmcro-product-repo"
+    },
+    {
+      "id": "pmcro-capability-import",
+      "sourceRef": "skills/pmcro-capability-import"
+    },
+    {
+      "id": "pmcro-orchestrator",
+      "sourceRef": "skills/pmcro-orchestrator"
+    },
+    {
+      "id": "pmcro-planner",
+      "sourceRef": "skills/pmcro-planner"
+    },
+    {
+      "id": "pmcro-maker",
+      "sourceRef": "skills/pmcro-maker"
+    },
+    {
+      "id": "pmcro-checker",
+      "sourceRef": "skills/pmcro-checker"
+    },
+    {
+      "id": "pmcro-reflector",
+      "sourceRef": "skills/pmcro-reflector"
+    },
+    {
+      "id": "pmcro-resource-registry",
+      "sourceRef": "skills/pmcro-resource-registry",
+      "registryRef": ".pmcro/registry/index.json#resources/0",
+      "registrationState": "registered-checked",
+      "firstUsePolicy": "fresh-later-cycle-only"
+    },
+    {
+      "id": "pmcro-message-queue",
+      "sourceRef": "skills/pmcro-message-queue",
+      "registryRef": ".pmcro/registry/index.json#resources/1",
+      "registrationState": "registered-checked",
+      "firstUsePolicy": "fresh-later-cycle-only"
+    }
   ],
   "providerProjectionAuthority": false,
   "promotion": "checker-verified-only",

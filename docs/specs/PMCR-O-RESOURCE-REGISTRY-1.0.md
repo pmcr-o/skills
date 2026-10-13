@@ -24,6 +24,9 @@ Revocation is append-only and changes planner admissibility without erasing sour
 8. Registry resolution is read-only and MUST NOT invoke the resolved capability.
 9. Producer identity and independent checker identity SHOULD remain distinguishable in evidence.
 10. Content digests SHOULD be stable over canonical bytes or a canonical tree digest.
+11. REGISTER MUST NOT invoke the resource being registered.
+12. A newly registered resource MAY become Planner-visible immediately but MUST NOT be executed within its registration Cycle; first USE begins in a fresh later Cycle.
+13. Registration metadata SHOULD preserve the pre-registration checked digest and the registered-state digest so lifecycle-only mutations remain auditable.
 
 ## Skill Creator boundary
 

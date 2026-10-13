@@ -3,11 +3,11 @@
   "kind": "candidate-capability-agent",
   "independentSurface": true,
   "displayName": "PMCR-O resource registry",
-  "status": "checked-candidate",
-  "availableToPlanner": false,
+  "status": "registered-checked",
+  "availableToPlanner": true,
   "checkerVerdictRef": ".pmcro/evidence/candidate-capabilities-check.json",
-  "registrationRef": null,
-  "nextCycleUseAllowed": false,
+  "registrationRef": ".pmcro/evidence/capability-registration.json#registrations/0",
+  "nextCycleUseAllowed": true,
   "entrypoints": [
     "python scripts/registry.py register",
     "python scripts/registry.py resolve",
@@ -37,7 +37,7 @@
     "candidateOnly": true,
     "grantsRuntimeAuthority": false,
     "registersItself": false,
-    "plannerAdmissible": false
+    "plannerAdmissible": true
   },
   "invariants": [
     "independent checker PASS required before a resource becomes registered-checked",
@@ -49,5 +49,8 @@
   "sourceEvidence": [
     "docs/specs/PMCR-O-RESOURCE-REGISTRY-1.0.md",
     "A:/marketplace/eng/src/resource-registry/lib/registry_core.py"
-  ]
+  ],
+  "registrationCycleUseAllowed": false,
+  "registeredSourceCommit": "68ff94f306be9ced7942060838af37514adfe22d",
+  "preRegistrationContentDigest": "a3ac9c6e61cec75070d61300450c401a7b9fe4cea103acd180d0db9d8fe284b4"
 }
