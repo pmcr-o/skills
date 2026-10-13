@@ -1,0 +1,112 @@
+{
+  "apiVersion": "pmcro.training-datasets/v1",
+  "status": "candidate-unchecked",
+  "trainingAuthorityGranted": false,
+  "eligibilityPolicyRef": ".pmcro/protocol/training-data-eligibility.schema.json",
+  "trainingSpecRef": "docs/specs/PMCR-O-TRAINING-DATA-1.0.md",
+  "sharedRules": {
+    "defaultEligible": false,
+    "requiresExplicitOptIn": true,
+    "requiresProvenance": true,
+    "requiresSanitization": true,
+    "requiresIndependentChecker": true,
+    "excludedClasses": [
+      "secrets",
+      "credentials",
+      "private-reasoning",
+      "unapproved-user-content"
+    ],
+    "evaluationLeakageAllowed": false,
+    "trailDataEligibleByDefault": false
+  },
+  "profiles": [
+    {
+      "role": "pmcro-orchestrator",
+      "datasetId": "pmcro-orchestrator-role-data",
+      "status": "candidate-unchecked",
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-orchestrator",
+      "trainingObjectives": [
+        "intent-admission",
+        "context-selection",
+        "capability-resolution",
+        "delegation-bounds",
+        "planner-handoff"
+      ],
+      "mustExcludeBehavior": [
+        "execute-maker-work",
+        "widen-grant"
+      ]
+    },
+    {
+      "role": "pmcro-planner",
+      "datasetId": "pmcro-planner-role-data",
+      "status": "candidate-unchecked",
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-planner",
+      "trainingObjectives": [
+        "minimal-plan",
+        "dependency-graph",
+        "capability-gaps",
+        "effect-bounds",
+        "acceptance-criteria"
+      ],
+      "mustExcludeBehavior": [
+        "execute-plan",
+        "invent-capability"
+      ]
+    },
+    {
+      "role": "pmcro-maker",
+      "datasetId": "pmcro-maker-role-data",
+      "status": "candidate-unchecked",
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-maker",
+      "trainingObjectives": [
+        "plan-fidelity",
+        "admitted-capability-use",
+        "evidence-completeness",
+        "stop-on-gap"
+      ],
+      "mustExcludeBehavior": [
+        "self-certify",
+        "silent-plan-expansion"
+      ],
+      "independenceGroup": "maker"
+    },
+    {
+      "role": "pmcro-checker",
+      "datasetId": "pmcro-checker-role-data",
+      "status": "candidate-unchecked",
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-checker",
+      "trainingObjectives": [
+        "evidence-sufficiency",
+        "contract-conformance",
+        "verdict-classification",
+        "adversarial-defect-detection",
+        "no-repair"
+      ],
+      "mustExcludeBehavior": [
+        "repair-candidate",
+        "check-own-maker-output"
+      ],
+      "independenceGroup": "checker",
+      "mustRemainSeparateFrom": [
+        "pmcro-maker-role-data"
+      ]
+    },
+    {
+      "role": "pmcro-reflector",
+      "datasetId": "pmcro-reflector-role-data",
+      "status": "candidate-unchecked",
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-reflector",
+      "trainingObjectives": [
+        "exactly-one-next-seed",
+        "valid-continuation-operation",
+        "deduplication",
+        "nonexecution"
+      ],
+      "mustExcludeBehavior": [
+        "execute-next-seed",
+        "emit-multiple-next-seeds"
+      ]
+    }
+  ]
+}
