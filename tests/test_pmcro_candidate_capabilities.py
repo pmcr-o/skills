@@ -1,4 +1,4 @@
-﻿import hashlib
+import hashlib
 import json
 import subprocess
 import sys
@@ -186,5 +186,3 @@ class CandidateLifecycleTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-
