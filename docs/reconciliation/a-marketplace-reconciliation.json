@@ -1,0 +1,633 @@
+{
+  "schema": "pmcro.reconciliation/v1",
+  "source": {
+    "path": "A:\\marketplace",
+    "mode": "read-only",
+    "catalogSchema": "agent-marketplace-project/v3",
+    "canonicalAuthority": ".pmcro",
+    "projection": ".agents",
+    "hostChain": ".claude/.grok/.cursor/.github -> .agents -> .pmcro"
+  },
+  "target": {
+    "path": "C:\\Users\\pmcro\\source\\repos\\pmcro-skills-agent-family",
+    "authority": "checked-canonical-comparison"
+  },
+  "allowedClassifications": [
+    "ADOPT",
+    "MERGE",
+    "SUPERSEDE",
+    "REFERENCE",
+    "DEFER"
+  ],
+  "agents": [
+    {
+      "id": "pmcro-agent",
+      "catalogStatus": "canonical",
+      "role": "global-orchestrator",
+      "declaredSkills": 17,
+      "repository": "https://github.com/pmcr-o/pmcro-agent",
+      "localPath": "A:\\marketplace\\pmcro-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 136,
+      "classification": "MERGE",
+      "reason": "overlaps an existing canonical PMCR-O capability/system surface"
+    },
+    {
+      "id": "csuite-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-meta-orchestrator",
+      "declaredSkills": 15,
+      "repository": "https://github.com/pmcr-o/csuite-agent",
+      "localPath": "A:\\marketplace\\csuite-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 120,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "agent-skills-template",
+      "catalogStatus": "canonical",
+      "role": "template-orchestrator",
+      "declaredSkills": 6,
+      "repository": "https://github.com/pmcr-o/agent-skills-template",
+      "localPath": "A:\\marketplace\\agent-skills-template",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 48,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "dotagents-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 6,
+      "repository": "https://github.com/pmcr-o/dotagents-agent",
+      "localPath": "A:\\marketplace\\dotagents-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 48,
+      "classification": "MERGE",
+      "reason": "overlaps an existing canonical PMCR-O capability/system surface"
+    },
+    {
+      "id": "dotnet-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 113,
+      "repository": "https://github.com/pmcr-o/dotnet-agent",
+      "localPath": "A:\\marketplace\\dotnet-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 1014,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "github-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 10,
+      "repository": "https://github.com/pmcr-o/github-agent",
+      "localPath": "A:\\marketplace\\github-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 80,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "docker-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 2,
+      "repository": "https://github.com/pmcr-o/docker-agent",
+      "localPath": "A:\\marketplace\\docker-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 16,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "powershell-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 1,
+      "repository": "https://github.com/pmcr-o/powershell-agent",
+      "localPath": "A:\\marketplace\\powershell-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 8,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "filesystem-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 2,
+      "repository": "https://github.com/pmcr-o/filesystem-agent",
+      "localPath": "A:\\marketplace\\filesystem-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 16,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "governance-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 1,
+      "repository": "https://github.com/pmcr-o/governance-agent",
+      "localPath": "A:\\marketplace\\governance-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 10,
+      "classification": "MERGE",
+      "reason": "domain token already appears in the checked C: marketplace"
+    },
+    {
+      "id": "desktop-commander-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 1,
+      "repository": "https://github.com/pmcr-o/desktop-commander-agent",
+      "localPath": "A:\\marketplace\\desktop-commander-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 8,
+      "classification": "MERGE",
+      "reason": "overlaps an existing canonical PMCR-O capability/system surface"
+    },
+    {
+      "id": "skill-creator-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 4,
+      "repository": "https://github.com/pmcr-o/skill-creator-agent",
+      "localPath": "A:\\marketplace\\skill-creator-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 32,
+      "classification": "MERGE",
+      "reason": "overlaps an existing canonical PMCR-O capability/system surface"
+    },
+    {
+      "id": "reasoning-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 10,
+      "repository": "https://github.com/pmcr-o/reasoning-agent",
+      "localPath": "A:\\marketplace\\reasoning-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 82,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "maf-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 3,
+      "repository": "https://github.com/pmcr-o/maf-agent",
+      "localPath": "A:\\marketplace\\maf-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 32,
+      "classification": "MERGE",
+      "reason": "overlaps an existing canonical PMCR-O capability/system surface"
+    },
+    {
+      "id": "social-media-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 3,
+      "repository": "https://github.com/pmcr-o/social-media-agent",
+      "localPath": "A:\\marketplace\\social-media-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 24,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "git-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 2,
+      "repository": "https://github.com/pmcr-o/git-agent",
+      "localPath": "A:\\marketplace\\git-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 16,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "python-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 2,
+      "repository": "https://github.com/pmcr-o/python-agent",
+      "localPath": "A:\\marketplace\\python-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 16,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "aspire-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 3,
+      "repository": "https://github.com/pmcr-o/aspire-agent",
+      "localPath": "A:\\marketplace\\aspire-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 24,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "computer-use-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 2,
+      "repository": "https://github.com/pmcr-o/computer-use-agent",
+      "localPath": "A:\\marketplace\\computer-use-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 20,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "model-gateway-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 2,
+      "repository": "https://github.com/pmcr-o/model-gateway-agent",
+      "localPath": "A:\\marketplace\\model-gateway-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 16,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "eval-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 3,
+      "repository": "https://github.com/pmcr-o/eval-agent",
+      "localPath": "A:\\marketplace\\eval-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 24,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "federation-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 3,
+      "repository": "https://github.com/pmcr-o/federation-agent",
+      "localPath": "A:\\marketplace\\federation-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 24,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "confidentiality-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 3,
+      "repository": "https://github.com/pmcr-o/confidentiality-agent",
+      "localPath": "A:\\marketplace\\confidentiality-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 24,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "resource-registry-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 4,
+      "repository": "https://github.com/pmcr-o/resource-registry-agent",
+      "localPath": "A:\\marketplace\\resource-registry-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 32,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    },
+    {
+      "id": "economics-agent",
+      "catalogStatus": "canonical",
+      "role": "domain-orchestrator",
+      "declaredSkills": 4,
+      "repository": "https://github.com/pmcr-o/economics-agent",
+      "localPath": "A:\\marketplace\\economics-agent",
+      "exists": true,
+      "surfaces": {
+        "pmcro": true,
+        "agents": true,
+        "claude": true,
+        "claudePlugin": true,
+        "github": true,
+        "agentsMd": true
+      },
+      "observedSkillFiles": 32,
+      "classification": "ADOPT",
+      "reason": "candidate domain system not presently represented as a full canonical C: agent project"
+    }
+  ],
+  "legacy": [
+    {
+      "id": "dotagents-marketplace",
+      "status": "migration-evidence",
+      "classification": "REFERENCE"
+    },
+    {
+      "id": "dotnet-skills-marketplace",
+      "status": "migration-evidence",
+      "classification": "REFERENCE"
+    },
+    {
+      "id": "filesystem-marketplace",
+      "status": "migration-evidence",
+      "classification": "REFERENCE"
+    },
+    {
+      "id": "github-marketplace",
+      "status": "migration-evidence",
+      "classification": "REFERENCE"
+    },
+    {
+      "id": "powershell-marketplace",
+      "status": "migration-evidence",
+      "classification": "REFERENCE"
+    },
+    {
+      "id": "skill-creator-marketplace",
+      "status": "migration-evidence",
+      "classification": "REFERENCE"
+    }
+  ],
+  "concepts": [
+    {
+      "id": "pmcro-canonical-authority",
+      "classification": "ADOPT",
+      "evidence": "A:/marketplace README/catalog declare .pmcro canonical; matches checked C: law."
+    },
+    {
+      "id": "provider-projections",
+      "classification": "ADOPT",
+      "evidence": "A: host -> .agents -> .pmcro projection chain matches provider-projection law."
+    },
+    {
+      "id": "generated-domain-agent-projects",
+      "classification": "MERGE",
+      "evidence": "A: eng/src and refresh/build tooling provide a mature generator model to reconcile with C: projection compiler."
+    },
+    {
+      "id": "agent-registry-and-filesystem-queues",
+      "classification": "MERGE",
+      "evidence": "A: agent-registry.json binds local paths and filesystem-spool-v1 queues; richer than current C: registry."
+    },
+    {
+      "id": "pinned-upstream-source",
+      "classification": "ADOPT",
+      "evidence": "A: eng/upstream uses pinned vendor source plus lock digest; compatible with provenance law."
+    },
+    {
+      "id": "independent-marketplace-validation",
+      "classification": "ADOPT",
+      "evidence": "A: eng/validate-agent-repos.py is explicitly independent whole-marketplace validation."
+    },
+    {
+      "id": "mandatory-all-skill-folders",
+      "classification": "SUPERSEDE",
+      "evidence": "A: eng/README requires scripts/references/assets/tests for every owned skill; current C: law requires only SKILL.md + agents/ and optional progressive layers."
+    },
+    {
+      "id": "automatic-post-reflect-cycle",
+      "classification": "SUPERSEDE",
+      "evidence": "A: agent contracts automatically admit REFLECT next seed; checked C: next-seed law keeps it unexecuted until a fresh admitted Cycle."
+    },
+    {
+      "id": "recursive-phase-cycles",
+      "classification": "DEFER",
+      "evidence": "A: contracts allow recursive lifecycle inside every bounded phase; current law only clearly admits explicit child delegation as a child Cycle."
+    },
+    {
+      "id": "i-context-accountability-frame",
+      "classification": "DEFER",
+      "evidence": "A: pmcro.i-context/v1 appears useful but has no checked equivalent in current C: contracts yet."
+    },
+    {
+      "id": "cross-agent-local-trails",
+      "classification": "MERGE",
+      "evidence": "A: each I owns a local trail and cross-I handoffs reference source trails; reconcile with current trail/evidence graph."
+    },
+    {
+      "id": "transport-model-not-authority",
+      "classification": "ADOPT",
+      "evidence": "A: explicitly states transport/model identity never grants authority; matches checked C: law."
+    },
+    {
+      "id": "maker-no-self-certification",
+      "classification": "ADOPT",
+      "evidence": "A: Maker output remains evidence until independent CHECK; matches current C: law."
+    },
+    {
+      "id": "eng-history",
+      "classification": "REFERENCE",
+      "evidence": "A: eng/history is declared superseded provenance and must not drive new builds."
+    }
+  ],
+  "mutation": {
+    "sourceMutationAllowed": false,
+    "registrationAllowed": false,
+    "promotionAllowed": false
+  }
+}
