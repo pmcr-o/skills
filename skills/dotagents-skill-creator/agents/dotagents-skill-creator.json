@@ -86,5 +86,26 @@
       "tests"
     ],
     "noEmptyOptionalFolders": true
+  },
+  "lifecycleCapabilitySeparation": {
+    "CREATE": {
+      "authority": "registered",
+      "candidateOnly": true
+    },
+    "READ": {
+      "authority": "separate-capability-required"
+    },
+    "UPDATE": {
+      "authority": "separate-capability-required"
+    },
+    "DELETE": {
+      "authority": "separate-capability-required"
+    },
+    "REGISTER": {
+      "authority": "independent-checker-and-registry-required"
+    },
+    "USE": {
+      "authority": "later-cycle-plan-and-grant-required"
+    }
   }
 }

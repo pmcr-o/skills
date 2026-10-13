@@ -1,10 +1,15 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.invalid/thought-transfer/skill-create-message.schema.json",
+  "$id": "https://pmcro.dev/protocol/skill-create-message.schema.json",
   "title": "PMCR-O skill.create.request",
   "type": "object",
   "additionalProperties": false,
-  "required": ["apiVersion", "kind", "requestId", "trailId", "cycleId", "sourceIntent", "plugin", "skill", "description", "purpose", "scope", "validatedResources", "requiredFolders", "requiredFiles", "samplePromptsRef", "messageContract", "mode"],
+  "required": [
+    "apiVersion", "kind", "requestId", "trailId", "cycleId", "sourceIntent",
+    "plugin", "skill", "description", "purpose", "scope", "validatedResources",
+    "requiredFolders", "requiredFiles", "optionalFolders", "messageContract", "mode",
+    "candidateState", "registrationRequiredBeforeUse"
+  ],
   "properties": {
     "apiVersion": {"const": "pmcro.dev/v1"},
     "kind": {"const": "skill.create.request"},
@@ -16,11 +21,23 @@
     "skill": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
     "description": {"type": "string", "minLength": 1, "maxLength": 1024},
     "purpose": {"type": "string", "minLength": 1},
-    "scope": {"type": "string", "enum": ["global", "personal", "project", "run"]},
+    "scope": {"enum": ["global", "personal", "project", "run"]},
     "validatedResources": {"type": "array", "minItems": 1, "items": {"type": "string"}},
-    "requiredFolders": {"type": "array", "minItems": 5, "items": {"type": "string"}},
-    "requiredFiles": {"type": "array", "minItems": 6, "items": {"type": "string"}},
-    "samplePromptsRef": {"const": "references/sample-prompts.md"},
+    "requiredFolders": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "contains": {"const": "agents"},
+      "items": {"enum": ["agents"]}
+    },
+    "requiredFiles": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "contains": {"const": "SKILL.md"},
+      "items": {"enum": ["SKILL.md"]}
+    },
+    "optionalFolders": {
+      "type": "array", "uniqueItems": true,
+      "items": {"enum": ["references", "assets", "scripts", "tests"]}
+    },
+    "samplePromptsRef": {"type": ["string", "null"]},
     "messageContract": {
       "type": "object",
       "required": ["input", "output", "accept", "deny"],
@@ -32,6 +49,8 @@
       },
       "additionalProperties": false
     },
-    "mode": {"type": "string", "enum": ["simulate", "apply"]}
+    "mode": {"enum": ["simulate", "apply"]},
+    "candidateState": {"const": "generated-unchecked"},
+    "registrationRequiredBeforeUse": {"const": true}
   }
 }

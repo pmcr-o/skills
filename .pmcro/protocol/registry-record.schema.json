@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/protocol/registry-record.schema.json",
+  "title": "PMCR-O checked registry record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "resourceId", "resourceKind", "sourceRef", "contentDigest", "producerAgentRef",
+    "checkerVerdictRef", "state", "admissibleToPlanner", "registrationRef", "revocationRef",
+    "provenancePreserved", "physicalDeleteOnRevoke"
+  ],
+  "properties": {
+    "resourceId": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "resourceKind": {"enum": ["agent", "skill", "capability", "transport", "model-binding", "projection"]},
+    "sourceRef": {"type": "string", "minLength": 1},
+    "contentDigest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "producerAgentRef": {"type": "string", "minLength": 1},
+    "checkerVerdictRef": {"type": ["string", "null"]},
+    "state": {"enum": ["generated-unchecked", "checked-candidate", "registered-checked", "revoked"]},
+    "admissibleToPlanner": {"type": "boolean"},
+    "registrationRef": {"type": ["string", "null"]},
+    "revocationRef": {"type": ["string", "null"]},
+    "provenancePreserved": {"const": true},
+    "physicalDeleteOnRevoke": {"const": false}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"state": {"const": "generated-unchecked"}}},
+      "then": {"properties": {"admissibleToPlanner": {"const": false}, "checkerVerdictRef": {"type": "null"}, "registrationRef": {"type": "null"}, "revocationRef": {"type": "null"}}}
+    },
+    {
+      "if": {"properties": {"state": {"const": "checked-candidate"}}},
+      "then": {"properties": {"admissibleToPlanner": {"const": false}, "checkerVerdictRef": {"type": "string", "minLength": 1}, "registrationRef": {"type": "null"}, "revocationRef": {"type": "null"}}}
+    },
+    {
+      "if": {"properties": {"state": {"const": "registered-checked"}}},
+      "then": {"properties": {"admissibleToPlanner": {"const": true}, "checkerVerdictRef": {"type": "string", "minLength": 1}, "registrationRef": {"type": "string", "minLength": 1}, "revocationRef": {"type": "null"}}}
+    },
+    {
+      "if": {"properties": {"state": {"const": "revoked"}}},
+      "then": {"properties": {"admissibleToPlanner": {"const": false}, "checkerVerdictRef": {"type": "string", "minLength": 1}, "registrationRef": {"type": "string", "minLength": 1}, "revocationRef": {"type": "string", "minLength": 1}}}
+    }
+  ]
+}

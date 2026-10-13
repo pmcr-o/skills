@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/protocol/transport-binding.schema.json",
+  "title": "PMCR-O transport binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "transportId", "kind", "delivery", "durability", "ordering", "leaseSeconds",
+    "maxAttempts", "retryPolicy", "deduplication", "immutableEnvelope",
+    "mutableStateSeparated", "ackReceipt", "localTrailOwnership", "sharedMutableTrail",
+    "grantsAuthority", "autoExecutesNextSeed", "state", "checkerVerdictRef", "registrationRef"
+  ],
+  "properties": {
+    "transportId": {"type": "string", "minLength": 1},
+    "kind": {"enum": ["filesystem-spool-v1", "broker-adapter", "in-process"]},
+    "delivery": {"const": "at-least-once"},
+    "durability": {"const": "write-temp-then-atomic-move"},
+    "ordering": {"const": "best-effort FIFO; correctness must not depend on global order"},
+    "leaseSeconds": {"type": "integer", "minimum": 1},
+    "maxAttempts": {"type": "integer", "minimum": 1},
+    "retryPolicy": {"const": "bounded-exponential-backoff-with-dead-letter"},
+    "deduplication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["messageId", "dedupeDigest", "contentDigest"],
+      "properties": {
+        "messageId": {"const": true},
+        "dedupeDigest": {"const": true},
+        "contentDigest": {"const": true}
+      }
+    },
+    "immutableEnvelope": {"const": true},
+    "mutableStateSeparated": {"const": true},
+    "ackReceipt": {"const": true},
+    "localTrailOwnership": {"const": true},
+    "sharedMutableTrail": {"const": false},
+    "grantsAuthority": {"const": false},
+    "autoExecutesNextSeed": {"const": false},
+    "state": {"enum": ["candidate-unregistered", "registered-checked", "revoked"]},
+    "checkerVerdictRef": {"type": ["string", "null"]},
+    "registrationRef": {"type": ["string", "null"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"state": {"const": "candidate-unregistered"}}},
+      "then": {
+        "properties": {
+          "checkerVerdictRef": {"type": "null"},
+          "registrationRef": {"type": "null"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"state": {"const": "registered-checked"}}},
+      "then": {
+        "properties": {
+          "checkerVerdictRef": {"type": "string", "minLength": 1},
+          "registrationRef": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  ]
+}

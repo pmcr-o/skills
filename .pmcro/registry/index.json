@@ -1,0 +1,27 @@
+{
+  "apiVersion": "pmcro.registry/v1",
+  "kind": "RegistryIndex",
+  "authority": "canonical",
+  "recordSchemaRef": ".pmcro/protocol/registry-record.schema.json",
+  "messageSchemaRef": ".pmcro/protocol/message-envelope.schema.json",
+  "messageKindsRef": ".pmcro/protocol/message-kinds.json",
+  "transportSchemaRef": ".pmcro/protocol/transport-binding.schema.json",
+  "plannerResolutionRule": "only registered-checked and non-revoked resources are admissible",
+  "registrationRule": "independent checker PASS plus immutable provenance is required",
+  "revocationRule": "append-only revocation removes admissibility without deleting provenance",
+  "transports": [
+    {
+      "transportId": "filesystem-spool-v1",
+      "state": "candidate-unregistered",
+      "sourceEvidenceRef": "A:/marketplace/.pmcro/queue",
+      "grantsAuthority": false,
+      "autoExecutesNextSeed": false
+    }
+  ],
+  "invariants": [
+    "registry lookup is read-only resolution, not execution",
+    "registered resource does not widen an existing grant",
+    "transport availability does not imply execution authorization",
+    "revocation never erases provenance"
+  ]
+}

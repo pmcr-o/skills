@@ -1,0 +1,27 @@
+{
+  "schema": "pmcro.message-kinds/v1",
+  "authority": "canonical-protocol",
+  "kinds": {
+    "pmcro.seed": {"owner": "orchestrator", "purpose": "immutable request ingress for a fresh Cycle"},
+    "orchestrator.route": {"owner": "orchestrator", "purpose": "admit, deny, select context, and route"},
+    "planner.plan": {"owner": "planner", "purpose": "minimum plan over registered checked resources"},
+    "maker.result": {"owner": "maker", "purpose": "execution result and evidence; never a verdict"},
+    "checker.verdict": {"owner": "checker", "purpose": "independent PASS, FAIL, INCOMPLETE, or BLOCKED verdict"},
+    "reflector.reflect": {"owner": "reflector", "purpose": "one earned constraint and exactly one unexecuted next seed"},
+    "agent.handoff": {"owner": "orchestrator", "purpose": "immutable cross-agent handoff reference"},
+    "capability.invoke": {"owner": "maker", "purpose": "invoke one admitted registered capability during MAKE"},
+    "capability.result": {"owner": "capability-provider", "purpose": "return capability evidence without granting authority"},
+    "skill.create.request": {"owner": "skill-creator", "purpose": "request a generated-unchecked capability candidate"},
+    "resource.registration": {"owner": "registry", "purpose": "register a checker-backed immutable resource record"},
+    "resource.resolution": {"owner": "registry", "purpose": "planner-facing admissibility result from registry state"},
+    "resource.revocation": {"owner": "registry", "purpose": "append-only revocation without provenance deletion"},
+    "registry.verification": {"owner": "checker", "purpose": "verify registry/event integrity without repair"},
+    "system.halt": {"owner": "orchestrator", "purpose": "bounded halt with evidence"}
+  },
+  "invariants": [
+    "message kind ownership does not grant execution authority",
+    "messages are transport data and never cognitive phase injection",
+    "capability invocation is legal only during MAKE",
+    "reflector.reflect never executes its emitted next seed"
+  ]
+}

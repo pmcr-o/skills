@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/protocol/message-envelope.schema.json",
+  "title": "PMCR-O durable transport message",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "apiVersion", "kind", "messageId", "traceId", "correlationId", "parentMessageId",
+    "causationId", "trailId", "cycleId", "sourceAgent", "targetAgent", "plugin", "skill",
+    "createdAt", "availableAt", "expiresAt", "evidenceStatus", "grantRefs", "payload",
+    "dedupeDigest", "contentDigest", "transportContext"
+  ],
+  "properties": {
+    "apiVersion": {"const": "pmcro.message/v1"},
+    "kind": {"type": "string", "minLength": 1},
+    "messageId": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "traceId": {"type": "string", "minLength": 1},
+    "correlationId": {"type": "string", "minLength": 1},
+    "parentMessageId": {"type": "string"},
+    "causationId": {"type": "string"},
+    "trailId": {"type": "string", "minLength": 1},
+    "cycleId": {"type": "string", "minLength": 1},
+    "sourceAgent": {"type": "string", "minLength": 1},
+    "targetAgent": {"type": "string", "minLength": 1},
+    "plugin": {"type": "string"},
+    "skill": {"type": "string"},
+    "createdAt": {"type": "string", "format": "date-time"},
+    "availableAt": {"type": "string", "format": "date-time"},
+    "expiresAt": {"type": "string"},
+    "evidenceStatus": {"enum": ["CONFIRMED", "NOT-YET-VERIFIED", "NOT-RUN"]},
+    "grantRefs": {"type": "array", "items": {"type": "string"}},
+    "payload": {"type": "object"},
+    "dedupeDigest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "contentDigest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "transportContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["transportRef", "delivery", "grantsAuthority", "phaseInjectionAllowed", "autoExecutesNextSeed"],
+      "properties": {
+        "transportRef": {"type": "string", "minLength": 1},
+        "delivery": {"enum": ["at-least-once", "at-most-once", "exactly-once-simulated"]},
+        "grantsAuthority": {"const": false},
+        "phaseInjectionAllowed": {"const": false},
+        "autoExecutesNextSeed": {"const": false}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"kind": {"const": "reflector.reflect"}}},
+      "then": {
+        "properties": {
+          "transportContext": {
+            "properties": {"autoExecutesNextSeed": {"const": false}}
+          }
+        }
+      }
+    }
+  ]
+}

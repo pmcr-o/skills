@@ -15,6 +15,7 @@ Use `.pmcro/` as the control-plane mirror for charter, registry, governance refe
 
 Canonical raw-intent ingress is `@orchestrator /pmcro:seed`. That command preserves immutable request data and is not a cognitive phase. `@orchestrator /pmcro:init` separately establishes or resumes Project/Trail/context around admitted seed data before a fresh `ORCHESTRATE` cycle. A host may expose `/seed` as an alias, but canonical artifacts and protocol records use the fully qualified command.
 
+Lifecycle authority is intentionally split. This skill owns CREATE for generated candidates only. READ, UPDATE, DELETE, REGISTER, INSTALL, PUBLISH, and USE require separately registered capabilities. A created candidate does not enter the Planner catalog until independent checker evidence and canonical registry state mark it `registered-checked`.
 Creation remains bounded:
 
 `RAW_SEED -> CREATE CANDIDATE -> INDEPENDENT CHECK -> PROMOTE/REGISTER -> LATER USE`

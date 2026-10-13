@@ -38,6 +38,11 @@ A provider, shell, model, network endpoint, or registered transport does not gra
 
 PMCR-O mirrors proven provider component boundaries rather than renaming them unnecessarily. Canonical component names include `agents/`, `skills/`, `commands/`, `rules/`, `hooks/`, `workflows/`, `evals/`, `scripts/`, `bin/`, settings, and MCP/LSP bindings. PMCR-O adds only system-specific layers such as `protocol/`, `trails/`, `cycles/`, `frames/`, `evidence/`, `models/`, `registry/`, and `projections/`.
 
+## Registry and durable transport
+
+The canonical registry under `.pmcro/registry/` controls Planner admissibility. A resource becomes selectable only after independent CHECK and explicit registration; revocation removes admissibility without deleting provenance. Registry resolution is read-only and never invokes the resolved resource.
+
+Durable messages are transport data, not cognition. A queue may provide at-least-once delivery, deduplication, atomic claims, receipts, leases, retries, and dead-letter handling, but transport MUST NOT grant authority, inject a cognitive phase, or execute a reflected next seed. Cross-agent work references immutable messages and source trails rather than co-editing one shared mutable trail.
 ## Documentation and conformance
 
 Architecture documentation follows this chain:

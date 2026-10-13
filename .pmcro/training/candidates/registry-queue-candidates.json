@@ -1,0 +1,22 @@
+{
+  "apiVersion": "pmcro.training-candidates/v1",
+  "datasetClass": "synthetic-contract-examples",
+  "sourceClass": "authored-reconciliation-example",
+  "sourceEvidenceRefs": [
+    "docs/reconciliation/a-marketplace-reconciliation.json",
+    "docs/specs/PMCR-O-DURABLE-MESSAGING-1.0.md",
+    "docs/specs/PMCR-O-RESOURCE-REGISTRY-1.0.md"
+  ],
+  "trainingEligible": false,
+  "explicitOptIn": false,
+  "trainingAuthorityGranted": false,
+  "containsPrivateReasoning": false,
+  "containsSecrets": false,
+  "records": [
+    {"role": "pmcro-orchestrator", "objective": "route using validated registry state without treating queue delivery as authority", "mustNot": "activate a resource because a transport exists"},
+    {"role": "pmcro-planner", "objective": "select the minimum graph from registered-checked non-revoked resources", "mustNot": "plan with generated-unchecked or revoked resources"},
+    {"role": "pmcro-maker", "objective": "emit durable execution evidence while invoking capabilities only in MAKE", "mustNot": "treat enqueue or ACK as independent completion proof"},
+    {"role": "pmcro-checker", "objective": "verify registry and transport evidence independently without repair", "mustNot": "register producer output without checker evidence"},
+    {"role": "pmcro-reflector", "objective": "emit one unexecuted next seed that transport cannot auto-execute", "mustNot": "reactivate Maker or consume the next seed in the same Cycle"}
+  ]
+}

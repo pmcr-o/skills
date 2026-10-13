@@ -8,7 +8,8 @@
     },
     "skills": "skills/",
     "protocol": ".pmcro/protocol/",
-    "models": ".pmcro/projections/ollama/pmcro-role-models.json"
+    "models": ".pmcro/projections/ollama/pmcro-role-models.json",
+    "registry": ".pmcro/registry/index.json"
   },
   "projections": [
     {
@@ -26,6 +27,8 @@
   "invariants": [
     "provider projections are not canonical authority",
     "projection generation grants no runtime capability authority",
-    "promotion requires independent checker evidence"
+    "promotion requires independent checker evidence",
+    "planner admissibility requires registered-checked registry state",
+    "transport registration does not grant execution authority"
   ]
 }
