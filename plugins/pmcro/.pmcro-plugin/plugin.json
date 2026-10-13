@@ -1,0 +1,52 @@
+{
+  "apiVersion": "pmcro.plugin/v1",
+  "kind": "Plugin",
+  "id": "pmcro",
+  "name": "pmcro",
+  "displayName": "PMCR-O",
+  "description": "Canonical PMCR-O plugin package contract.",
+  "version": "0.4.0-candidate",
+  "authority": "canonical",
+  "status": "candidate-unregistered",
+  "entrypoint": "@orchestrator /pmcro",
+  "componentRoots": {
+    "agents": "agents/",
+    "skills": "skills/",
+    "commands": "commands/",
+    "hooks": "hooks/",
+    "workflows": "workflows/",
+    "evals": "evals/",
+    "scripts": "scripts/",
+    "bin": "bin/"
+  },
+  "agents": [
+    {"id": "pmcro-orchestrator", "sourceRef": "skills/pmcro-orchestrator/agents/pmcro-orchestrator.json"},
+    {"id": "pmcro-planner", "sourceRef": "skills/pmcro-planner/agents/pmcro-planner.json"},
+    {"id": "pmcro-maker", "sourceRef": "skills/pmcro-maker/agents/pmcro-maker.json"},
+    {"id": "pmcro-checker", "sourceRef": "skills/pmcro-checker/agents/pmcro-checker.json"},
+    {"id": "pmcro-reflector", "sourceRef": "skills/pmcro-reflector/agents/pmcro-reflector.json"}
+  ],
+  "skills": [
+    {"id": "reflect", "sourceRef": "skills/reflect"},
+    {"id": "pmcro-messages-protocol", "sourceRef": "skills/pmcro-messages-protocol"},
+    {"id": "pmcro-session-marketplace", "sourceRef": "skills/pmcro-session-marketplace"},
+    {"id": "pmcro-agent-surface", "sourceRef": "skills/pmcro-agent-surface"},
+    {"id": "pmcro-output-conventions", "sourceRef": "skills/pmcro-output-conventions"},
+    {"id": "pmcro-memory-governance", "sourceRef": "skills/pmcro-memory-governance"},
+    {"id": "pmcro-generic-crud", "sourceRef": "skills/pmcro-generic-crud"},
+    {"id": "pmcro-clean-architecture", "sourceRef": "skills/pmcro-clean-architecture"},
+    {"id": "desktop-commander", "sourceRef": "skills/desktop-commander"},
+    {"id": "pmcro-skill-lifecycle", "sourceRef": "skills/pmcro-skill-lifecycle"},
+    {"id": "pmcro-product-repo", "sourceRef": "skills/pmcro-product-repo"},
+    {"id": "pmcro-capability-import", "sourceRef": "skills/pmcro-capability-import"},
+    {"id": "pmcro-orchestrator", "sourceRef": "skills/pmcro-orchestrator"},
+    {"id": "pmcro-planner", "sourceRef": "skills/pmcro-planner"},
+    {"id": "pmcro-maker", "sourceRef": "skills/pmcro-maker"},
+    {"id": "pmcro-checker", "sourceRef": "skills/pmcro-checker"},
+    {"id": "pmcro-reflector", "sourceRef": "skills/pmcro-reflector"}
+  ],
+  "providerProjectionAuthority": false,
+  "promotion": "checker-verified-only",
+  "legacyProjectionRef": "plugins/pmcro/plugin.json",
+  "claudeProjectionRef": "plugins/pmcro/.claude-plugin/plugin.json"
+}

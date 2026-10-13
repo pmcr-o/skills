@@ -1,0 +1,31 @@
+{
+  "apiVersion": "pmcro.authority/v1",
+  "kind": "AuthorityRegistry",
+  "canonical": {
+    "marketplace": ".pmcro-plugin/marketplace.json",
+    "plugins": {
+      "pmcro": "plugins/pmcro/.pmcro-plugin/plugin.json"
+    },
+    "skills": "skills/",
+    "protocol": ".pmcro/protocol/",
+    "models": ".pmcro/projections/ollama/pmcro-role-models.json"
+  },
+  "projections": [
+    {
+      "provider": "agents-compatibility",
+      "marketplace": ".agents/plugins/marketplace.json",
+      "mode": "generated-projection"
+    },
+    {
+      "provider": "claude-code",
+      "marketplace": ".claude-plugin/marketplace.json",
+      "projectSurface": ".claude/",
+      "mode": "generated-projection"
+    }
+  ],
+  "invariants": [
+    "provider projections are not canonical authority",
+    "projection generation grants no runtime capability authority",
+    "promotion requires independent checker evidence"
+  ]
+}

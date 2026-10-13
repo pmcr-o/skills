@@ -1,0 +1,26 @@
+{
+  "apiVersion": "pmcro.projection/v1",
+  "provider": "claude-code",
+  "status": "candidate-unregistered",
+  "canonicalMarketplaceRef": ".pmcro-plugin/marketplace.json",
+  "marketplaceOutput": ".claude-plugin/marketplace.json",
+  "pluginManifestOutput": ".claude-plugin/plugin.json",
+  "projectAgentOutputRoot": ".claude/agents/",
+  "projectSkillOutputRoot": ".claude/skills/",
+  "pluginAgentOutputRoot": "agents/",
+  "pluginSkillOutputRoot": "skills/",
+  "mapping": {
+    "marketplace": "Marketplace -> Claude marketplace",
+    "plugin": "Plugin -> Claude plugin",
+    "agents": "canonical role agents -> generated Claude subagent markdown",
+    "skills": "portable SKILL.md packages -> Claude Agent Skills",
+    "commands": "commands -> commands",
+    "hooks": "hooks -> hooks",
+    "mcp": "MCP bindings -> .mcp.json when declared"
+  },
+  "authority": {
+    "canonical": false,
+    "grantsRuntimeAuthority": false,
+    "requiresIndependentCheck": true
+  }
+}

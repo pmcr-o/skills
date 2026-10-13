@@ -1,0 +1,31 @@
+{
+  "apiVersion": "pmcro.marketplace/v1",
+  "kind": "Marketplace",
+  "id": "thought-transfer-pmcro",
+  "name": "thought-transfer-pmcro",
+  "description": "Canonical PMCR-O marketplace catalog and projection source.",
+  "version": "0.4.0-candidate",
+  "authority": "canonical",
+  "controlPlaneRef": ".pmcro/",
+  "pluginRoot": "plugins/",
+  "plugins": [
+    {
+      "id": "pmcro",
+      "name": "pmcro",
+      "description": "PMCR-O control, marketplace, agent-family, capability, model, and trail plugin.",
+      "source": "./plugins/pmcro",
+      "manifest": "plugins/pmcro/.pmcro-plugin/plugin.json",
+      "category": "development",
+      "status": "candidate-unregistered"
+    }
+  ],
+  "projectionPolicy": {
+    "providerSurfacesAreCanonical": false,
+    "requiresIndependentCheck": true,
+    "generatedOnly": [
+      ".agents/plugins/marketplace.json",
+      ".claude-plugin/marketplace.json",
+      ".claude/"
+    ]
+  }
+}

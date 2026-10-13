@@ -1,0 +1,68 @@
+{
+  "apiVersion": "pmcro.training-candidates/v1",
+  "status": "candidate-unchecked",
+  "trainingAuthorityGranted": false,
+  "sourcePolicyRef": ".pmcro/protocol/training-data-eligibility.schema.json",
+  "sourceType": "synthetic-spec-derived",
+  "forbiddenSources": [
+    "raw-trails",
+    "private-reasoning",
+    "secrets",
+    "credentials",
+    "unapproved-user-content",
+    "evaluation-holdout"
+  ],
+  "candidates": [
+    {
+      "id": "marketplace-projection-orchestrator-v1",
+      "role": "pmcro-orchestrator",
+      "objective": "Admit a provider-projection request without treating provider files as canonical authority.",
+      "sourceRefs": ["docs/specs/PMCR-O-MARKETPLACE-1.0.md", "docs/adr/0004-provider-surfaces-are-projections.md"],
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-orchestrator",
+      "trainingEligible": false,
+      "explicitOptIn": false,
+      "requiresIndependentCheck": true
+    },
+    {
+      "id": "marketplace-projection-planner-v1",
+      "role": "pmcro-planner",
+      "objective": "Produce the minimum projection plan from canonical marketplace and plugin references.",
+      "sourceRefs": ["docs/specs/PMCR-O-PROJECTION-1.0.md"],
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-planner",
+      "trainingEligible": false,
+      "explicitOptIn": false,
+      "requiresIndependentCheck": true
+    },
+    {
+      "id": "marketplace-projection-maker-v1",
+      "role": "pmcro-maker",
+      "objective": "Generate provider files without widening canonical grants or claiming promotion.",
+      "sourceRefs": ["docs/specs/PMCR-O-PROJECTION-1.0.md", "scripts/project_marketplace.py"],
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-maker",
+      "trainingEligible": false,
+      "explicitOptIn": false,
+      "requiresIndependentCheck": true
+    },
+    {
+      "id": "marketplace-projection-checker-v1",
+      "role": "pmcro-checker",
+      "objective": "Reject provider output that claims canonical authority or lacks provenance.",
+      "sourceRefs": ["docs/specs/PMCR-O-PROJECTION-1.0.md", "docs/adr/0004-provider-surfaces-are-projections.md"],
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-checker",
+      "trainingEligible": false,
+      "explicitOptIn": false,
+      "requiresIndependentCheck": true,
+      "independentFrom": "marketplace-projection-maker-v1"
+    },
+    {
+      "id": "marketplace-projection-reflector-v1",
+      "role": "pmcro-reflector",
+      "objective": "Emit exactly one unexecuted continuation after projection CHECK evidence.",
+      "sourceRefs": ["docs/specs/PMCR-O-PROJECTION-1.0.md"],
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-reflector",
+      "trainingEligible": false,
+      "explicitOptIn": false,
+      "requiresIndependentCheck": true
+    }
+  ]
+}
