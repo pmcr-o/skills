@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/protocol/pmcro-handoff.schema.json",
+  "title": "PMCR-O typed role handoff",
+  "type": "object",
+  "required": [
+    "handoffId",
+    "projectRef",
+    "trailRef",
+    "cycleRef",
+    "fromAgentRef",
+    "toRole",
+    "artifactKind",
+    "artifactRef",
+    "grantRef",
+    "expectedPredecessor",
+    "provenance"
+  ],
+  "properties": {
+    "handoffId": {
+      "type": "string"
+    },
+    "projectRef": {
+      "type": "string"
+    },
+    "trailRef": {
+      "type": "string"
+    },
+    "cycleRef": {
+      "type": "string"
+    },
+    "fromAgentRef": {
+      "type": "string"
+    },
+    "toRole": {
+      "enum": [
+        "orchestrator",
+        "planner",
+        "maker",
+        "checker",
+        "reflector"
+      ]
+    },
+    "artifactKind": {
+      "enum": [
+        "planner_handoff",
+        "plan_artifact",
+        "maker_handoff",
+        "make_result",
+        "checker_handoff",
+        "checker_verdict",
+        "reflection_handoff",
+        "next_seed_intent"
+      ]
+    },
+    "artifactRef": {
+      "type": "string"
+    },
+    "grantRef": {
+      "type": "string"
+    },
+    "expectedPredecessor": {
+      "type": "string"
+    },
+    "provenance": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

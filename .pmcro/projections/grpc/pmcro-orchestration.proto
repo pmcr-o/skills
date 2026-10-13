@@ -1,0 +1,22 @@
+syntax = "proto3";
+package pmcro.orchestration.v1;
+
+message RefRequest { string project_ref = 1; string trail_ref = 2; string cycle_ref = 3; string artifact_ref = 4; string grant_ref = 5; }
+message RefResult { string result_ref = 1; string cycle_ref = 2; repeated string evidence_refs = 3; string status = 4; }
+message Frame { string cycle_ref = 1; string agent_ref = 2; string role = 3; string phase = 4; string evidence_ref = 5; }
+
+service PmcroOrchestration {
+  rpc SubmitSeed(RefRequest) returns (RefResult);
+  rpc InitializeProject(RefRequest) returns (RefResult);
+  rpc StartCycle(RefRequest) returns (RefResult);
+  rpc GetCycle(RefRequest) returns (RefResult);
+  rpc GetState(RefRequest) returns (RefResult);
+  rpc GetResult(RefRequest) returns (RefResult);
+  rpc StreamTrail(RefRequest) returns (stream Frame);
+}
+
+service OrchestratorService { rpc Run(RefRequest) returns (RefResult); }
+service PlannerService { rpc Run(RefRequest) returns (RefResult); }
+service MakerService { rpc Run(RefRequest) returns (RefResult); }
+service CheckerService { rpc Run(RefRequest) returns (RefResult); }
+service ReflectorService { rpc Run(RefRequest) returns (RefResult); }

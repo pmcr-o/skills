@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/protocol/training-data-eligibility.schema.json",
+  "title": "PMCR-O training data eligibility",
+  "type": "object",
+  "required": [
+    "recordRef",
+    "defaultEligible",
+    "explicitOptIn",
+    "provenanceRefs",
+    "sanitization",
+    "excludedClasses",
+    "checkerVerdictRef"
+  ],
+  "properties": {
+    "recordRef": {
+      "type": "string"
+    },
+    "defaultEligible": {
+      "const": false
+    },
+    "explicitOptIn": {
+      "const": true
+    },
+    "provenanceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "sanitization": {
+      "type": "object",
+      "required": [
+        "completed",
+        "redactionReportRef"
+      ],
+      "properties": {
+        "completed": {
+          "const": true
+        },
+        "redactionReportRef": {
+          "type": "string"
+        }
+      }
+    },
+    "excludedClasses": {
+      "type": "array",
+      "allOf": [
+        {
+          "contains": {
+            "const": "secrets"
+          }
+        },
+        {
+          "contains": {
+            "const": "credentials"
+          }
+        },
+        {
+          "contains": {
+            "const": "private-reasoning"
+          }
+        },
+        {
+          "contains": {
+            "const": "unapproved-user-content"
+          }
+        }
+      ]
+    },
+    "checkerVerdictRef": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

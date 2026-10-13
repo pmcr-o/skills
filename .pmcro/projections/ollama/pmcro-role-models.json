@@ -1,0 +1,119 @@
+{
+  "apiVersion": "pmcro.model-projection/v1",
+  "provider": "ollama",
+  "status": "candidate-untrained-unregistered",
+  "runtimeAuthorityGranted": false,
+  "bindings": [
+    {
+      "bindingId": "ollama.pmcro-orchestrator.candidate",
+      "agentRole": "pmcro-orchestrator",
+      "provider": "ollama",
+      "targetModelRef": "ollama://pmcro-orchestrator:<version>",
+      "resolvedModelRef": null,
+      "baseModelRef": null,
+      "adapterRef": null,
+      "checkpointRef": null,
+      "modelVersion": "0.0.0-candidate",
+      "trainingDataPolicyRef": ".pmcro/protocol/training-data-eligibility.schema.json",
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-orchestrator",
+      "evaluationResultRef": null,
+      "outputContractRef": "skills/pmcro-orchestrator/agents/pmcro-orchestrator.json",
+      "provenance": {
+        "projection": "ollama",
+        "generatedFrom": "pmcro-model-binding/v1"
+      },
+      "status": "candidate-untrained",
+      "grantsCapabilityAuthority": false
+    },
+    {
+      "bindingId": "ollama.pmcro-planner.candidate",
+      "agentRole": "pmcro-planner",
+      "provider": "ollama",
+      "targetModelRef": "ollama://pmcro-planner:<version>",
+      "resolvedModelRef": null,
+      "baseModelRef": null,
+      "adapterRef": null,
+      "checkpointRef": null,
+      "modelVersion": "0.0.0-candidate",
+      "trainingDataPolicyRef": ".pmcro/protocol/training-data-eligibility.schema.json",
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-planner",
+      "evaluationResultRef": null,
+      "outputContractRef": "skills/pmcro-planner/agents/pmcro-planner.json",
+      "provenance": {
+        "projection": "ollama",
+        "generatedFrom": "pmcro-model-binding/v1"
+      },
+      "status": "candidate-untrained",
+      "grantsCapabilityAuthority": false
+    },
+    {
+      "bindingId": "ollama.pmcro-maker.candidate",
+      "agentRole": "pmcro-maker",
+      "provider": "ollama",
+      "targetModelRef": "ollama://pmcro-maker:<version>",
+      "resolvedModelRef": null,
+      "baseModelRef": null,
+      "adapterRef": null,
+      "checkpointRef": null,
+      "modelVersion": "0.0.0-candidate",
+      "trainingDataPolicyRef": ".pmcro/protocol/training-data-eligibility.schema.json",
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-maker",
+      "evaluationResultRef": null,
+      "outputContractRef": "skills/pmcro-maker/agents/pmcro-maker.json",
+      "provenance": {
+        "projection": "ollama",
+        "generatedFrom": "pmcro-model-binding/v1"
+      },
+      "status": "candidate-untrained",
+      "grantsCapabilityAuthority": false
+    },
+    {
+      "bindingId": "ollama.pmcro-checker.candidate",
+      "agentRole": "pmcro-checker",
+      "provider": "ollama",
+      "targetModelRef": "ollama://pmcro-checker:<version>",
+      "resolvedModelRef": null,
+      "baseModelRef": null,
+      "adapterRef": null,
+      "checkpointRef": null,
+      "modelVersion": "0.0.0-candidate",
+      "trainingDataPolicyRef": ".pmcro/protocol/training-data-eligibility.schema.json",
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-checker",
+      "evaluationResultRef": null,
+      "outputContractRef": "skills/pmcro-checker/agents/pmcro-checker.json",
+      "provenance": {
+        "projection": "ollama",
+        "generatedFrom": "pmcro-model-binding/v1"
+      },
+      "status": "candidate-untrained",
+      "grantsCapabilityAuthority": false
+    },
+    {
+      "bindingId": "ollama.pmcro-reflector.candidate",
+      "agentRole": "pmcro-reflector",
+      "provider": "ollama",
+      "targetModelRef": "ollama://pmcro-reflector:<version>",
+      "resolvedModelRef": null,
+      "baseModelRef": null,
+      "adapterRef": null,
+      "checkpointRef": null,
+      "modelVersion": "0.0.0-candidate",
+      "trainingDataPolicyRef": ".pmcro/protocol/training-data-eligibility.schema.json",
+      "evaluationSuiteRef": ".pmcro/evals/pmcro-role-evals.json#/pmcro-reflector",
+      "evaluationResultRef": null,
+      "outputContractRef": "skills/pmcro-reflector/agents/pmcro-reflector.json",
+      "provenance": {
+        "projection": "ollama",
+        "generatedFrom": "pmcro-model-binding/v1"
+      },
+      "status": "candidate-untrained",
+      "grantsCapabilityAuthority": false
+    }
+  ],
+  "checkerIsolation": {
+    "makerBinding": "ollama.pmcro-maker.candidate",
+    "checkerBinding": "ollama.pmcro-checker.candidate",
+    "mustDiffer": true
+  },
+  "note": "Target names only. No model training, pull, resolution, registration, or activation is claimed."
+}

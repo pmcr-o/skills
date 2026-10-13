@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/protocol/pmcro-orchestration-api.schema.json",
+  "title": "Transport-neutral PMCR-O orchestration API",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "publicOperations",
+    "internalRoleOperations",
+    "transitionPolicy"
+  ],
+  "properties": {
+    "apiVersion": {
+      "const": "pmcro.orchestration/v1"
+    },
+    "publicOperations": {
+      "const": [
+        "SubmitSeed",
+        "InitializeProject",
+        "StartCycle",
+        "GetCycle",
+        "GetState",
+        "GetResult",
+        "StreamTrail"
+      ]
+    },
+    "internalRoleOperations": {
+      "const": [
+        "Orchestrate",
+        "Plan",
+        "Make",
+        "Check",
+        "Reflect"
+      ]
+    },
+    "transitionPolicy": {
+      "type": "object",
+      "required": [
+        "enforced",
+        "phaseOrder",
+        "directRoleCallsRequireControlPlaneAdmission"
+      ],
+      "properties": {
+        "enforced": {
+          "const": true
+        },
+        "phaseOrder": {
+          "const": [
+            "orchestrate",
+            "plan",
+            "make",
+            "check",
+            "reflect"
+          ]
+        },
+        "directRoleCallsRequireControlPlaneAdmission": {
+          "const": true
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

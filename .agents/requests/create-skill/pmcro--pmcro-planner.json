@@ -1,0 +1,35 @@
+{
+  "creatorAuthority": "dotagents-skill-creator",
+  "entrypoint": "@skill-creator /create-skill",
+  "existingMatches": [],
+  "kind": "skill.create.request",
+  "nextSeed": "Run an independent checker against the generated child before promotion or use.",
+  "rawSeed": "full autonomosly run Extend the canonical PMCR-O agent-family contract with a provider-neutral MODEL_BINDING and MODEL_LIFECYCLE specification, using Ollama as the first local projection for separately trainable pmcro-orchestrator, pmcro-planner, pmcro-maker, pmcro-checker, and pmcro-reflector models, including training-data eligibility, provenance, role-specific evals, checkpoint/version registration, and Checker-independence requirements.",
+  "rawSeedImmutable": true,
+  "rawSeedSha256": "e9b06278199bc71340d13f67b2c2de147e7085a0f126c9afc037218542063f7d",
+  "requiredInvoker": "dotagents-skill-creator",
+  "rules": {
+    "generatedLayers": [],
+    "optionalLayers": [
+      "references",
+      "assets",
+      "scripts",
+      "tests"
+    ],
+    "preserveExistingSource": true,
+    "registrationRequiresIndependentCheck": true,
+    "requiredCore": [
+      "SKILL.md",
+      "agents/"
+    ],
+    "reuseByAdapter": true
+  },
+  "schemaVersion": 2,
+  "sourceCatalogRef": null,
+  "sourceRef": "pmcro/skill-creator-bootstrap-reconcile@b72088858b1d3d8d0f9b011692e649a44b5c881f",
+  "status": "candidate-created-awaiting-independent-check",
+  "target": {
+    "plugin": "pmcro",
+    "skill": "pmcro-planner"
+  }
+}

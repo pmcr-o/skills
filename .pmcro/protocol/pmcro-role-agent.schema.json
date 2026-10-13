@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/protocol/pmcro-role-agent.schema.json",
+  "title": "PMCR-O role agent",
+  "type": "object",
+  "required": [
+    "id",
+    "role",
+    "identity",
+    "fullInternalCycle",
+    "inputs",
+    "outputs",
+    "roleOwnedResult",
+    "delegation",
+    "modelBinding",
+    "training",
+    "authority"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "role": {
+      "enum": [
+        "orchestrator",
+        "planner",
+        "maker",
+        "checker",
+        "reflector"
+      ]
+    },
+    "identity": {
+      "type": "string",
+      "pattern": "^I AM THE "
+    },
+    "fullInternalCycle": {
+      "const": [
+        "orchestrate",
+        "plan",
+        "make",
+        "check",
+        "reflect"
+      ]
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "roleOwnedResult": {
+      "type": "string"
+    },
+    "delegation": {
+      "type": "object",
+      "required": [
+        "childCycleRequired",
+        "childGrantMustBeSubset",
+        "automaticNextRoleInvocation"
+      ],
+      "properties": {
+        "childCycleRequired": {
+          "const": true
+        },
+        "childGrantMustBeSubset": {
+          "const": true
+        },
+        "automaticNextRoleInvocation": {
+          "const": false
+        }
+      }
+    },
+    "modelBinding": {
+      "type": "object"
+    },
+    "training": {
+      "type": "object"
+    },
+    "authority": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

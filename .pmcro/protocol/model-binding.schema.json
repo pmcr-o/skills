@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/protocol/model-binding.schema.json",
+  "title": "Provider-neutral PMCR-O model binding",
+  "type": "object",
+  "required": [
+    "bindingId",
+    "agentRole",
+    "provider",
+    "targetModelRef",
+    "resolvedModelRef",
+    "baseModelRef",
+    "modelVersion",
+    "trainingDataPolicyRef",
+    "evaluationSuiteRef",
+    "outputContractRef",
+    "provenance",
+    "status",
+    "grantsCapabilityAuthority"
+  ],
+  "properties": {
+    "bindingId": {
+      "type": "string"
+    },
+    "agentRole": {
+      "enum": [
+        "pmcro-orchestrator",
+        "pmcro-planner",
+        "pmcro-maker",
+        "pmcro-checker",
+        "pmcro-reflector"
+      ]
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetModelRef": {
+      "type": "string"
+    },
+    "resolvedModelRef": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "baseModelRef": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "adapterRef": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "checkpointRef": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "modelVersion": {
+      "type": "string"
+    },
+    "trainingDataPolicyRef": {
+      "type": "string"
+    },
+    "evaluationSuiteRef": {
+      "type": "string"
+    },
+    "evaluationResultRef": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "outputContractRef": {
+      "type": "string"
+    },
+    "provenance": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "candidate-untrained",
+        "candidate-trained-unchecked",
+        "evaluated-unchecked",
+        "checked",
+        "registered",
+        "active",
+        "retired",
+        "rejected"
+      ]
+    },
+    "grantsCapabilityAuthority": {
+      "const": false
+    }
+  },
+  "additionalProperties": false
+}

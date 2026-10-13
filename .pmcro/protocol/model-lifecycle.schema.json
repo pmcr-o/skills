@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pmcro.dev/protocol/model-lifecycle.schema.json",
+  "title": "PMCR-O model lifecycle",
+  "type": "object",
+  "required": [
+    "modelId",
+    "agentRole",
+    "state",
+    "trainingDataGate",
+    "roleEvaluation",
+    "checkerIndependence",
+    "registrationGate",
+    "transitions"
+  ],
+  "properties": {
+    "modelId": {
+      "type": "string"
+    },
+    "agentRole": {
+      "enum": [
+        "pmcro-orchestrator",
+        "pmcro-planner",
+        "pmcro-maker",
+        "pmcro-checker",
+        "pmcro-reflector"
+      ]
+    },
+    "state": {
+      "enum": [
+        "base-selected",
+        "dataset-candidate",
+        "dataset-checked",
+        "training-candidate",
+        "trained-unchecked",
+        "evaluated-unchecked",
+        "checked",
+        "registered",
+        "active",
+        "retired",
+        "rejected"
+      ]
+    },
+    "trainingDataGate": {
+      "type": "object",
+      "required": [
+        "defaultEligible",
+        "explicitOptInRequired",
+        "eligibilitySchemaRef"
+      ],
+      "properties": {
+        "defaultEligible": {
+          "const": false
+        },
+        "explicitOptInRequired": {
+          "const": true
+        },
+        "eligibilitySchemaRef": {
+          "const": ".pmcro/protocol/training-data-eligibility.schema.json"
+        }
+      }
+    },
+    "roleEvaluation": {
+      "type": "object",
+      "required": [
+        "suiteRef",
+        "resultRefRequiredBeforeCheck"
+      ],
+      "properties": {
+        "suiteRef": {
+          "type": "string"
+        },
+        "resultRefRequiredBeforeCheck": {
+          "const": true
+        }
+      }
+    },
+    "checkerIndependence": {
+      "type": "object",
+      "required": [
+        "independentCheckerRequired",
+        "makerAndCheckerBindingsMustDiffer",
+        "checkerMayRepairCandidate"
+      ],
+      "properties": {
+        "independentCheckerRequired": {
+          "const": true
+        },
+        "makerAndCheckerBindingsMustDiffer": {
+          "const": true
+        },
+        "checkerMayRepairCandidate": {
+          "const": false
+        }
+      }
+    },
+    "registrationGate": {
+      "type": "object",
+      "required": [
+        "independentCheckRequired",
+        "evaluationRequired",
+        "provenanceRequired"
+      ],
+      "properties": {
+        "independentCheckRequired": {
+          "const": true
+        },
+        "evaluationRequired": {
+          "const": true
+        },
+        "provenanceRequired": {
+          "const": true
+        }
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "evidenceRefs"
+        ],
+        "properties": {
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "evidenceRefs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

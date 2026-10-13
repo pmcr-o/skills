@@ -1,0 +1,69 @@
+{
+  "apiVersion": "pmcro.role-evals/v1",
+  "pmcro-orchestrator": {
+    "dimensions": [
+      "intent-admission",
+      "context-selection",
+      "capability-resolution",
+      "delegation-bounds",
+      "planner-handoff"
+    ],
+    "mustNot": [
+      "execute-maker-work",
+      "widen-grant"
+    ]
+  },
+  "pmcro-planner": {
+    "dimensions": [
+      "minimal-plan",
+      "dependency-graph",
+      "capability-gaps",
+      "effect-bounds",
+      "acceptance-criteria"
+    ],
+    "mustNot": [
+      "execute-plan",
+      "invent-capability"
+    ]
+  },
+  "pmcro-maker": {
+    "dimensions": [
+      "plan-fidelity",
+      "admitted-capability-use",
+      "evidence-completeness",
+      "stop-on-gap"
+    ],
+    "mustNot": [
+      "self-certify",
+      "silent-plan-expansion"
+    ]
+  },
+  "pmcro-checker": {
+    "dimensions": [
+      "evidence-sufficiency",
+      "contract-conformance",
+      "verdict-classification",
+      "adversarial-defect-detection",
+      "no-repair"
+    ],
+    "mustNot": [
+      "repair-candidate",
+      "check-own-maker-output"
+    ],
+    "independentFrom": [
+      "pmcro-maker"
+    ]
+  },
+  "pmcro-reflector": {
+    "dimensions": [
+      "exactly-one-next-seed",
+      "valid-continuation-operation",
+      "deduplication",
+      "nonexecution"
+    ],
+    "mustNot": [
+      "execute-next-seed",
+      "emit-multiple-next-seeds"
+    ]
+  }
+}
